@@ -3,21 +3,196 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SnowTracker</title>
+<title>SnowTracker · Cada bajada, contada</title>
+<meta name="description" content="SnowTracker mide tu día de esquí en el iPhone y el Apple Watch: velocidad, desnivel, cada bajada en el mapa, tu pulso y toda la temporada. Sin cuentas, sin publicidad y con tus datos en tu iPhone.">
+<meta property="og:title" content="SnowTracker · Cada bajada, contada">
+<meta property="og:description" content="Velocidad, desnivel y cada bajada de tu día de esquí, en el iPhone y el Apple Watch.">
+<meta property="og:image" content="https://marcosvelascogithub.github.io/snowtracker-web/img/cabecera.jpg">
+<meta name="theme-color" content="#0b1418">
 <link rel="stylesheet" href="estilo.css">
+<style>
+  main.portada { max-width: none; padding: 0; }
+  .envoltura { max-width: 1080px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+
+  /* Cabecera: la cordillera y la huella del icono */
+  .heroe { position: relative; background: #1f4250; }
+  .heroe .envoltura { position: relative; z-index: 1; padding-block: 64px 8px; text-align: center; }
+  .heroe img.cordillera { display: block; width: 100%; height: auto; margin-top: -2px;
+                          min-height: 260px; object-fit: cover; object-position: 40% bottom; }
+  .heroe::after { content: ""; position: absolute; inset: auto 0 0 0; height: 90px;
+                  background: linear-gradient(transparent, var(--fondo)); }
+  .heroe .marca { font-size: 15px; }
+  .heroe h1 { font-size: clamp(44px, 8vw, 92px); letter-spacing: -0.02em; margin: 14px 0 0; }
+  .heroe h1 span { color: var(--cian); }
+  .heroe p { font-size: clamp(18px, 2.4vw, 22px); color: #c9d6df; max-width: 32ch; margin: 18px auto 0; text-wrap: balance; }
+  .pronto { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 12px 22px;
+            border-radius: 999px; background: rgba(9, 20, 26, .72); border: 1px solid rgba(255, 255, 255, .14);
+            font-weight: 600; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .pronto::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--naranja); }
+
+  /* Funciones, alternando texto y captura */
+  .funcion { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 72px; }
+  .funcion:nth-of-type(even) .texto { order: 2; }
+  .texto { min-width: 0; }
+  .antetitulo { color: var(--naranja); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: 13px; }
+  .funcion h2, .seccion h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .funcion h2 span, .seccion h2 span { color: var(--cian); }
+  .funcion p { color: #c9d6df; font-size: 18px; max-width: 46ch; }
+  .telefonos { display: flex; justify-content: center; gap: 20px; }
+  .telefono { width: min(280px, 44vw); aspect-ratio: 660 / 1434; border-radius: 15% / 7%; padding: 2.6%;
+              background: #3a404a; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); }
+  .telefono img { width: 100%; height: 100%; border-radius: 13% / 6%; display: block; background: #000; }
+  .telefonos .telefono:nth-child(2) { margin-top: 48px; }
+
+  /* Apple Watch */
+  .seccion { padding-block: 72px; text-align: center; }
+  .seccion > .envoltura > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .relojes { display: flex; justify-content: center; gap: 28px; margin-top: 40px; flex-wrap: wrap; }
+  .reloj { width: 190px; padding: 14px; border-radius: 30%; background: #3a404a; box-shadow: 0 24px 48px rgba(0, 0, 0, .45); }
+  .reloj img { width: 100%; display: block; border-radius: 26%; }
+
+  /* Todo lo demás */
+  .rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; text-align: left; }
+  .tarjeta { background: var(--superficie); border-radius: 20px; padding: 22px; min-width: 0; }
+  .tarjeta h3 { margin: 0 0 6px; font-size: 18px; }
+  .tarjeta p { margin: 0; color: var(--secundario); font-size: 16px; }
+
+  /* Privacidad */
+  .privacidad { background: var(--superficie); border-radius: 28px; padding: 48px 32px; margin-block: 24px 72px; text-align: center; }
+  .sellos { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .sellos span { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+
+  footer.pie { border-top: 1px solid rgba(255, 255, 255, .08); padding-block: 32px 48px; display: flex; flex-wrap: wrap;
+               gap: 12px 24px; justify-content: space-between; color: var(--secundario); font-size: 15px; margin-top: 0; }
+  footer.pie nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+  @media (max-width: 760px) {
+    .funcion { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; text-align: center; }
+    .funcion:nth-of-type(even) .texto { order: 0; }
+    .funcion p { margin-inline: auto; }
+    .rejilla { grid-template-columns: 1fr; }
+    .telefonos .telefono:nth-child(2) { margin-top: 32px; }
+  }
+  @media (min-width: 761px) and (max-width: 980px) { .rejilla { grid-template-columns: repeat(2, 1fr); } }
+</style>
 </head>
 <body>
-<main>
-<header>
-<span class="marca">SnowTracker</span>
-<h1>Cada bajada, <span style="color: var(--cian)">contada.</span></h1>
-<p class="secundario">Velocidad, desnivel y cada bajada de tu día de esquí, en el iPhone y el Apple Watch.</p>
-</header>
-<div class="botones">
-<a href="privacidad/">Política de privacidad</a>
-<a href="soporte/">Soporte</a>
+<main class="portada">
+
+<section class="heroe">
+  <div class="envoltura">
+    <span class="marca">SnowTracker</span>
+    <h1>Cada bajada,<br><span>contada.</span></h1>
+    <p>Velocidad, desnivel y cada bajada de tu día de esquí, en el iPhone y el Apple Watch.</p>
+    <span class="pronto">Próximamente en el App Store</span>
+  </div>
+  <img class="cordillera" src="img/cabecera.jpg" alt="" width="2400" height="1029">
+</section>
+
+<div class="envoltura">
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">En directo</span>
+      <h2>Cada bajada, <span>al momento.</span></h2>
+      <p>Pulsa «Empezar» y olvídate. SnowTracker separa solo las bajadas de los remontes y te dice en cuál vas, a qué velocidad, cuánto has bajado y la inclinación de la pista. Con el iPhone bloqueado, la sesión sigue en la pantalla de bloqueo, con Pausar a mano.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="img/01-sesion.jpg" alt="Sesión en curso: 57 km/h, 2 h 19 min, 6899 m de desnivel bajado y 15 bajadas" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">El mapa</span>
+      <h2>Tu día entero, <span>en el mapa.</span></h2>
+      <p>La ruta del día, coloreada por velocidad sobre los mapas de Apple, con cada bajada numerada. Toca una y el mapa la encuadra sola. Y si quieres revivirla, reprodúcela hasta 60 veces más rápido.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="img/02-mapa.jpg" alt="Mapa del día en Baqueira Beret con la ruta coloreada por velocidad" loading="lazy"></div>
+      <div class="telefono"><img src="img/04b-bajada.jpg" alt="Una bajada destacada en el mapa y el resto atenuado" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">El resumen</span>
+      <h2>Todo el día, <span>de un vistazo.</span></h2>
+      <p>Velocidad máxima y media, desnivel, distancia esquiando y en remontes, cada bajada con su velocidad y el perfil de altitud del día. Ordena las bajadas por número o por velocidad.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="img/03-resumen.jpg" alt="Resumen del 14 de febrero con las cifras del día" loading="lazy"></div>
+      <div class="telefono"><img src="img/04a-perfil.jpg" alt="Lista de bajadas y perfil de altitud" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Hoy</span>
+      <h2>Sabe en qué <span>estación estás.</span></h2>
+      <p>Al abrir la app, Hoy te dice en qué estación estás, lo que llevas en el día y cómo vas en la temporada. Elige esquí, snowboard o telemark y empieza.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="img/06-hoy.jpg" alt="Hoy: Baqueira Beret, detectada por tu ubicación, con el botón Empezar" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">La temporada</span>
+      <h2>Cada metro <span>cuenta.</span></h2>
+      <p>Días, bajadas, kilómetros y el desnivel acumulado de toda la temporada, comparado con la anterior. Tus récords, con el día y la estación de cada uno, y todas las estaciones donde has esquiado.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="img/07-temporada.jpg" alt="Temporada 2025/26: 86.087 m de desnivel, 21 días y 179 bajadas" loading="lazy"></div>
+      <div class="telefono"><img src="img/08-temporada-records.jpg" alt="Récords de la temporada y estaciones" loading="lazy"></div>
+    </div>
+  </section>
+
 </div>
-<footer>Marcos · <a href="mailto:marcosvelasco.iphoneapps@gmail.com">marcosvelasco.iphoneapps@gmail.com</a></footer>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">Apple Watch</span>
+    <h2>Tú esquías, <span>el reloj apunta.</span></h2>
+    <p>Empieza en el iPhone y llévalo en el bolsillo. En la muñeca ves la bajada en la que vas, la velocidad, el pulso y el desnivel, y pausas o bloqueas la pantalla desde la muñeca. El pulso y las kcal de cada día quedan en su resumen.</p>
+    <div class="relojes">
+      <div class="reloj"><img src="img/reloj-2-metricas.png" alt="Apple Watch: bajada 12, 58 km/h, pulso 142 ppm y 5860 m bajados" loading="lazy"></div>
+      <div class="reloj"><img src="img/reloj-3-controles.png" alt="Apple Watch: Bloquear, Terminar y Pausar" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">Y además</span>
+    <h2>Pensada para <span>la montaña.</span></h2>
+    <div class="rejilla">
+      <div class="tarjeta"><h3>En la pantalla de bloqueo</h3><p>La sesión en una actividad en vivo, con la bajada, la velocidad y el tiempo, y Pausar sin abrir la app.</p></div>
+      <div class="tarjeta"><h3>Nunca pierdes una sesión</h3><p>Si la app se cierra o el iPhone se apaga, la sesión se recupera al volver. Y te avisa cuando queda poca batería.</p></div>
+      <div class="tarjeta"><h3>Guarda en Salud</h3><p>Cada día, como entrenamiento en la app Salud, con la ruta y, con el reloj, el pulso y las kcal.</p></div>
+      <div class="tarjeta"><h3>Comparte la ruta</h3><p>Exporta la ruta de cualquier día en GPX para llevarla a otras apps.</p></div>
+      <div class="tarjeta"><h3>Esquí, snowboard o telemark</h3><p>Elige tu actividad; las cifras se miden igual.</p></div>
+      <div class="tarjeta"><h3>Tus unidades</h3><p>Kilómetros o millas, metros o pies, según tu región, y VoiceOver lee cada cifra con su unidad.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura">
+  <section class="privacidad">
+    <span class="antetitulo">Privacidad</span>
+    <h2 style="font-size: clamp(30px, 4vw, 42px); margin: 10px 0 14px;">Tus datos, <span style="color: var(--cian)">en tu iPhone.</span></h2>
+    <p class="secundario" style="max-width: 50ch; margin: 0 auto;">SnowTracker no tiene cuentas ni servidores propios. Tus sesiones se guardan en tu dispositivo y nadie más las ve.</p>
+    <div class="sellos"><span>Sin cuentas</span><span>Sin publicidad</span><span>Sin analíticas</span><span>Sin seguimiento</span></div>
+    <p style="margin-top: 24px;"><a href="privacidad/">Lee la política de privacidad</a></p>
+  </section>
+
+  <footer class="pie">
+    <span>SnowTracker · Marcos</span>
+    <nav><a href="soporte/">Soporte</a><a href="privacidad/">Privacidad</a><a href="mailto:marcosvelasco.iphoneapps@gmail.com?subject=SnowTracker">Contacto</a></nav>
+  </footer>
+</div>
+
 </main>
 </body>
 </html>
