@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SnowTracker · Every run, counted</title>
+<meta name="description" content="SnowTracker measures your day of skiing on iPhone and Apple Watch: speed, vertical, every run on the map, your heart rate and the whole season. No accounts, no ads, and your data stays on your iPhone.">
+<meta property="og:title" content="SnowTracker · Every run, counted">
+<meta property="og:description" content="Speed, vertical and every run of your ski day, on iPhone and Apple Watch.">
+<meta property="og:image" content="https://marcosvelascogithub.github.io/snowtracker-web/img/cabecera.jpg">
+<meta name="theme-color" content="#0b1418">
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/">
+<link rel="stylesheet" href="../estilo.css">
+<style>
+  main.portada { max-width: none; padding: 0; }
+  .envoltura { max-width: 1080px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+
+  /* Cabecera: la cordillera y la huella del icono */
+  .heroe { position: relative; background: #1f4250; }
+  .heroe .envoltura { position: relative; z-index: 1; padding-block: 64px 8px; text-align: center; }
+  .heroe img.cordillera { display: block; width: 100%; height: auto; margin-top: -2px;
+                          min-height: 260px; object-fit: cover; object-position: 40% bottom; }
+  .heroe::after { content: ""; position: absolute; inset: auto 0 0 0; height: 90px;
+                  background: linear-gradient(transparent, var(--fondo)); }
+  .heroe .marca { font-size: 15px; }
+  .heroe h1 { font-size: clamp(44px, 8vw, 92px); letter-spacing: -0.02em; margin: 14px 0 0; }
+  .heroe h1 span { color: var(--cian); }
+  .heroe p { font-size: clamp(18px, 2.4vw, 22px); color: #c9d6df; max-width: 32ch; margin: 18px auto 0; text-wrap: balance; }
+  .pronto { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 12px 22px;
+            border-radius: 999px; background: rgba(9, 20, 26, .72); border: 1px solid rgba(255, 255, 255, .14);
+            font-weight: 600; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .pronto::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--naranja); }
+
+  /* Funciones, alternando texto y captura */
+  .funcion { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 72px; }
+  .funcion:nth-of-type(even) .texto { order: 2; }
+  .texto { min-width: 0; }
+  .antetitulo { color: var(--naranja); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: 13px; }
+  .funcion h2, .seccion h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .funcion h2 span, .seccion h2 span { color: var(--cian); }
+  .funcion p { color: #c9d6df; font-size: 18px; max-width: 46ch; }
+  .telefonos { display: flex; justify-content: center; gap: 20px; }
+  .telefono { width: min(280px, 44vw); aspect-ratio: 660 / 1434; border-radius: 15% / 7%; padding: 2.6%;
+              background: #3a404a; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); }
+  .telefono img { width: 100%; height: 100%; border-radius: 13% / 6%; display: block; background: #000; }
+  .telefonos .telefono:nth-child(2) { margin-top: 48px; }
+
+  /* Apple Watch */
+  .seccion { padding-block: 72px; text-align: center; }
+  .seccion > .envoltura > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .relojes { display: flex; justify-content: center; gap: 28px; margin-top: 40px; flex-wrap: wrap; }
+  .reloj { width: 190px; padding: 14px; border-radius: 30%; background: #3a404a; box-shadow: 0 24px 48px rgba(0, 0, 0, .45); }
+  .reloj img { width: 100%; display: block; border-radius: 26%; }
+
+  /* Todo lo demás */
+  .rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; text-align: left; }
+  .tarjeta { background: var(--superficie); border-radius: 20px; padding: 22px; min-width: 0; }
+  .tarjeta h3 { margin: 0 0 6px; font-size: 18px; }
+  .tarjeta p { margin: 0; color: var(--secundario); font-size: 16px; }
+
+  /* Privacidad */
+  .privacidad { background: var(--superficie); border-radius: 28px; padding: 48px 32px; margin-block: 24px 72px; text-align: center; }
+  .sellos { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .sellos span { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+
+  footer.pie { border-top: 1px solid rgba(255, 255, 255, .08); padding-block: 32px 48px; display: flex; flex-wrap: wrap;
+               gap: 12px 24px; justify-content: space-between; color: var(--secundario); font-size: 15px; margin-top: 0; }
+  footer.pie nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+  @media (max-width: 760px) {
+    .funcion { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; text-align: center; }
+    .funcion:nth-of-type(even) .texto { order: 0; }
+    .funcion p { margin-inline: auto; }
+    .rejilla { grid-template-columns: 1fr; }
+    .telefonos .telefono:nth-child(2) { margin-top: 32px; }
+  }
+  @media (min-width: 761px) and (max-width: 980px) { .rejilla { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<main class="portada">
+
+<section class="heroe">
+  <div class="envoltura">
+    <span class="marca">SnowTracker</span>
+    <h1>Every run,<br><span>counted.</span></h1>
+    <p>Speed, vertical and every run of your ski day, on iPhone and Apple Watch.</p>
+    <span class="pronto">Coming soon to the App Store</span>
+  </div>
+  <img class="cordillera" src="../img/cabecera.jpg" alt="" width="2400" height="1029">
+</section>
+
+<div class="envoltura">
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Live</span>
+      <h2>Every run, <span>as it happens.</span></h2>
+      <p>Tap Start and forget about it. SnowTracker tells runs from lifts on its own and shows which run you’re on, how fast you’re going, how much vertical you’ve skied and the slope of the run. With your iPhone locked, the session stays on the Lock Screen, with Pause close at hand.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/01-sesion.jpg" alt="Session in progress: 36 mph, 2:19:45, 22,635 ft of vertical descent and 15 runs" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">The map</span>
+      <h2>Your whole day, <span>on the map.</span></h2>
+      <p>The day’s route, colored by speed on Apple Maps, with every run numbered. Tap one and the map frames it. And if you want to relive it, play it back up to 60 times faster.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/02-mapa.jpg" alt="Map of the day at Baqueira Beret with the route colored by speed" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/04b-bajada.jpg" alt="One run highlighted on the map and the rest dimmed" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">The summary</span>
+      <h2>The whole day, <span>at a glance.</span></h2>
+      <p>Max and average speed, vertical, distance skiing and on lifts, every run with its speed and the day’s altitude profile. Sort your runs by number or by speed.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/03-resumen.jpg" alt="Summary of February 14 with the day’s stats" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/04a-perfil.jpg" alt="List of runs and altitude profile" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Today</span>
+      <h2>It knows which <span>resort you’re at.</span></h2>
+      <p>When you open the app, Today tells you which resort you’re at, what you’ve done so far today and how your season is going. Choose ski, snowboard or telemark and start.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/06-hoy.jpg" alt="Today: Baqueira Beret, detected from your location, with the Start button" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">The season</span>
+      <h2>All your vertical <span>adds up.</span></h2>
+      <p>Days, runs, distance and the total vertical of the whole season, compared with the previous one. Your records, each with its day and resort, and every resort where you’ve skied.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/07-temporada.jpg" alt="Season 2025/26: 282,438 ft of vertical, 21 days and 179 runs" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/08-temporada-records.jpg" alt="Season records and resorts" loading="lazy"></div>
+    </div>
+  </section>
+
+</div>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">Apple Watch</span>
+    <h2>You ski, <span>your watch keeps up.</span></h2>
+    <p>Start on your iPhone and keep it in your pocket. On your wrist you see the run you’re on, your speed, your heart rate and your vertical, and you pause or lock the screen from your wrist. Each day’s heart rate and calories stay in its summary.</p>
+    <div class="relojes">
+      <div class="reloj"><img src="../img/en/reloj-2-metricas.png" alt="Apple Watch: run 12, 36 mph, heart rate 142 bpm and 19,226 ft of descent" loading="lazy"></div>
+      <div class="reloj"><img src="../img/en/reloj-3-controles.png" alt="Apple Watch: Lock, End and Pause" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">And more</span>
+    <h2>Made for <span>the mountains.</span></h2>
+    <div class="rejilla">
+      <div class="tarjeta"><h3>On the Lock Screen</h3><p>The session in a Live Activity, with the run, the speed and the time, and Pause without opening the app.</p></div>
+      <div class="tarjeta"><h3>You never lose a session</h3><p>If the app closes or your iPhone turns off, the session is recovered when you come back. And it lets you know when the battery is running low.</p></div>
+      <div class="tarjeta"><h3>Save to Health</h3><p>Each day, as a workout in the Health app, with the route and, with the watch, your heart rate and calories.</p></div>
+      <div class="tarjeta"><h3>Share the route</h3><p>Export any day’s route as GPX to use it in other apps.</p></div>
+      <div class="tarjeta"><h3>Ski, snowboard or telemark</h3><p>Choose your activity; the stats are measured the same way.</p></div>
+      <div class="tarjeta"><h3>Your units</h3><p>Kilometers or miles, meters or feet, depending on your region, and VoiceOver reads each number with its unit.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura">
+  <section class="privacidad">
+    <span class="antetitulo">Privacy</span>
+    <h2 style="font-size: clamp(30px, 4vw, 42px); margin: 10px 0 14px;">Your data, <span style="color: var(--cian)">on your iPhone.</span></h2>
+    <p class="secundario" style="max-width: 50ch; margin: 0 auto;">SnowTracker has no accounts and no servers of its own. Your sessions are stored on your device and nobody else sees them.</p>
+    <div class="sellos"><span>No accounts</span><span>No ads</span><span>No analytics</span><span>No tracking</span></div>
+    <p style="margin-top: 24px;"><a href="privacy/">Read the privacy policy</a></p>
+  </section>
+
+  <footer class="pie">
+    <span>SnowTracker · Marcos Velasco Fernández</span>
+    <nav><a href="support/">Support</a><a href="privacy/">Privacy</a><a href="mailto:marcosvelasco.iphoneapps@gmail.com?subject=SnowTracker">Contact</a><a href="../" hreflang="es" lang="es">Español</a></nav>
+  </footer>
+</div>
+
+</main>
+</body>
+</html>
