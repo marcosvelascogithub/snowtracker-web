@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SnowTracker OpenStreetMap data</title>
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/">
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body>
+<main>
+<header>
+<a class="marca" href="../">SnowTracker</a>
+<h1>OpenStreetMap data</h1>
+<p class="secundario">Extract of October 31, 2026, 23:00 UTC</p>
+</header>
+
+<div class="resumen"><p>The pistes, lifts and ski resorts shown in SnowTracker are © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>. The data in the app is a derivative database of OpenStreetMap and is published here under the <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL) 1.0</a>.</p></div>
+
+<h2>Download the data</h2>
+<p>The same files the app includes, free of charge:</p>
+<p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 5.8 MB · downhill pistes and lifts</span></p>
+<p><a href="../../datos-osm/pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0.4 MB · index of the 7,166 zones in pistes.bin</span></p>
+<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0.3 MB · the 3,330 ski resorts</span></p>
+
+<h2>Source</h2>
+<p>Generated from the worldwide piste extract of <a href="https://www.opensnowmap.org/">OpenSnowMap</a> (<code>planet_pistes.osm.gz</code>), with OpenStreetMap data. Lines are simplified and tags the app doesn't use are removed. Updated with each app version.</p>
+
+<h2>Format</h2>
+<p><strong>pistes-index.json:</strong> <code>extract</code> is the extract date and each item in <code>zones</code> is <code>[min latitude, min longitude, max latitude, max longitude, offset, length]</code>: the zone's bounding box and where its block is in pistes.bin, in bytes.</p>
+<p><strong>pistes.bin:</strong> the zone blocks, one after another. Each block is a GeoJSON (<code>FeatureCollection</code> of <code>LineString</code>) compressed with xz. Each line has <code>piste:type</code> and, if present, <code>piste:difficulty</code>, or else <code>aerialway</code>, with the OpenStreetMap values.</p>
+<p><strong>resorts.json:</strong> <code>extract</code> is the extract date and each item in <code>resorts</code> is <code>[name, name:es, name:en, country in Spanish, country in English, min latitude, min longitude, max latitude, max longitude]</code>: the resort's name in OpenStreetMap and the bounding box of its pistes and lifts.</p>
+
+<footer><a href="../privacy/">Privacy</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a></footer>
+</main>
+</body>
+</html>
