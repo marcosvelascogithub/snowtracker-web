@@ -68,6 +68,27 @@
                gap: 12px 24px; justify-content: space-between; color: var(--secundario); font-size: 15px; margin-top: 0; }
   footer.pie nav { display: flex; gap: 20px; flex-wrap: wrap; }
 
+
+  /* Datos rápidos bajo el titular */
+  .datos-heroe { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; color: #c9d6df; font-size: 15px; font-weight: 600; }
+  .datos-heroe span + span::before { content: "·"; margin-right: 18px; color: var(--secundario); }
+
+  /* Estaciones */
+  .estaciones { position: relative; overflow: hidden; border-radius: 28px; margin-block: 24px 48px; padding: 56px 32px;
+                text-align: center; background: linear-gradient(160deg, #1f4250 0%, var(--superficie) 70%); }
+  .estaciones h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .estaciones h2 span { color: var(--cian); }
+  .estaciones > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .cifras { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px 56px; margin: 36px 0 8px; }
+  .cifra strong { display: block; font-size: clamp(48px, 7vw, 72px); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .cifra span { color: var(--secundario); font-weight: 600; }
+  .paises { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; padding: 0; list-style: none; }
+  .paises li { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+  .paises li b { color: var(--naranja); font-variant-numeric: tabular-nums; margin-left: 6px; }
+  .boton { display: inline-block; margin-top: 32px; padding: 14px 26px; border-radius: 999px; background: var(--cian); color: #08222c;
+           font-weight: 700; text-decoration: none; }
+  .estaciones .nota { margin-top: 18px; font-size: 14px; color: var(--secundario); }
+
   @media (max-width: 760px) {
     .funcion { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; text-align: center; }
     .funcion:nth-of-type(even) .texto { order: 0; }
@@ -86,6 +107,7 @@
     <span class="marca">SnowTracker</span>
     <h1>Cada bajada,<br><span>contada.</span></h1>
     <p>Velocidad, desnivel y cada bajada de tu día de esquí, en el iPhone y el Apple Watch.</p>
+    <div class="datos-heroe"><span>iPhone y Apple Watch</span><span>2.897 estaciones</span><span>Sin cuentas ni publicidad</span></div>
     <span class="pronto">Próximamente en el App Store</span>
   </div>
   <img class="cordillera" src="img/cabecera.jpg" alt="" width="2400" height="1029">
@@ -109,11 +131,33 @@
       <span class="antetitulo">El mapa</span>
       <h2>Tu día entero, <span>en el mapa.</span></h2>
       <p>La ruta del día, coloreada por velocidad sobre los mapas de Apple, con cada bajada numerada y, debajo, las pistas por dificultad y los remontes. Toca una bajada y el mapa la encuadra sola. Y si quieres revivirla, reprodúcela hasta 240 veces más rápido.</p>
-      <p class="secundario">Pistas de <a href="estaciones/">2.897 estaciones en 63 países</a>, dentro de la app y sin conexión.</p>
     </div>
     <div class="telefonos">
       <div class="telefono"><img src="img/02-mapa.jpg" alt="Mapa del día en Baqueira Beret, en satélite, con las pistas y la ruta coloreada por velocidad" loading="lazy"></div>
-      <div class="telefono"><img src="img/04b-bajada.jpg" alt="Una bajada destacada en el mapa y el resto atenuado" loading="lazy"></div>
+    </div>
+  </section>
+
+  <div class="estaciones">
+    <span class="antetitulo">Estaciones</span>
+    <h2>Las pistas de tu estación, <span>ya en la app.</span></h2>
+    <p>Las pistas por dificultad y los remontes de las estaciones de todo el mundo van dentro de la app: se ven debajo de tu ruta aunque no tengas cobertura, y en Hoy la app reconoce la estación en la que estás.</p>
+    <div class="cifras">
+      <div class="cifra"><strong>2.897</strong><span>estaciones con pistas</span></div>
+      <div class="cifra"><strong>63</strong><span>países</span></div>
+    </div>
+    <ul class="paises"><li>Estados Unidos<b>428</b></li><li>Japón<b>372</b></li><li>Suiza<b>266</b></li><li>Austria<b>223</b></li><li>Francia<b>195</b></li><li>Canadá<b>180</b></li></ul>
+    <a class="boton" href="estaciones/">Busca tu estación</a>
+    <p class="nota">Datos: © colaboradores de OpenStreetMap, con licencia ODbL. <a href="datos-osm/">Descarga los datos</a>.</p>
+  </div>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Hoy</span>
+      <h2>Sabe en qué <span>estación estás.</span></h2>
+      <p>Al abrir la app, Hoy te dice en qué estación estás, lo que llevas en el día o, si hoy no has esquiado, tu último día: bajadas, desnivel, velocidad máxima y, con Apple Watch, pulso y kcal. Toca la estación para ver las cercanas o buscar otra. Elige esquí, snowboard o telemark y empieza.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="img/06-hoy.jpg" alt="Hoy: Baqueira Beret, detectada por tu ubicación, el botón Empezar y la tarjeta del día" loading="lazy"></div>
     </div>
   </section>
 
@@ -131,12 +175,12 @@
 
   <section class="funcion">
     <div class="texto">
-      <span class="antetitulo">Hoy</span>
-      <h2>Sabe en qué <span>estación estás.</span></h2>
-      <p>Al abrir la app, Hoy te dice en qué estación estás, lo que llevas en el día o, si hoy no has esquiado, tu último día: bajadas, desnivel, velocidad máxima y, con Apple Watch, pulso y kcal. Elige esquí, snowboard o telemark y empieza.</p>
+      <span class="antetitulo">Salud</span>
+      <h2>Tu pulso, <span>bajada a bajada.</span></h2>
+      <p>Con el Apple Watch, cada día guarda tu pulso medio en las bajadas, el máximo y las kcal activas, y la gráfica del pulso de todo el día con las bajadas marcadas.</p>
     </div>
     <div class="telefonos">
-      <div class="telefono"><img src="img/06-hoy.jpg" alt="Hoy: Baqueira Beret, detectada por tu ubicación, el botón Empezar y la tarjeta del día" loading="lazy"></div>
+      <div class="telefono"><img src="img/05-salud.jpg" alt="Salud del sábado 14 de febrero: 145 ppm de media en las bajadas, 166 ppm de máximo, 992 kcal activas y la gráfica del pulso" loading="lazy"></div>
     </div>
   </section>
 
@@ -192,7 +236,7 @@
 
   <footer class="pie">
     <span>SnowTracker · Marcos Velasco Fernández</span>
-    <nav><a href="soporte/">Soporte</a><a href="privacidad/">Privacidad</a><a href="mailto:marcosvelasco.iphoneapps@gmail.com?subject=SnowTracker">Contacto</a><a href="en/" hreflang="en" lang="en">English</a></nav>
+    <nav><a href="soporte/">Soporte</a><a href="privacidad/">Privacidad</a><a href="datos-osm/">Datos de OpenStreetMap</a><a href="mailto:marcosvelasco.iphoneapps@gmail.com?subject=SnowTracker">Contacto</a><a href="en/" hreflang="en" lang="en">English</a></nav>
   </footer>
 </div>
 
