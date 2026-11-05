@@ -9,6 +9,7 @@
 <meta property="og:description" content="Velocidad, desnivel y cada bajada de tu día de esquí, en el iPhone y el Apple Watch.">
 <meta property="og:image" content="https://marcosvelascogithub.github.io/snowtracker-web/img/cabecera.jpg">
 <meta name="theme-color" content="#0b1418">
+<meta name="apple-itunes-app" content="app-id=6826156855">
 <link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/">
 <link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/">
 <link rel="stylesheet" href="estilo.css">
@@ -27,10 +28,12 @@
   .heroe h1 { font-size: clamp(44px, 8vw, 92px); letter-spacing: -0.02em; margin: 14px 0 0; }
   .heroe h1 span { color: var(--cian); }
   .heroe p { font-size: clamp(18px, 2.4vw, 22px); color: #c9d6df; max-width: 32ch; margin: 18px auto 0; text-wrap: balance; }
-  .pronto { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 12px 22px;
+  .tienda { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 12px 22px;
             border-radius: 999px; background: rgba(9, 20, 26, .72); border: 1px solid rgba(255, 255, 255, .14);
-            font-weight: 600; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-  .pronto::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--naranja); }
+            font-weight: 600; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            color: inherit; text-decoration: none; transition: border-color .2s, background .2s; }
+  .tienda:hover, .tienda:focus-visible { border-color: var(--naranja); background: rgba(9, 20, 26, .88); }
+  .tienda::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--naranja); }
 
   /* Funciones, alternando texto y captura */
   .funcion { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 72px; }
@@ -108,7 +111,7 @@
     <h1>Cada bajada,<br><span>contada.</span></h1>
     <p>Velocidad, desnivel y cada bajada de tu día de esquí, en el iPhone y el Apple Watch.</p>
     <div class="datos-heroe"><span>iPhone y Apple Watch</span><span>2.897 estaciones</span><span>Sin cuentas ni publicidad</span></div>
-    <span class="pronto">Próximamente en el App Store</span>
+    <a class="tienda" href="https://apps.apple.com/app/id6826156855">Descárgala en el App Store</a>
   </div>
   <img class="cordillera" src="img/cabecera.jpg" alt="" width="2400" height="1029">
 </section>
