@@ -2,7 +2,7 @@
 #
 #  estaciones.py
 #
-#  Genera las páginas de estaciones (`estaciones/` y `en/resorts/`) a partir de
+#  Genera las páginas de estaciones (`estaciones/`, `en/resorts/` y `de/skigebiete/`) a partir de
 #  `datos/estaciones.json`, que sale del script `scripts/pistas/estaciones.py` de la app
 #  con el mismo extracto de OpenStreetMap que los datos de pistas de cada versión.
 #
@@ -22,7 +22,7 @@ LATIN = re.compile(r"^[\u0000-ɏḀ-ỿ\s'’.,()\-–/&0-9]+$")
 TEXT = {
     "es": {
         "path": ROOT / "estaciones" / "index.html",
-        "lang": "es", "other": "../en/resorts/", "other_lang": "en", "other_label": "English",
+        "lang": "es", "label": "Español", "root": "../",
         "home": "../", "css": "../estilo.css",
         "title": "Estaciones con pistas en SnowTracker",
         "h1": "Estaciones",
@@ -33,12 +33,11 @@ TEXT = {
         "data": "Datos: © colaboradores de OpenStreetMap, con licencia ODbL. Países: Natural Earth y Apple. Actualizado el {date}.",
         "footer": "SnowTracker · Marcos Velasco Fernández",
         "country": "country_es", "name": "name_es",
-        "canonical": "https://marcosvelascogithub.github.io/snowtracker-web/estaciones/",
-        "alternate": "https://marcosvelascogithub.github.io/snowtracker-web/en/resorts/",
+        "dir": "estaciones/",
     },
     "en": {
         "path": ROOT / "en" / "resorts" / "index.html",
-        "lang": "en", "other": "../../estaciones/", "other_lang": "es", "other_label": "Español",
+        "lang": "en", "label": "English", "root": "../../",
         "home": "../", "css": "../../estilo.css",
         "title": "Ski resorts with pistes in SnowTracker",
         "h1": "Ski resorts",
@@ -49,10 +48,26 @@ TEXT = {
         "data": "Data: © OpenStreetMap contributors, licensed under the ODbL. Countries: Natural Earth and Apple. Updated {date}.",
         "footer": "SnowTracker · Marcos Velasco Fernández",
         "country": "country_en", "name": "name_en",
-        "canonical": "https://marcosvelascogithub.github.io/snowtracker-web/en/resorts/",
-        "alternate": "https://marcosvelascogithub.github.io/snowtracker-web/estaciones/",
+        "dir": "en/resorts/",
+    },
+    "de": {
+        "path": ROOT / "de" / "skigebiete" / "index.html",
+        "lang": "de", "label": "Deutsch", "root": "../../",
+        "home": "../", "css": "../../estilo.css",
+        "title": "Skigebiete mit Pisten in SnowTracker",
+        "h1": "Skigebiete",
+        "intro": "SnowTracker zeigt die Pisten und Lifte von {n} Skigebieten in {c} Ländern unter deiner Route, auf der Karte jedes Tages. Sie sind in der App enthalten: Sie werden offline angezeigt und senden keine Daten.",
+        "note": "Die Daten stammen von OpenStreetMap, einer Karte, die von ihren Mitwirkenden erstellt wird, und werden mit jeder Version der App aktualisiert. Hat dein Skigebiet Pisten in OpenStreetMap, siehst du sie auch, wenn es nicht in dieser Liste steht – sie enthält nur Skigebiete mit Namen.",
+        "search": "Skigebiet oder Land suchen", "none": "Kein Skigebiet gefunden.",
+        "count": "{n} Skigebiete", "count1": "1 Skigebiet",
+        "data": "Daten: © OpenStreetMap-Mitwirkende, lizenziert unter der ODbL. Länder: Natural Earth und Apple. Stand: {date}.",
+        "footer": "SnowTracker · Marcos Velasco Fernández",
+        "country": "country_de", "name": "name_de",
+        "dir": "de/skigebiete/",
     },
 }
+
+SITE = "https://marcosvelascogithub.github.io/snowtracker-web/"
 
 
 def fold(s):
@@ -77,7 +92,11 @@ def render(lang, data):
     for r in resorts:
         by_country[r[t["country"]]].append(r)
     countries = sorted(by_country, key=fold)
-    fmt = (lambda n: f"{n:,}".replace(",", ".")) if lang == "es" else (lambda n: f"{n:,}")
+    fmt = (lambda n: f"{n:,}".replace(",", ".")) if lang in ("es", "de") else (lambda n: f"{n:,}")
+    alternates = "".join(f'<link rel="alternate" hreflang="{o["lang"]}" href="{SITE}{o["dir"]}">\n'
+                         for k, o in TEXT.items() if k != lang)
+    others = " · ".join(f'<a href="{t["root"]}{o["dir"]}" hreflang="{o["lang"]}" lang="{o["lang"]}">{o["label"]}</a>'
+                        for k, o in TEXT.items() if k != lang)
     e = html.escape
     out = [f"""<!doctype html>
 <html lang="{t['lang']}">
@@ -86,9 +105,8 @@ def render(lang, data):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{e(t['title'])}</title>
 <meta name="description" content="{e(t['intro'].format(n=fmt(len(resorts)), c=len(countries)))}">
-<link rel="canonical" href="{t['canonical']}">
-<link rel="alternate" hreflang="{t['other_lang']}" href="{t['alternate']}">
-<link rel="stylesheet" href="{t['css']}">
+<link rel="canonical" href="{SITE}{t['dir']}">
+{alternates}<link rel="stylesheet" href="{t['css']}">
 <style>
   main {{ max-width: 760px; }}
   .buscar {{ width: 100%; font: inherit; color: var(--texto); background: var(--superficie); border: 1px solid rgba(255, 255, 255, .12);
@@ -133,7 +151,7 @@ def render(lang, data):
         out.append("</ul>\n</details>\n")
     out.append(f"""</div>
 <p class="secundario datos">{e(t['data'].format(date=data['date'][lang]))}</p>
-<footer>{e(t['footer'])} · <a href="{t['other']}" hreflang="{t['other_lang']}" lang="{t['other_lang']}">{t['other_label']}</a></footer>
+<footer>{e(t['footer'])} · {others}</footer>
 </main>
 <script>
 (() => {{

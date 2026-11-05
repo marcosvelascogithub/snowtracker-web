@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SnowTracker OpenStreetMap-Daten</title>
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/">
+<link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body>
+<main>
+<header>
+<a class="marca" href="../">SnowTracker</a>
+<h1>OpenStreetMap-Daten</h1>
+<p class="secundario">Extrakt vom 31. Oktober 2026, 23:00 UTC</p>
+</header>
+
+<div class="resumen"><p>Die Pisten, Lifte und Skigebiete in SnowTracker sind © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a>. Die Daten der App sind eine von OpenStreetMap abgeleitete Datenbank und werden hier unter der <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL) 1.0</a> veröffentlicht.</p></div>
+
+<h2>Daten herunterladen</h2>
+<p>Dieselben Dateien, die die App enthält, kostenlos:</p>
+<p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 5,8 MB · Abfahrtspisten und Lifte</span></p>
+<p><a href="../../datos-osm/pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0,4 MB · Index der 7.166 Zonen in pistes.bin</span></p>
+<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,3 MB · die 3.330 Skigebiete</span></p>
+
+<h2>Quelle</h2>
+<p>Erstellt aus dem weltweiten Pistenextrakt von <a href="https://www.opensnowmap.org/">OpenSnowMap</a> (<code>planet_pistes.osm.gz</code>), mit Daten von OpenStreetMap. Die Linien sind vereinfacht, und Tags, die die App nicht verwendet, sind entfernt. Wird mit jeder Version der App aktualisiert.</p>
+
+<h2>Format</h2>
+<p><strong>pistes-index.json:</strong> <code>extract</code> ist das Datum des Extrakts, und jedes Element in <code>zones</code> ist <code>[min. Breite, min. Länge, max. Breite, max. Länge, Offset, Länge]</code>: das umschließende Rechteck der Zone und die Position ihres Blocks in pistes.bin, in Bytes.</p>
+<p><strong>pistes.bin:</strong> die Blöcke der Zonen, einer nach dem anderen. Jeder Block ist ein mit xz komprimiertes GeoJSON (<code>FeatureCollection</code> aus <code>LineString</code>). Jede Linie hat <code>piste:type</code> und, falls vorhanden, <code>piste:difficulty</code>, oder andernfalls <code>aerialway</code>, mit den Werten von OpenStreetMap.</p>
+<p><strong>resorts.json:</strong> <code>extract</code> ist das Datum des Extrakts, und jedes Element in <code>resorts</code> ist <code>[Name, name:es, name:en, Land auf Spanisch, Land auf Englisch, min. Breite, min. Länge, max. Breite, max. Länge]</code>: der Name des Skigebiets in OpenStreetMap und das umschließende Rechteck seiner Pisten und Lifte.</p>
+
+<footer><a href="../datenschutz/">Datenschutz</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a></footer>
+</main>
+</body>
+</html>
