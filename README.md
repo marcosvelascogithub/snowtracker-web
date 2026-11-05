@@ -6,7 +6,7 @@ Política de privacidad y soporte de la app SnowTracker, publicadas con GitHub P
 |---|---|---|---|
 | Portada (URL de marketing) | https://marcosvelascogithub.github.io/snowtracker-web/ | https://marcosvelascogithub.github.io/snowtracker-web/en/ | https://marcosvelascogithub.github.io/snowtracker-web/de/ |
 | Soporte | https://marcosvelascogithub.github.io/snowtracker-web/soporte/ | https://marcosvelascogithub.github.io/snowtracker-web/en/support/ | https://marcosvelascogithub.github.io/snowtracker-web/de/support/ |
-| Privacidad | https://marcosvelascogithub.github.io/snowtracker-web/privacidad/ | https://marcosvelascogithub.github.io/snowtracker-web/en/privacy/ | https://marcosvelascogithub.github.io/snowtracker-web/de/datenschutz/ |
+| Privacidad | https://marcosvelascogithub.github.io/snowtracker-web/privacidad/ | https://marcosvelascogithub.github.io/snowtracker-web/en/privacy/ | (enlaza a la inglesa) |
 | Datos de OpenStreetMap (ODbL) | https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/ | https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/ | https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/ |
 
 Las capturas de la portada son las capturas en bruto del iPhone de 6,9" de `docs/app-store/` del repositorio de la app, a la mitad de tamaño: en `img/`, en español, y en `img/en/`, en inglés. La cabecera (`img/cabecera.jpg`, 2400 × 1029) no lleva texto y vale para las dos: sale de `cabecera()` de `docs/app-store/scripts/componer-cabecera.py` con el titular vacío.
