@@ -29,12 +29,9 @@
   .heroe h1 { font-size: clamp(44px, 8vw, 92px); letter-spacing: -0.02em; margin: 14px 0 0; }
   .heroe h1 span { color: var(--cian); }
   .heroe p { font-size: clamp(18px, 2.4vw, 22px); color: #c9d6df; max-width: 32ch; margin: 18px auto 0; text-wrap: balance; }
-  .tienda { display: inline-flex; align-items: center; gap: 10px; margin-top: 28px; padding: 12px 22px;
-            border-radius: 999px; background: rgba(9, 20, 26, .72); border: 1px solid rgba(255, 255, 255, .14);
-            font-weight: 600; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            color: inherit; text-decoration: none; transition: border-color .2s, background .2s; }
-  .tienda:hover, .tienda:focus-visible { border-color: var(--naranja); background: rgba(9, 20, 26, .88); }
-  .tienda::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--naranja); }
+  .tienda { display: inline-block; margin-top: 28px; line-height: 0; border-radius: 8px; }
+  .tienda img { display: block; height: 48px; width: auto; }
+  .tienda:focus-visible { outline: 2px solid var(--naranja); outline-offset: 4px; }
 
   /* Funciones, alternando texto y captura */
   .funcion { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 72px; }
@@ -112,7 +109,7 @@
     <h1>Cada bajada,<br><span>contada.</span></h1>
     <p>Velocidad, desnivel y cada bajada de tu día de esquí, en el iPhone y el Apple Watch.</p>
     <div class="datos-heroe"><span>iPhone y Apple Watch</span><span>3.146 estaciones</span><span>Sin cuentas ni publicidad</span></div>
-    <a class="tienda" href="https://apps.apple.com/app/id6826156855">Descárgala en el App Store</a>
+    <a class="tienda" href="https://apps.apple.com/app/id6826156855"><img src="img/app-store/es.svg" alt="Consíguelo en el App Store" width="120" height="40"></a>
   </div>
   <img class="cordillera" src="img/cabecera.jpg" alt="" width="2400" height="1029">
 </section>
