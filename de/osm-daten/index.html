@@ -7,6 +7,7 @@
 <link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/">
 <link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/">
 <link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/">
 <link rel="stylesheet" href="../../estilo.css">
 </head>
 <body>
@@ -23,7 +24,7 @@
 <p>Dieselben Dateien, die die App enthält, kostenlos:</p>
 <p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 5,8 MB · Abfahrtspisten und Lifte</span></p>
 <p><a href="../../datos-osm/pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0,4 MB · Index der 7.166 Zonen in pistes.bin</span></p>
-<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,4 MB · die 3.330 Skigebiete</span></p>
+<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,4 MB · die 3.146 Skigebiete</span></p>
 
 <h2>Quelle</h2>
 <p>Erstellt aus dem weltweiten Pistenextrakt von <a href="https://www.opensnowmap.org/">OpenSnowMap</a> (<code>planet_pistes.osm.gz</code>), mit Daten von OpenStreetMap. Die Linien sind vereinfacht, und Tags, die die App nicht verwendet, sind entfernt. Wird mit jeder Version der App aktualisiert.</p>
@@ -33,7 +34,7 @@
 <p><strong>pistes.bin:</strong> die Blöcke der Zonen, einer nach dem anderen. Jeder Block ist ein mit xz komprimiertes GeoJSON (<code>FeatureCollection</code> aus <code>LineString</code>). Jede Linie hat <code>piste:type</code> und, falls vorhanden, <code>piste:difficulty</code>, oder andernfalls <code>aerialway</code>, mit den Werten von OpenStreetMap.</p>
 <p><strong>resorts.json:</strong> <code>extract</code> ist das Datum des Extrakts, und jedes Element in <code>resorts</code> ist <code>[Name, name:es, name:en, name:de, Land auf Spanisch, Land auf Englisch, Land auf Deutsch, min. Breite, min. Länge, max. Breite, max. Länge]</code>: der Name des Skigebiets in OpenStreetMap und das umschließende Rechteck seiner Pisten und Lifte.</p>
 
-<footer><a href="../../en/privacy/" hreflang="en">Datenschutz</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a></footer>
+<footer><a href="../../en/privacy/" hreflang="en">Datenschutz</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a></footer>
 </main>
 </body>
 </html>

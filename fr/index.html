@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SnowTracker · Chaque descente, enregistrée</title>
+<meta name="description" content="SnowTracker enregistre votre journée de ski sur iPhone et Apple Watch : vitesse, dénivelé, chaque descente sur le plan, votre fréquence cardiaque et toute la saison. Sans compte, sans publicité, et vos données restent sur votre iPhone.">
+<meta property="og:title" content="SnowTracker · Chaque descente, enregistrée">
+<meta property="og:description" content="La vitesse, le dénivelé et chaque descente de votre journée de ski, sur iPhone et Apple Watch.">
+<meta property="og:image" content="https://marcosvelascogithub.github.io/snowtracker-web/img/cabecera.jpg">
+<meta name="theme-color" content="#0b1418">
+<meta name="apple-itunes-app" content="app-id=6826156855">
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/">
+<link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/">
+<link rel="stylesheet" href="../estilo.css">
+<style>
+  main.portada { max-width: none; padding: 0; }
+  .envoltura { max-width: 1080px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+
+  /* Cabecera: la cordillera y la huella del icono */
+  .heroe { position: relative; background: #1f4250; }
+  .heroe .envoltura { position: relative; z-index: 1; padding-block: 64px 8px; text-align: center; }
+  .heroe img.cordillera { display: block; width: 100%; height: auto; margin-top: -2px;
+                          min-height: 260px; object-fit: cover; object-position: 40% bottom; }
+  .heroe::after { content: ""; position: absolute; inset: auto 0 0 0; height: 90px;
+                  background: linear-gradient(transparent, var(--fondo)); }
+  .heroe .marca { font-size: 15px; }
+  .heroe h1 { font-size: clamp(44px, 8vw, 92px); letter-spacing: -0.02em; margin: 14px 0 0; }
+  .heroe h1 span { color: var(--cian); }
+  .heroe p { font-size: clamp(18px, 2.4vw, 22px); color: #c9d6df; max-width: 32ch; margin: 18px auto 0; text-wrap: balance; }
+  .tienda { display: inline-block; margin-top: 28px; line-height: 0; border-radius: 8px; }
+  .tienda img { display: block; height: 48px; width: auto; }
+  .tienda:focus-visible { outline: 2px solid var(--naranja); outline-offset: 4px; }
+
+  /* Funciones, alternando texto y captura */
+  .funcion { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 72px; }
+  .funcion:nth-of-type(even) .texto { order: 2; }
+  .texto { min-width: 0; }
+  .antetitulo { color: var(--naranja); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: 13px; }
+  .funcion h2, .seccion h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .funcion h2 span, .seccion h2 span { color: var(--cian); }
+  .funcion p { color: #c9d6df; font-size: 18px; max-width: 46ch; }
+  .telefonos { display: flex; justify-content: center; gap: 20px; }
+  .telefono { width: min(280px, 44vw); aspect-ratio: 660 / 1434; border-radius: 15% / 7%; padding: 2.6%;
+              background: #3a404a; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); }
+  .telefono img { width: 100%; height: 100%; border-radius: 13% / 6%; display: block; background: #000; }
+  .telefonos .telefono:nth-child(2) { margin-top: 48px; }
+
+  /* Apple Watch */
+  .seccion { padding-block: 72px; text-align: center; }
+  .seccion > .envoltura > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .relojes { display: flex; justify-content: center; gap: 28px; margin-top: 40px; flex-wrap: wrap; }
+  .reloj { width: 190px; padding: 14px; border-radius: 30%; background: #3a404a; box-shadow: 0 24px 48px rgba(0, 0, 0, .45); }
+  .reloj img { width: 100%; display: block; border-radius: 26%; }
+
+  /* Todo lo demás */
+  .rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; text-align: left; }
+  .tarjeta { background: var(--superficie); border-radius: 20px; padding: 22px; min-width: 0; }
+  .tarjeta h3 { margin: 0 0 6px; font-size: 18px; }
+  .tarjeta p { margin: 0; color: var(--secundario); font-size: 16px; }
+
+  /* Privacidad */
+  .privacidad { background: var(--superficie); border-radius: 28px; padding: 48px 32px; margin-block: 24px 72px; text-align: center; }
+  .sellos { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .sellos span { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+
+  footer.pie { border-top: 1px solid rgba(255, 255, 255, .08); padding-block: 32px 48px; display: flex; flex-wrap: wrap;
+               gap: 12px 24px; justify-content: space-between; color: var(--secundario); font-size: 15px; margin-top: 0; }
+  footer.pie nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+
+  /* Datos rápidos bajo el titular */
+  .datos-heroe { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; color: #c9d6df; font-size: 15px; font-weight: 600; }
+  .datos-heroe span + span::before { content: "·"; margin-right: 18px; color: var(--secundario); }
+
+  /* Estaciones */
+  .estaciones { position: relative; overflow: hidden; border-radius: 28px; margin-block: 24px 48px; padding: 56px 32px;
+                text-align: center; background: linear-gradient(160deg, #1f4250 0%, var(--superficie) 70%); }
+  .estaciones h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .estaciones h2 span { color: var(--cian); }
+  .estaciones > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .cifras { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px 56px; margin: 36px 0 8px; }
+  .cifra strong { display: block; font-size: clamp(48px, 7vw, 72px); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .cifra span { color: var(--secundario); font-weight: 600; }
+  .paises { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; padding: 0; list-style: none; }
+  .paises li { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+  .paises li b { color: var(--naranja); font-variant-numeric: tabular-nums; margin-left: 6px; }
+  .boton { display: inline-block; margin-top: 32px; padding: 14px 26px; border-radius: 999px; background: var(--cian); color: #08222c;
+           font-weight: 700; text-decoration: none; }
+  .estaciones .nota { margin-top: 18px; font-size: 14px; color: var(--secundario); }
+
+  @media (max-width: 760px) {
+    .funcion { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; text-align: center; }
+    .funcion:nth-of-type(even) .texto { order: 0; }
+    .funcion p { margin-inline: auto; }
+    .rejilla { grid-template-columns: 1fr; }
+    .telefonos .telefono:nth-child(2) { margin-top: 32px; }
+  }
+  @media (min-width: 761px) and (max-width: 980px) { .rejilla { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<main class="portada">
+
+<section class="heroe">
+  <div class="envoltura">
+    <span class="marca">SnowTracker</span>
+    <h1>Chaque descente,<br><span>enregistrée.</span></h1>
+    <p>La vitesse, le dénivelé et chaque descente de votre journée de ski, sur iPhone et Apple Watch.</p>
+    <div class="datos-heroe"><span>iPhone et Apple Watch</span><span>3 146 stations</span><span>Sans compte, sans publicité</span></div>
+    <a class="tienda" href="https://apps.apple.com/app/id6826156855"><img src="../img/app-store/fr.svg" alt="Télécharger dans l’App Store" width="120" height="40"></a>
+  </div>
+  <img class="cordillera" src="../img/cabecera.jpg" alt="" width="2400" height="1029">
+</section>
+
+<div class="envoltura">
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">En direct</span>
+      <h2>Chaque descente, <span>en temps réel.</span></h2>
+      <p>Touchez « Démarrer » et oubliez-le. SnowTracker distingue tout seul les descentes et les remontées, et vous montre dans quelle descente vous êtes, à quelle vitesse vous allez, combien de dénivelé vous avez descendu et quelle est la pente. iPhone verrouillé, la session reste sur l’écran verrouillé, avec « Pause » toujours à portée de main.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/01-sesion.jpg" alt="Session en cours : 71 km/h, 2:26:07, 4 163 m de dénivelé descendu et 11 descentes" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Le plan</span>
+      <h2>Toute votre journée <span>sur le plan.</span></h2>
+      <p>Le parcours de la journée, coloré selon la vitesse, sur Apple Plans, chaque descente numérotée et, dessous, les pistes selon leur difficulté et les remontées. Touchez une descente et le plan vous la montre. Et pour la revivre, rejouez-la jusqu’à 240 fois plus vite.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/02-mapa.jpg" alt="Plan satellite de la journée à Baqueira Beret avec les descentes et le parcours coloré selon la vitesse" loading="lazy"></div>
+    </div>
+  </section>
+
+  <div class="estaciones">
+    <span class="antetitulo">Stations</span>
+    <h2>Les pistes de votre station, <span>déjà dans l’app.</span></h2>
+    <p>Les pistes selon leur difficulté et les remontées de stations du monde entier sont incluses dans l’app : vous les voyez sous votre parcours, même sans réseau, et dans « Aujourd’hui » l’app reconnaît la station où vous êtes.</p>
+    <div class="cifras">
+      <div class="cifra"><strong>3 146</strong><span>stations avec pistes</span></div>
+      <div class="cifra"><strong>63</strong><span>pays</span></div>
+    </div>
+    <ul class="paises"><li>États-Unis<b>432</b></li><li>Japon<b>385</b></li><li>Suisse<b>293</b></li><li>Autriche<b>275</b></li><li>France<b>245</b></li><li>Italie<b>213</b></li></ul>
+    <a class="boton" href="stations/">Trouvez votre station</a>
+    <p class="nota">Données : © contributeurs d’OpenStreetMap, sous licence ODbL. <a href="donnees-osm/">Télécharger les données</a>.</p>
+  </div>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Aujourd’hui</span>
+      <h2>L’app sait <span>où vous skiez.</span></h2>
+      <p>Quand vous ouvrez l’app, « Aujourd’hui » vous montre dans quelle station vous êtes, ce que vous avez déjà skié aujourd’hui ou, si vous n’avez pas skié aujourd’hui, votre dernier jour : descentes, dénivelé, vitesse maximale et, avec l’Apple Watch, fréquence cardiaque et kcal. Touchez la station pour voir les stations à proximité ou en rechercher une autre. Choisissez ski, snowboard ou télémark, et c’est parti.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/06-hoy.jpg" alt="Aujourd’hui : Baqueira Beret, détectée grâce à votre position, le bouton « Démarrer » et la carte du jour" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Le résumé</span>
+      <h2>Toute la journée <span>d’un coup d’œil.</span></h2>
+      <p>Vitesse maximale et moyenne, dénivelé, distance sur les pistes et sur les remontées, chaque descente avec sa vitesse et le profil d’altitude de la journée. Triez vos descentes par numéro ou par vitesse.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/03-resumen.jpg" alt="Résumé du 14 février avec les mesures de la journée" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/04a-perfil.jpg" alt="Liste des descentes et profil d’altitude" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Santé</span>
+      <h2>Votre cœur, <span>descente après descente.</span></h2>
+      <p>Avec l’Apple Watch, chaque journée garde votre fréquence cardiaque moyenne pendant les descentes, votre fréquence cardiaque maximale et vos kcal actives, ainsi qu’un graphique de votre fréquence cardiaque sur toute la journée avec les descentes en évidence.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/05-salud.jpg" alt="Santé, samedi 14 février : 145 bpm en moyenne pendant les descentes, 166 bpm au maximum, 992 kcal actives et le graphique de la fréquence cardiaque" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">La saison</span>
+      <h2>Chaque mètre de dénivelé <span>compte.</span></h2>
+      <p>Jours de ski, descentes, distance et dénivelé cumulé de la saison, comparés à la précédente. Vos records, chacun avec son jour et sa station, et toutes les stations où vous avez skié.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/07-temporada.jpg" alt="Saison 2025/26 : 86 669 m de dénivelé descendu, 21 jours de ski et 182 descentes" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/08-temporada-records.jpg" alt="Records et stations de la saison" loading="lazy"></div>
+    </div>
+  </section>
+
+</div>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">Apple Watch</span>
+    <h2>Vous skiez, <span>votre montre aussi.</span></h2>
+    <p>Démarrez sur l’iPhone et laissez-le dans la poche. Au poignet, vous voyez la descente en cours, votre vitesse, votre fréquence cardiaque et votre dénivelé, et vous mettez en pause ou verrouillez l’écran directement sur la montre. La fréquence cardiaque et les calories de chaque journée restent dans son résumé.</p>
+    <div class="relojes">
+      <div class="reloj"><img src="../img/en/reloj-2-metricas.png" alt="Apple Watch : descente 12, 58 km/h, fréquence cardiaque 142 bpm et 5 860 m de dénivelé descendu" loading="lazy"></div>
+      <div class="reloj"><img src="../img/en/reloj-3-controles.png" alt="Apple Watch : Verrouiller, Terminer et Pause" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">Et plus</span>
+    <h2>Conçue pour <span>la montagne.</span></h2>
+    <div class="rejilla">
+      <div class="tarjeta"><h3>Sur l’écran verrouillé</h3><p>La session en activité en direct, avec le dénivelé, la durée, les descentes et la vitesse maximale (avec la montre, aussi la fréquence cardiaque et les calories), et « Pause », sans ouvrir l’app.</p></div>
+      <div class="tarjeta"><h3>Aucune session perdue</h3><p>Si l’app se ferme ou si votre iPhone s’éteint, la session est récupérée à votre retour. Elle vous prévient quand la batterie faiblit et, après 30 minutes sans bouger, vous demande si vous skiez encore.</p></div>
+      <div class="tarjeta"><h3>Enregistrée dans Santé</h3><p>Chaque journée comme exercice dans l’app Santé, avec le parcours et, avec la montre, votre fréquence cardiaque et vos calories.</p></div>
+      <div class="tarjeta"><h3>Partagez le parcours</h3><p>Exportez le parcours de chaque journée en GPX pour l’utiliser dans d’autres apps.</p></div>
+      <div class="tarjeta"><h3>Ski, snowboard ou télémark</h3><p>Choisissez votre sport ; les mesures sont les mêmes.</p></div>
+      <div class="tarjeta"><h3>Vos unités</h3><p>Kilomètres ou miles, mètres ou pieds, selon votre région, et VoiceOver lit chaque valeur avec son unité.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura">
+  <section class="privacidad">
+    <span class="antetitulo">Confidentialité</span>
+    <h2 style="font-size: clamp(30px, 4vw, 42px); margin: 10px 0 14px;">Vos données, <span style="color: var(--cian)">sur votre iPhone.</span></h2>
+    <p class="secundario" style="max-width: 50ch; margin: 0 auto;">SnowTracker n’a ni comptes ni serveurs. Vos sessions sont enregistrées sur votre appareil, et personne d’autre ne les voit.</p>
+    <div class="sellos"><span>Sans compte</span><span>Sans publicité</span><span>Sans analyse</span><span>Sans suivi</span></div>
+    <p style="margin-top: 24px;"><a href="../en/privacy/" hreflang="en">Lire la politique de confidentialité (en anglais)</a></p>
+  </section>
+
+  <footer class="pie">
+    <span>SnowTracker · Marcos Velasco Fernández</span>
+    <nav><a href="assistance/">Assistance</a><a href="../en/privacy/" hreflang="en">Confidentialité</a><a href="donnees-osm/">Données OpenStreetMap</a><a href="mailto:marcosvelasco.iphoneapps@gmail.com?subject=SnowTracker">Contact</a><a href="../" hreflang="es" lang="es">Español</a><a href="../en/" hreflang="en" lang="en">English</a><a href="../de/" hreflang="de" lang="de">Deutsch</a></nav>
+  </footer>
+</div>
+
+</main>
+</body>
+</html>

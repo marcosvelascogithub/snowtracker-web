@@ -7,6 +7,7 @@
 <link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/">
 <link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/">
 <link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/">
 <link rel="stylesheet" href="../estilo.css">
 </head>
 <body>
@@ -23,7 +24,7 @@
 <p>Los mismos ficheros que lleva la app, sin coste:</p>
 <p><a href="pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 5,8 MB · pistas de esquí alpino y remontes</span></p>
 <p><a href="pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0,4 MB · índice de las 7.166 zonas de pistes.bin</span></p>
-<p><a href="resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,4 MB · las 3.330 estaciones de esquí</span></p>
+<p><a href="resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,4 MB · las 3.146 estaciones de esquí</span></p>
 
 <h2>Origen</h2>
 <p>Se generan a partir del extracto mundial de pistas de <a href="https://www.opensnowmap.org/">OpenSnowMap</a> (<code>planet_pistes.osm.gz</code>), con datos de OpenStreetMap. Las líneas se simplifican y se quitan las etiquetas que la app no usa. Se actualizan con cada versión de la app.</p>
@@ -33,7 +34,7 @@
 <p><strong>pistes.bin:</strong> los bloques de las zonas, uno tras otro. Cada bloque es un GeoJSON (<code>FeatureCollection</code> de <code>LineString</code>) comprimido con xz. Cada línea lleva <code>piste:type</code> y, si la tiene, <code>piste:difficulty</code>, o bien <code>aerialway</code>, con los valores de OpenStreetMap.</p>
 <p><strong>resorts.json:</strong> <code>extract</code> es la fecha del extracto y cada elemento de <code>resorts</code> es <code>[name, name:es, name:en, name:de, país en español, país en inglés, país en alemán, latitud mínima, longitud mínima, latitud máxima, longitud máxima]</code>: el nombre de la estación en OpenStreetMap y el recuadro de sus pistas y remontes.</p>
 
-<footer><a href="../privacidad/">Privacidad</a> · <a href="../soporte/">Soporte</a> · <a href="../">SnowTracker</a> · <a href="../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../de/osm-daten/" hreflang="de" lang="de">Deutsch</a></footer>
+<footer><a href="../privacidad/">Privacidad</a> · <a href="../soporte/">Soporte</a> · <a href="../">SnowTracker</a> · <a href="../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../de/osm-daten/" hreflang="de" lang="de">Deutsch</a> · <a href="../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a></footer>
 </main>
 </body>
 </html>
