@@ -2,7 +2,7 @@
 #
 #  estaciones.py
 #
-#  Genera las páginas de estaciones (`estaciones/`, `en/resorts/` y `de/skigebiete/`) a partir de
+#  Genera las páginas de estaciones (`estaciones/`, `en/resorts/`, `de/skigebiete/` y `fr/stations/`) a partir de
 #  `datos/estaciones.json`, que sale del script `scripts/pistas/estaciones.py` de la app
 #  con el mismo extracto de OpenStreetMap que los datos de pistas de cada versión.
 #
@@ -65,6 +65,21 @@ TEXT = {
         "country": "country_de", "name": "name_de",
         "dir": "de/skigebiete/",
     },
+    "fr": {
+        "path": ROOT / "fr" / "stations" / "index.html",
+        "lang": "fr", "label": "Français", "root": "../../",
+        "home": "../", "css": "../../estilo.css",
+        "title": "Stations de ski avec pistes dans SnowTracker",
+        "h1": "Stations",
+        "intro": "SnowTracker affiche les pistes et les remontées de {n} stations dans {c} pays sous votre parcours, sur le plan de chaque journée. Elles sont incluses dans l’app : elles s’affichent hors connexion et n’envoient aucune donnée.",
+        "note": "Les données viennent d’OpenStreetMap, une carte réalisée par ses contributeurs, et sont mises à jour à chaque version de l’app. Si votre station a des pistes dans OpenStreetMap, vous les verrez même si elle ne figure pas dans cette liste, qui ne reprend que les stations ayant un nom.",
+        "search": "Rechercher une station ou un pays", "none": "Aucune station ne correspond.",
+        "count": "{n} stations", "count1": "1 station",
+        "data": "Données : © contributeurs d’OpenStreetMap, sous licence ODbL. Pays : Natural Earth et Apple. Mis à jour le {date}.",
+        "footer": "SnowTracker · Marcos Velasco Fernández",
+        "country": "country_fr", "name": "name_fr",
+        "dir": "fr/stations/",
+    },
 }
 
 SITE = "https://marcosvelascogithub.github.io/snowtracker-web/"
@@ -92,7 +107,9 @@ def render(lang, data):
     for r in resorts:
         by_country[r[t["country"]]].append(r)
     countries = sorted(by_country, key=fold)
-    fmt = (lambda n: f"{n:,}".replace(",", ".")) if lang in ("es", "de") else (lambda n: f"{n:,}")
+    # Separador de miles: punto en español y alemán, espacio fino en francés, coma en inglés.
+    sep = {"es": ".", "de": ".", "fr": "\u202f"}.get(lang, ",")
+    fmt = lambda n: f"{n:,}".replace(",", sep)
     alternates = "".join(f'<link rel="alternate" hreflang="{o["lang"]}" href="{SITE}{o["dir"]}">\n'
                          for k, o in TEXT.items() if k != lang)
     others = " · ".join(f'<a href="{t["root"]}{o["dir"]}" hreflang="{o["lang"]}" lang="{o["lang"]}">{o["label"]}</a>'

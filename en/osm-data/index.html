@@ -7,6 +7,7 @@
 <link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/">
 <link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/">
 <link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/">
 <link rel="stylesheet" href="../../estilo.css">
 </head>
 <body>
@@ -23,7 +24,7 @@
 <p>The same files the app includes, free of charge:</p>
 <p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 5.8 MB · downhill pistes and lifts</span></p>
 <p><a href="../../datos-osm/pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0.4 MB · index of the 7,166 zones in pistes.bin</span></p>
-<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0.4 MB · the 3,330 ski resorts</span></p>
+<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0.4 MB · the 3,146 ski resorts</span></p>
 
 <h2>Source</h2>
 <p>Generated from the worldwide piste extract of <a href="https://www.opensnowmap.org/">OpenSnowMap</a> (<code>planet_pistes.osm.gz</code>), with OpenStreetMap data. Lines are simplified and tags the app doesn't use are removed. Updated with each app version.</p>
@@ -33,7 +34,7 @@
 <p><strong>pistes.bin:</strong> the zone blocks, one after another. Each block is a GeoJSON (<code>FeatureCollection</code> of <code>LineString</code>) compressed with xz. Each line has <code>piste:type</code> and, if present, <code>piste:difficulty</code>, or else <code>aerialway</code>, with the OpenStreetMap values.</p>
 <p><strong>resorts.json:</strong> <code>extract</code> is the extract date and each item in <code>resorts</code> is <code>[name, name:es, name:en, name:de, country in Spanish, country in English, country in German, min latitude, min longitude, max latitude, max longitude]</code>: the resort's name in OpenStreetMap and the bounding box of its pistes and lifts.</p>
 
-<footer><a href="../privacy/">Privacy</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../de/osm-daten/" hreflang="de" lang="de">Deutsch</a></footer>
+<footer><a href="../privacy/">Privacy</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../de/osm-daten/" hreflang="de" lang="de">Deutsch</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a></footer>
 </main>
 </body>
 </html>
