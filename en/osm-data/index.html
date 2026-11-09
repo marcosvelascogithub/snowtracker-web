@@ -22,7 +22,7 @@
 
 <h2>Download the data</h2>
 <p>The same files the app includes, free of charge:</p>
-<p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 5.8 MB · downhill pistes and lifts</span></p>
+<p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 6.4 MB · downhill pistes and lifts</span></p>
 <p><a href="../../datos-osm/pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0.4 MB · index of the 7,166 zones in pistes.bin</span></p>
 <p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0.4 MB · the 3,146 ski resorts</span></p>
 
@@ -31,7 +31,7 @@
 
 <h2>Format</h2>
 <p><strong>pistes-index.json:</strong> <code>extract</code> is the extract date and each item in <code>zones</code> is <code>[min latitude, min longitude, max latitude, max longitude, offset, length]</code>: the zone's bounding box and where its block is in pistes.bin, in bytes.</p>
-<p><strong>pistes.bin:</strong> the zone blocks, one after another. Each block is a GeoJSON (<code>FeatureCollection</code> of <code>LineString</code>) compressed with xz. Each line has <code>piste:type</code> and, if present, <code>piste:difficulty</code>, or else <code>aerialway</code>, with the OpenStreetMap values.</p>
+<p><strong>pistes.bin:</strong> the zone blocks, one after another. Each block is a GeoJSON (<code>FeatureCollection</code> of <code>LineString</code>) compressed with xz. Each piste has <code>piste:type</code> and, if present, <code>piste:difficulty</code> and <code>name</code> (its <code>name</code> or, failing that, its <code>piste:name</code>); each lift has <code>aerialway</code>, with the OpenStreetMap values.</p>
 <p><strong>resorts.json:</strong> <code>extract</code> is the extract date and each item in <code>resorts</code> is <code>[name, name:es, name:en, name:de, country in Spanish, country in English, country in German, min latitude, min longitude, max latitude, max longitude]</code>: the resort's name in OpenStreetMap and the bounding box of its pistes and lifts.</p>
 
 <footer><a href="../privacy/">Privacy</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../de/osm-daten/" hreflang="de" lang="de">Deutsch</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a></footer>
