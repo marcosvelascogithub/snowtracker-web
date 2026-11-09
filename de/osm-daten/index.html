@@ -22,7 +22,7 @@
 
 <h2>Daten herunterladen</h2>
 <p>Dieselben Dateien, die die App enthält, kostenlos:</p>
-<p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 5,8 MB · Abfahrtspisten und Lifte</span></p>
+<p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 6,4 MB · Abfahrtspisten und Lifte</span></p>
 <p><a href="../../datos-osm/pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0,4 MB · Index der 7.166 Zonen in pistes.bin</span></p>
 <p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,4 MB · die 3.146 Skigebiete</span></p>
 
@@ -31,7 +31,7 @@
 
 <h2>Format</h2>
 <p><strong>pistes-index.json:</strong> <code>extract</code> ist das Datum des Extrakts, und jedes Element in <code>zones</code> ist <code>[min. Breite, min. Länge, max. Breite, max. Länge, Offset, Länge]</code>: das umschließende Rechteck der Zone und die Position ihres Blocks in pistes.bin, in Bytes.</p>
-<p><strong>pistes.bin:</strong> die Blöcke der Zonen, einer nach dem anderen. Jeder Block ist ein mit xz komprimiertes GeoJSON (<code>FeatureCollection</code> aus <code>LineString</code>). Jede Linie hat <code>piste:type</code> und, falls vorhanden, <code>piste:difficulty</code>, oder andernfalls <code>aerialway</code>, mit den Werten von OpenStreetMap.</p>
+<p><strong>pistes.bin:</strong> die Blöcke der Zonen, einer nach dem anderen. Jeder Block ist ein mit xz komprimiertes GeoJSON (<code>FeatureCollection</code> aus <code>LineString</code>). Jede Piste hat <code>piste:type</code> und, falls vorhanden, <code>piste:difficulty</code> und <code>name</code> (ihr <code>name</code> oder, falls er fehlt, ihr <code>piste:name</code>); jeder Lift hat <code>aerialway</code>, mit den Werten von OpenStreetMap.</p>
 <p><strong>resorts.json:</strong> <code>extract</code> ist das Datum des Extrakts, und jedes Element in <code>resorts</code> ist <code>[Name, name:es, name:en, name:de, Land auf Spanisch, Land auf Englisch, Land auf Deutsch, min. Breite, min. Länge, max. Breite, max. Länge]</code>: der Name des Skigebiets in OpenStreetMap und das umschließende Rechteck seiner Pisten und Lifte.</p>
 
 <footer><a href="../../en/privacy/" hreflang="en">Datenschutz</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a></footer>
