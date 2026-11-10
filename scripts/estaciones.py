@@ -2,7 +2,8 @@
 #
 #  estaciones.py
 #
-#  Genera las páginas de estaciones (`estaciones/`, `en/resorts/`, `de/skigebiete/`, `fr/stations/`, `it/comprensori/` y `nl/skigebieden/`) a partir de
+#  Genera las páginas de estaciones (`estaciones/`, `en/resorts/`, `de/skigebiete/`, `fr/stations/`, `it/comprensori/`, `nl/skigebieden/`, `pl/osrodki/`, `cs/strediska/`,
+#  `sv/skidorter/`, `da/skiomraader/`, `ru/kurorty/`, `ja/ski-jo/` y `pt/estancias/`) a partir de
 #  `datos/estaciones.json`, que sale del script `scripts/pistas/estaciones.py` de la app
 #  con el mismo extracto de OpenStreetMap que los datos de pistas de cada versión.
 #
@@ -110,6 +111,117 @@ TEXT = {
         "country": "country_nl", "name": "name_nl",
         "dir": "nl/skigebieden/",
     },
+    "pl": {
+        "path": ROOT / "pl" / "osrodki" / "index.html",
+        "lang": "pl", "label": "Polski", "root": "../../",
+        "home": "../", "css": "../../estilo.css",
+        "title": "Ośrodki narciarskie z trasami w SnowTracker",
+        "h1": "Ośrodki narciarskie",
+        "intro": "SnowTracker pokazuje pod Twoją trasą, na mapie każdego dnia, trasy i wyciągi z {n} {rw} w {c} {cw}. Są wbudowane w aplikację: widać je bez połączenia i nie wysyłają żadnych danych.",
+        "note": "Dane pochodzą z OpenStreetMap, mapy tworzonej przez jej współtwórców, i są aktualizowane z każdą wersją aplikacji. Jeśli Twój ośrodek ma trasy w OpenStreetMap, zobaczysz je, nawet jeśli nie ma go na tej liście, która obejmuje tylko ośrodki z nazwą.",
+        "search": "Szukaj ośrodka lub kraju", "none": "Żaden ośrodek nie pasuje.",
+        "counts": {'one': '{n} ośrodek', 'few': '{n} ośrodki', 'many': '{n} ośrodków'},
+        "data": "Dane: © współtwórcy OpenStreetMap, licencja ODbL. Kraje: Natural Earth i Apple. Aktualizacja: {date}.",
+        "footer": "SnowTracker · Marcos Velasco Fernández",
+        "country": "country_pl", "name": "name_pl",
+        "dir": "pl/osrodki/",
+        "words": {'rw': {'one': 'ośrodka narciarskiego', 'other': 'ośrodków narciarskich'}, 'cw': {'one': 'kraju', 'other': 'krajach'}},
+    },
+    "cs": {
+        "path": ROOT / "cs" / "strediska" / "index.html",
+        "lang": "cs", "label": "Čeština", "root": "../../",
+        "home": "../", "css": "../../estilo.css",
+        "title": "Lyžařská střediska se sjezdovkami ve SnowTrackeru",
+        "h1": "Lyžařská střediska",
+        "intro": "SnowTracker na mapě každého dne ukazuje pod vaší trasou sjezdovky a vleky z {n} {rw} v {c} {cw}. Jsou součástí aplikace: zobrazí se i bez připojení a neodesílají žádná data.",
+        "note": "Data pocházejí z OpenStreetMap, mapy, kterou tvoří její přispěvatelé, a aktualizují se s každou verzí aplikace. Pokud má vaše středisko sjezdovky v OpenStreetMap, uvidíte je, i když na tomto seznamu není; obsahuje jen střediska s názvem.",
+        "search": "Hledat středisko nebo zemi", "none": "Žádné středisko neodpovídá.",
+        "counts": {'one': '{n} středisko', 'few': '{n} střediska', 'other': '{n} středisek'},
+        "data": "Data: © přispěvatelé OpenStreetMap, licence ODbL. Země: Natural Earth a Apple. Aktualizováno {date}.",
+        "footer": "SnowTracker · Marcos Velasco Fernández",
+        "country": "country_cs", "name": "name_cs",
+        "dir": "cs/strediska/",
+        "words": {'rw': {'one': 'lyžařského střediska', 'other': 'lyžařských středisek'}, 'cw': {'one': 'zemi', 'other': 'zemích'}},
+    },
+    "sv": {
+        "path": ROOT / "sv" / "skidorter" / "index.html",
+        "lang": "sv", "label": "Svenska", "root": "../../",
+        "home": "../", "css": "../../estilo.css",
+        "title": "Skidorter med backar i SnowTracker",
+        "h1": "Skidorter",
+        "intro": "SnowTracker visar backarna och liftarna i {n} {rw} i {c} {cw} under din rutt, på kartan för varje dag. De finns i appen: de visas utan anslutning och skickar inga data.",
+        "note": "Uppgifterna kommer från OpenStreetMap, en karta som skapas av dess bidragsgivare, och uppdateras med varje version av appen. Om din skidort har backar i OpenStreetMap ser du dem även om den inte finns i den här listan, som bara tar med skidorter med namn.",
+        "search": "Sök efter en skidort eller ett land", "none": "Ingen skidort matchar.",
+        "counts": {'one': '{n} skidort', 'other': '{n} skidorter'},
+        "data": "Data: © OpenStreetMaps bidragsgivare, licens ODbL. Länder: Natural Earth och Apple. Uppdaterad {date}.",
+        "footer": "SnowTracker · Marcos Velasco Fernández",
+        "country": "country_sv", "name": "name_sv",
+        "dir": "sv/skidorter/",
+        "words": {'rw': {'one': 'skidort', 'other': 'skidorter'}, 'cw': {'one': 'land', 'other': 'länder'}},
+    },
+    "da": {
+        "path": ROOT / "da" / "skiomraader" / "index.html",
+        "lang": "da", "label": "Dansk", "root": "../../",
+        "home": "../", "css": "../../estilo.css",
+        "title": "Skiområder med pister i SnowTracker",
+        "h1": "Skiområder",
+        "intro": "SnowTracker viser pisterne og liftene i {n} {rw} i {c} {cw} under din rute på kortet for hver dag. De ligger i appen: de vises uden forbindelse og sender ingen data.",
+        "note": "Dataene kommer fra OpenStreetMap, et kort, som dets bidragydere laver, og opdateres med hver version af appen. Har dit skiområde pister i OpenStreetMap, ser du dem, selv om det ikke er på denne liste, som kun omfatter skiområder med navn.",
+        "search": "Søg efter et skiområde eller et land", "none": "Ingen skiområder passer.",
+        "counts": {'one': '{n} skiområde', 'other': '{n} skiområder'},
+        "data": "Data: © OpenStreetMaps bidragydere, licens ODbL. Lande: Natural Earth og Apple. Opdateret {date}.",
+        "footer": "SnowTracker · Marcos Velasco Fernández",
+        "country": "country_da", "name": "name_da",
+        "dir": "da/skiomraader/",
+        "words": {'rw': {'one': 'skiområde', 'other': 'skiområder'}, 'cw': {'one': 'land', 'other': 'lande'}},
+    },
+    "ru": {
+        "path": ROOT / "ru" / "kurorty" / "index.html",
+        "lang": "ru", "label": "Русский", "root": "../../",
+        "home": "../", "css": "../../estilo.css",
+        "title": "Горнолыжные курорты с трассами в SnowTracker",
+        "h1": "Горнолыжные курорты",
+        "intro": "SnowTracker показывает на карте каждого дня под Вашим маршрутом трассы и подъемники {n} {rw} в {c} {cw}. Они встроены в приложение: видны без подключения и не отправляют никаких данных.",
+        "note": "Данные взяты из OpenStreetMap — карты, которую создают ее участники, — и обновляются с каждой версией приложения. Если у Вашего курорта есть трассы в OpenStreetMap, Вы увидите их, даже если его нет в этом списке: в него входят только курорты с названием.",
+        "search": "Поиск курорта или страны", "none": "Нет подходящих курортов.",
+        "counts": {'one': '{n} курорт', 'few': '{n} курорта', 'many': '{n} курортов'},
+        "data": "Данные: © участники OpenStreetMap, лицензия ODbL. Страны: Natural Earth и Apple. Обновлено {date}.",
+        "footer": "SnowTracker · Marcos Velasco Fernández",
+        "country": "country_ru", "name": "name_ru",
+        "dir": "ru/kurorty/",
+        "words": {'rw': {'one': 'курорта', 'other': 'курортов'}, 'cw': {'one': 'стране', 'other': 'странах'}},
+    },
+    "ja": {
+        "path": ROOT / "ja" / "ski-jo" / "index.html",
+        "lang": "ja", "label": "日本語", "root": "../../",
+        "home": "../", "css": "../../estilo.css",
+        "title": "SnowTrackerでコースを表示できるスキー場",
+        "h1": "スキー場",
+        "intro": "SnowTrackerは、{c}か国・{n}か所のスキー場のコースとリフトを、毎日の地図でルートの下に表示します。データはアプリに内蔵されているため、オフラインでも表示され、データを送信することはありません。",
+        "note": "データは協力者が作成している地図、OpenStreetMapのもので、アプリのバージョンごとに更新されます。OpenStreetMapにコースがあるスキー場なら、この一覧になくても表示されます。この一覧には名前のあるスキー場だけを載せています。",
+        "search": "スキー場または国を検索", "none": "該当するスキー場はありません。",
+        "counts": {'other': '{n}か所'},
+        "data": "データ：© OpenStreetMap協力者（ODbLライセンス）。国名：Natural EarthとApple。更新日：{date}。",
+        "footer": "SnowTracker · Marcos Velasco Fernández",
+        "country": "country_ja", "name": "name_ja",
+        "dir": "ja/ski-jo/",
+    },
+    "pt": {
+        "path": ROOT / "pt" / "estancias" / "index.html",
+        "lang": "pt-PT", "label": "Português", "root": "../../",
+        "home": "../", "css": "../../estilo.css",
+        "title": "Estâncias com pistas no SnowTracker",
+        "h1": "Estâncias de esqui",
+        "intro": "O SnowTracker mostra as pistas e os meios mecânicos de {n} {rw} em {c} {cw} por baixo do seu percurso, no mapa de cada dia. Estão incluídos na aplicação: veem-se sem ligação e não enviam dados.",
+        "note": "Os dados vêm do OpenStreetMap, um mapa feito pelos seus colaboradores, e são atualizados com cada versão da aplicação. Se a sua estância tiver pistas no OpenStreetMap, também as vê, mesmo que não esteja nesta lista, que só inclui estâncias com nome.",
+        "search": "Procure uma estância ou um país", "none": "Nenhuma estância corresponde.",
+        "counts": {'one': '{n} estância', 'other': '{n} estâncias'},
+        "data": "Dados: © colaboradores do OpenStreetMap, licença ODbL. Países: Natural Earth e Apple. Atualizado em {date}.",
+        "footer": "SnowTracker · Marcos Velasco Fernández",
+        "country": "country_pt", "name": "name_pt",
+        "dir": "pt/estancias/",
+        "words": {'rw': {'one': 'estância', 'other': 'estâncias'}, 'cw': {'one': 'país', 'other': 'países'}},
+    },
 }
 
 SITE = "https://marcosvelascogithub.github.io/snowtracker-web/"
@@ -119,13 +231,49 @@ def fold(s):
     return "".join(c for c in unicodedata.normalize("NFD", s.casefold()) if unicodedata.category(c) != "Mn")
 
 
+SCRIPTS = {"name_ru": ("CYRILLIC",), "name_ja": ("CJK", "HIRAGANA", "KATAKANA", "IDEOGRAPHIC")}
+
+
+def readable(name, key):
+    """Como `ResortCatalog.isReadable` de la app: cada letra, del alfabeto latino o, en ruso,
+    del cirílico y, en japonés, kanji o kana."""
+    if LATIN.match(name):
+        return True
+    scripts = ("LATIN",) + SCRIPTS.get(key, ())
+    return all(not c.isalpha() or unicodedata.name(c, "").startswith(scripts) for c in name)
+
+
+def category(lang, n):
+    """Categoría de plural de CLDR (*Language Plural Rules*) para enteros."""
+    if lang == "ja":
+        return "other"
+    if lang == "pl":
+        return "one" if n == 1 else "few" if n % 10 in (2, 3, 4) and n % 100 not in (12, 13, 14) else "many"
+    if lang == "cs":
+        return "one" if n == 1 else "few" if n in (2, 3, 4) else "other"
+    if lang == "ru":
+        if n % 10 == 1 and n % 100 != 11:
+            return "one"
+        return "few" if n % 10 in (2, 3, 4) and n % 100 not in (12, 13, 14) else "many"
+    return "one" if n == 1 else "other"
+
+
+def phrase_category(lang, n):
+    """Forma del sustantivo tras el número en la frase de la cabecera, en genitivo o locativo
+    («z 3147 ośrodków», «w 63 krajach»): en ruso, la de singular con 1, 21, 31… (salvo 11);
+    en los demás, solo con 1. Decisión propia, sin fuente."""
+    if lang == "ru":
+        return "one" if n % 10 == 1 and n % 100 != 11 else "other"
+    return "one" if n == 1 else "other"
+
+
 def display_name(r, key):
     """El nombre en el idioma de la página si lo hay; si el original no usa el alfabeto
     latino, el inglés, con el original entre paréntesis."""
     own = r.get(key)
     if own:
         return own, r["name"] if own != r["name"] else None
-    if not LATIN.match(r["name"]) and r.get("name_en"):
+    if not readable(r["name"], key) and r.get("name_en"):
         return r["name_en"], r["name"]
     return r["name"], None
 
@@ -138,8 +286,14 @@ def render(lang, data):
         by_country[r[t["country"]]].append(r)
     countries = sorted(by_country, key=fold)
     # Separador de miles: punto en español, alemán, italiano y neerlandés, espacio fino en francés, coma en inglés.
-    sep = {"es": ".", "de": ".", "fr": "\u202f", "it": ".", "nl": "."}.get(lang, ",")
-    fmt = lambda n: f"{n:,}".replace(",", sep)
+    # En los idiomas nuevos, como `Int.formatted()` de Foundation: espacio duro en polaco, checo, sueco,
+    # ruso y portugués (en polaco y portugués, solo desde 10 000), punto en danés y coma en japonés.
+    sep = {"es": ".", "de": ".", "fr": "\u202f", "it": ".", "nl": ".", "pl": "\u00a0", "cs": "\u00a0", "sv": "\u00a0",
+           "da": ".", "ru": "\u00a0", "pt": "\u00a0"}.get(lang, ",")
+    min_group = 10000 if lang in ("pl", "pt") else 1000
+    fmt = lambda n: f"{n:,}".replace(",", sep) if n >= min_group else str(n)
+    words = {k: v[phrase_category(lang, len(resorts) if k == "rw" else len(countries))] for k, v in t.get("words", {}).items()}
+    intro = t["intro"].format(n=fmt(len(resorts)), c=len(countries), **words)
     alternates = "".join(f'<link rel="alternate" hreflang="{o["lang"]}" href="{SITE}{o["dir"]}">\n'
                          for k, o in TEXT.items() if k != lang)
     others = " · ".join(f'<a href="{t["root"]}{o["dir"]}" hreflang="{o["lang"]}" lang="{o["lang"]}">{o["label"]}</a>'
@@ -151,7 +305,7 @@ def render(lang, data):
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{e(t['title'])}</title>
-<meta name="description" content="{e(t['intro'].format(n=fmt(len(resorts)), c=len(countries)))}">
+<meta name="description" content="{e(intro)}">
 <link rel="canonical" href="{SITE}{t['dir']}">
 {alternates}<link rel="stylesheet" href="{t['css']}">
 <style>
@@ -177,7 +331,7 @@ def render(lang, data):
 <header>
 <a class="marca" href="{t['home']}">SnowTracker</a>
 <h1>{e(t['h1'])}</h1>
-<p>{e(t['intro'].format(n=fmt(len(resorts)), c=len(countries)))}</p>
+<p>{e(intro)}</p>
 <p class="secundario">{e(t['note'])}</p>
 </header>
 <label class="secundario" for="buscar" style="position:absolute;left:-9999px">{e(t['search'])}</label>
@@ -188,7 +342,10 @@ def render(lang, data):
     for country in countries:
         items = sorted(by_country[country], key=lambda r: fold(display_name(r, t["name"])[0]))
         n = len(items)
-        count = t["count1"] if n == 1 else t["count"].format(n=fmt(n))
+        if "counts" in t:
+            count = t["counts"][category(lang, n)].format(n=fmt(n))
+        else:
+            count = t["count1"] if n == 1 else t["count"].format(n=fmt(n))
         out.append(f'<details data-pais="{e(fold(country))}">\n<summary>{e(country)}<span class="n">{count}</span></summary>\n<ul>\n')
         for r in items:
             name, orig = display_name(r, t["name"])
@@ -204,7 +361,7 @@ def render(lang, data):
 (() => {{
   const input = document.getElementById("buscar"), empty = document.getElementById("vacio");
   const groups = [...document.querySelectorAll("#lista details")];
-  const fold = s => s.normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase();
+  const fold = s => s.normalize("NFD").replace(/\\p{{Mn}}/gu, "").toLowerCase();
   input.addEventListener("input", () => {{
     const q = fold(input.value.trim()); let shown = 0;
     for (const g of groups) {{

@@ -11,6 +11,13 @@
 <link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/stations/">
 <link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/comprensori/">
 <link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/skigebieden/">
+<link rel="alternate" hreflang="pl" href="https://marcosvelascogithub.github.io/snowtracker-web/pl/osrodki/">
+<link rel="alternate" hreflang="cs" href="https://marcosvelascogithub.github.io/snowtracker-web/cs/strediska/">
+<link rel="alternate" hreflang="sv" href="https://marcosvelascogithub.github.io/snowtracker-web/sv/skidorter/">
+<link rel="alternate" hreflang="da" href="https://marcosvelascogithub.github.io/snowtracker-web/da/skiomraader/">
+<link rel="alternate" hreflang="ru" href="https://marcosvelascogithub.github.io/snowtracker-web/ru/kurorty/">
+<link rel="alternate" hreflang="ja" href="https://marcosvelascogithub.github.io/snowtracker-web/ja/ski-jo/">
+<link rel="alternate" hreflang="pt-PT" href="https://marcosvelascogithub.github.io/snowtracker-web/pt/estancias/">
 <link rel="stylesheet" href="../../estilo.css">
 <style>
   main { max-width: 760px; }
@@ -3506,13 +3513,13 @@
 </details>
 </div>
 <p class="secundario datos">Data: © OpenStreetMap contributors, licensed under the ODbL. Countries: Natural Earth and Apple. Updated November 2, 2026.</p>
-<footer>SnowTracker · Marcos Velasco Fernández · <a href="../../estaciones/" hreflang="es" lang="es">Español</a> · <a href="../../de/skigebiete/" hreflang="de" lang="de">Deutsch</a> · <a href="../../fr/stations/" hreflang="fr" lang="fr">Français</a> · <a href="../../it/comprensori/" hreflang="it" lang="it">Italiano</a> · <a href="../../nl/skigebieden/" hreflang="nl" lang="nl">Nederlands</a></footer>
+<footer>SnowTracker · Marcos Velasco Fernández · <a href="../../estaciones/" hreflang="es" lang="es">Español</a> · <a href="../../de/skigebiete/" hreflang="de" lang="de">Deutsch</a> · <a href="../../fr/stations/" hreflang="fr" lang="fr">Français</a> · <a href="../../it/comprensori/" hreflang="it" lang="it">Italiano</a> · <a href="../../nl/skigebieden/" hreflang="nl" lang="nl">Nederlands</a> · <a href="../../pl/osrodki/" hreflang="pl" lang="pl">Polski</a> · <a href="../../cs/strediska/" hreflang="cs" lang="cs">Čeština</a> · <a href="../../sv/skidorter/" hreflang="sv" lang="sv">Svenska</a> · <a href="../../da/skiomraader/" hreflang="da" lang="da">Dansk</a> · <a href="../../ru/kurorty/" hreflang="ru" lang="ru">Русский</a> · <a href="../../ja/ski-jo/" hreflang="ja" lang="ja">日本語</a> · <a href="../../pt/estancias/" hreflang="pt-PT" lang="pt-PT">Português</a></footer>
 </main>
 <script>
 (() => {
   const input = document.getElementById("buscar"), empty = document.getElementById("vacio");
   const groups = [...document.querySelectorAll("#lista details")];
-  const fold = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const fold = s => s.normalize("NFD").replace(/\p{Mn}/gu, "").toLowerCase();
   input.addEventListener("input", () => {
     const q = fold(input.value.trim()); let shown = 0;
     for (const g of groups) {
