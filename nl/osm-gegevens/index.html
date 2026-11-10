@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>OpenStreetMap-gegevens van SnowTracker</title>
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/">
+<link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/">
+<link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/dati-osm/">
+<link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/osm-gegevens/">
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body>
+<main>
+<header>
+<a class="marca" href="../">SnowTracker</a>
+<h1>OpenStreetMap-gegevens</h1>
+<p class="secundario">Extract van 31 oktober 2026, 23:00 UTC</p>
+</header>
+
+<div class="resumen"><p>De pistes, liften en skigebieden van SnowTracker zijn © <a href="https://www.openstreetmap.org/copyright">bijdragers van OpenStreetMap</a>. De gegevens van de app zijn een afgeleide database van OpenStreetMap, hier gepubliceerd onder de <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL) 1.0</a>.</p></div>
+
+<h2>Download de gegevens</h2>
+<p>Dezelfde bestanden als in de app, gratis:</p>
+<p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 6,4 MB · afdalingspistes en liften</span></p>
+<p><a href="../../datos-osm/pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0,4 MB · index van de 7.166 zones van pistes.bin</span></p>
+<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,5 MB · de 3.147 skigebieden</span></p>
+
+<h2>Bron</h2>
+<p>Gemaakt op basis van het wereldwijde pistes-extract van <a href="https://www.opensnowmap.org/">OpenSnowMap</a> (<code>planet_pistes.osm.gz</code>), met gegevens van OpenStreetMap. De lijnen zijn vereenvoudigd en kenmerken die de app niet gebruikt, zijn verwijderd. Bijgewerkt bij elke versie van de app.</p>
+
+<h2>Indeling</h2>
+<p><strong>pistes-index.json:</strong> <code>extract</code> is de datum van het extract, en elk element van <code>zones</code> is <code>[min. breedtegraad, min. lengtegraad, max. breedtegraad, max. lengtegraad, offset, lengte]</code>: de omhullende rechthoek van de zone en de positie van haar blok in pistes.bin, in bytes.</p>
+<p><strong>pistes.bin:</strong> de blokken van de zones, na elkaar. Elk blok is een met xz gecomprimeerde GeoJSON (<code>FeatureCollection</code> van <code>LineString</code>). Elke piste heeft <code>piste:type</code> en, als ze bestaan, <code>piste:difficulty</code> en <code>name</code> (haar <code>name</code> of anders haar <code>piste:name</code>); elke lift heeft <code>aerialway</code>, met de waarden van OpenStreetMap.</p>
+<p><strong>resorts.json:</strong> <code>extract</code> is de datum van het extract, en elk element van <code>resorts</code> is <code>[naam, name:es, name:en, name:de, name:fr, name:it, name:nl, land in het Spaans, land in het Engels, land in het Duits, land in het Frans, land in het Italiaans, land in het Nederlands, min. breedtegraad, min. lengtegraad, max. breedtegraad, max. lengtegraad]</code>: de naam van het skigebied in OpenStreetMap, de namen in de talen van de app als die er zijn, en de omhullende rechthoek van de pistes en liften.</p>
+
+<footer><a href="../../en/privacy/" hreflang="en">Privacy</a> · <a href="../ondersteuning/">Ondersteuning</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../de/osm-daten/" hreflang="de" lang="de">Deutsch</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a> · <a href="../../it/dati-osm/" hreflang="it" lang="it">Italiano</a></footer>
+</main>
+</body>
+</html>

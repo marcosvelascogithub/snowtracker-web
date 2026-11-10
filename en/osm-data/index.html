@@ -9,6 +9,7 @@
 <link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
 <link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/">
 <link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/dati-osm/">
+<link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/osm-gegevens/">
 <link rel="stylesheet" href="../../estilo.css">
 </head>
 <body>
@@ -33,9 +34,9 @@
 <h2>Format</h2>
 <p><strong>pistes-index.json:</strong> <code>extract</code> is the extract date and each item in <code>zones</code> is <code>[min latitude, min longitude, max latitude, max longitude, offset, length]</code>: the zone's bounding box and where its block is in pistes.bin, in bytes.</p>
 <p><strong>pistes.bin:</strong> the zone blocks, one after another. Each block is a GeoJSON (<code>FeatureCollection</code> of <code>LineString</code>) compressed with xz. Each piste has <code>piste:type</code> and, if present, <code>piste:difficulty</code> and <code>name</code> (its <code>name</code> or, failing that, its <code>piste:name</code>); each lift has <code>aerialway</code>, with the OpenStreetMap values.</p>
-<p><strong>resorts.json:</strong> <code>extract</code> is the extract date and each item in <code>resorts</code> is <code>[name, name:es, name:en, name:de, name:fr, name:it, country in Spanish, country in English, country in German, country in French, country in Italian, min latitude, min longitude, max latitude, max longitude]</code>: the resort's name in OpenStreetMap, its names in the app's languages, if any, and the bounding box of its pistes and lifts.</p>
+<p><strong>resorts.json:</strong> <code>extract</code> is the extract date and each item in <code>resorts</code> is <code>[name, name:es, name:en, name:de, name:fr, name:it, name:nl, country in Spanish, country in English, country in German, country in French, country in Italian, country in Dutch, min latitude, min longitude, max latitude, max longitude]</code>: the resort's name in OpenStreetMap, its names in the app's languages, if any, and the bounding box of its pistes and lifts.</p>
 
-<footer><a href="../privacy/">Privacy</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../de/osm-daten/" hreflang="de" lang="de">Deutsch</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a> · <a href="../../it/dati-osm/" hreflang="it" lang="it">Italiano</a></footer>
+<footer><a href="../privacy/">Privacy</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../de/osm-daten/" hreflang="de" lang="de">Deutsch</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a> · <a href="../../it/dati-osm/" hreflang="it" lang="it">Italiano</a> · <a href="../../nl/osm-gegevens/" hreflang="nl" lang="nl">Nederlands</a></footer>
 </main>
 </body>
 </html>

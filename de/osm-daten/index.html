@@ -9,6 +9,7 @@
 <link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
 <link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/">
 <link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/dati-osm/">
+<link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/osm-gegevens/">
 <link rel="stylesheet" href="../../estilo.css">
 </head>
 <body>
@@ -33,9 +34,9 @@
 <h2>Format</h2>
 <p><strong>pistes-index.json:</strong> <code>extract</code> ist das Datum des Extrakts, und jedes Element in <code>zones</code> ist <code>[min. Breite, min. Länge, max. Breite, max. Länge, Offset, Länge]</code>: das umschließende Rechteck der Zone und die Position ihres Blocks in pistes.bin, in Bytes.</p>
 <p><strong>pistes.bin:</strong> die Blöcke der Zonen, einer nach dem anderen. Jeder Block ist ein mit xz komprimiertes GeoJSON (<code>FeatureCollection</code> aus <code>LineString</code>). Jede Piste hat <code>piste:type</code> und, falls vorhanden, <code>piste:difficulty</code> und <code>name</code> (ihr <code>name</code> oder, falls er fehlt, ihr <code>piste:name</code>); jeder Lift hat <code>aerialway</code>, mit den Werten von OpenStreetMap.</p>
-<p><strong>resorts.json:</strong> <code>extract</code> ist das Datum des Extrakts, und jedes Element in <code>resorts</code> ist <code>[Name, name:es, name:en, name:de, name:fr, name:it, Land auf Spanisch, Land auf Englisch, Land auf Deutsch, Land auf Französisch, Land auf Italienisch, min. Breite, min. Länge, max. Breite, max. Länge]</code>: der Name des Skigebiets in OpenStreetMap, seine Namen in den Sprachen der App, falls vorhanden, und das umschließende Rechteck seiner Pisten und Lifte.</p>
+<p><strong>resorts.json:</strong> <code>extract</code> ist das Datum des Extrakts, und jedes Element in <code>resorts</code> ist <code>[Name, name:es, name:en, name:de, name:fr, name:it, name:nl, Land auf Spanisch, Land auf Englisch, Land auf Deutsch, Land auf Französisch, Land auf Italienisch, Land auf Niederländisch, min. Breite, min. Länge, max. Breite, max. Länge]</code>: der Name des Skigebiets in OpenStreetMap, seine Namen in den Sprachen der App, falls vorhanden, und das umschließende Rechteck seiner Pisten und Lifte.</p>
 
-<footer><a href="../../en/privacy/" hreflang="en">Datenschutz</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a> · <a href="../../it/dati-osm/" hreflang="it" lang="it">Italiano</a></footer>
+<footer><a href="../../en/privacy/" hreflang="en">Datenschutz</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a> · <a href="../../it/dati-osm/" hreflang="it" lang="it">Italiano</a> · <a href="../../nl/osm-gegevens/" hreflang="nl" lang="nl">Nederlands</a></footer>
 </main>
 </body>
 </html>

@@ -2,7 +2,7 @@
 #
 #  estaciones.py
 #
-#  Genera las páginas de estaciones (`estaciones/`, `en/resorts/`, `de/skigebiete/`, `fr/stations/` e `it/comprensori/`) a partir de
+#  Genera las páginas de estaciones (`estaciones/`, `en/resorts/`, `de/skigebiete/`, `fr/stations/`, `it/comprensori/` y `nl/skigebieden/`) a partir de
 #  `datos/estaciones.json`, que sale del script `scripts/pistas/estaciones.py` de la app
 #  con el mismo extracto de OpenStreetMap que los datos de pistas de cada versión.
 #
@@ -95,6 +95,21 @@ TEXT = {
         "country": "country_it", "name": "name_it",
         "dir": "it/comprensori/",
     },
+    "nl": {
+        "path": ROOT / "nl" / "skigebieden" / "index.html",
+        "lang": "nl", "label": "Nederlands", "root": "../../",
+        "home": "../", "css": "../../estilo.css",
+        "title": "Skigebieden met pistes in SnowTracker",
+        "h1": "Skigebieden",
+        "intro": "SnowTracker toont de pistes en liften van {n} skigebieden in {c} landen onder je route, op de kaart van elke dag. Ze zitten in de app: je ziet ze offline en ze versturen geen gegevens.",
+        "note": "De gegevens komen van OpenStreetMap, een kaart die door bijdragers wordt gemaakt, en worden bij elke versie van de app bijgewerkt. Heeft je skigebied pistes in OpenStreetMap, dan zie je ze ook als het niet in deze lijst staat, die alleen skigebieden met een naam bevat.",
+        "search": "Zoek een skigebied of land", "none": "Geen skigebied gevonden.",
+        "count": "{n} skigebieden", "count1": "1 skigebied",
+        "data": "Gegevens: © bijdragers van OpenStreetMap, onder de ODbL-licentie. Landen: Natural Earth en Apple. Bijgewerkt op {date}.",
+        "footer": "SnowTracker · Marcos Velasco Fernández",
+        "country": "country_nl", "name": "name_nl",
+        "dir": "nl/skigebieden/",
+    },
 }
 
 SITE = "https://marcosvelascogithub.github.io/snowtracker-web/"
@@ -122,8 +137,8 @@ def render(lang, data):
     for r in resorts:
         by_country[r[t["country"]]].append(r)
     countries = sorted(by_country, key=fold)
-    # Separador de miles: punto en español, alemán e italiano, espacio fino en francés, coma en inglés.
-    sep = {"es": ".", "de": ".", "fr": "\u202f", "it": "."}.get(lang, ",")
+    # Separador de miles: punto en español, alemán, italiano y neerlandés, espacio fino en francés, coma en inglés.
+    sep = {"es": ".", "de": ".", "fr": "\u202f", "it": ".", "nl": "."}.get(lang, ",")
     fmt = lambda n: f"{n:,}".replace(",", sep)
     alternates = "".join(f'<link rel="alternate" hreflang="{o["lang"]}" href="{SITE}{o["dir"]}">\n'
                          for k, o in TEXT.items() if k != lang)

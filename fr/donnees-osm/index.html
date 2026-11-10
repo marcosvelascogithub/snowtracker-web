@@ -9,6 +9,7 @@
 <link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
 <link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/">
 <link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/dati-osm/">
+<link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/osm-gegevens/">
 <link rel="stylesheet" href="../../estilo.css">
 </head>
 <body>
@@ -33,9 +34,9 @@
 <h2>Format</h2>
 <p><strong>pistes-index.json :</strong> <code>extract</code> est la date de l’extrait, et chaque élément de <code>zones</code> est <code>[latitude min., longitude min., latitude max., longitude max., décalage, longueur]</code> : le rectangle englobant de la zone et la position de son bloc dans pistes.bin, en octets.</p>
 <p><strong>pistes.bin :</strong> les blocs des zones, l’un après l’autre. Chaque bloc est un GeoJSON compressé avec xz (<code>FeatureCollection</code> de <code>LineString</code>). Chaque piste a <code>piste:type</code> et, s’ils existent, <code>piste:difficulty</code> et <code>name</code> (son <code>name</code> ou, à défaut, son <code>piste:name</code>) ; chaque remontée a <code>aerialway</code>, avec les valeurs d’OpenStreetMap.</p>
-<p><strong>resorts.json :</strong> <code>extract</code> est la date de l’extrait, et chaque élément de <code>resorts</code> est <code>[nom, name:es, name:en, name:de, name:fr, name:it, pays en espagnol, pays en anglais, pays en allemand, pays en français, pays en italien, latitude min., longitude min., latitude max., longitude max.]</code> : le nom de la station dans OpenStreetMap, ses noms dans les langues de l’app, s’il y en a, et le rectangle englobant de ses pistes et remontées.</p>
+<p><strong>resorts.json :</strong> <code>extract</code> est la date de l’extrait, et chaque élément de <code>resorts</code> est <code>[nom, name:es, name:en, name:de, name:fr, name:it, name:nl, pays en espagnol, pays en anglais, pays en allemand, pays en français, pays en italien, pays en néerlandais, latitude min., longitude min., latitude max., longitude max.]</code> : le nom de la station dans OpenStreetMap, ses noms dans les langues de l’app, s’il y en a, et le rectangle englobant de ses pistes et remontées.</p>
 
-<footer><a href="../../en/privacy/" hreflang="en">Confidentialité</a> · <a href="../assistance/">Assistance</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../de/osm-daten/" hreflang="de" lang="de">Deutsch</a> · <a href="../../it/dati-osm/" hreflang="it" lang="it">Italiano</a></footer>
+<footer><a href="../../en/privacy/" hreflang="en">Confidentialité</a> · <a href="../assistance/">Assistance</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../de/osm-daten/" hreflang="de" lang="de">Deutsch</a> · <a href="../../it/dati-osm/" hreflang="it" lang="it">Italiano</a> · <a href="../../nl/osm-gegevens/" hreflang="nl" lang="nl">Nederlands</a></footer>
 </main>
 </body>
 </html>

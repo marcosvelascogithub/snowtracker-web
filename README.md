@@ -1,13 +1,13 @@
 # SnowTracker · web
 
-Política de privacidad y soporte de la app SnowTracker, publicadas con GitHub Pages, en español, en inglés, en alemán, en francés y en italiano.
+Política de privacidad y soporte de la app SnowTracker, publicadas con GitHub Pages, en español, en inglés, en alemán, en francés, en italiano y en neerlandés.
 
-| Página | Español | Inglés | Alemán | Francés | Italiano |
-|---|---|---|---|---|---|
-| Portada (URL de marketing) | https://marcosvelascogithub.github.io/snowtracker-web/ | https://marcosvelascogithub.github.io/snowtracker-web/en/ | https://marcosvelascogithub.github.io/snowtracker-web/de/ | https://marcosvelascogithub.github.io/snowtracker-web/fr/ | https://marcosvelascogithub.github.io/snowtracker-web/it/ |
-| Soporte | https://marcosvelascogithub.github.io/snowtracker-web/soporte/ | https://marcosvelascogithub.github.io/snowtracker-web/en/support/ | https://marcosvelascogithub.github.io/snowtracker-web/de/support/ | https://marcosvelascogithub.github.io/snowtracker-web/fr/assistance/ | https://marcosvelascogithub.github.io/snowtracker-web/it/assistenza/ |
-| Privacidad | https://marcosvelascogithub.github.io/snowtracker-web/privacidad/ | https://marcosvelascogithub.github.io/snowtracker-web/en/privacy/ | (enlaza a la inglesa) | (enlaza a la inglesa) | (enlaza a la inglesa) |
-| Datos de OpenStreetMap (ODbL) | https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/ | https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/ | https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/ | https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/ | https://marcosvelascogithub.github.io/snowtracker-web/it/dati-osm/ |
+| Página | Español | Inglés | Alemán | Francés | Italiano | Neerlandés |
+|---|---|---|---|---|---|---|
+| Portada (URL de marketing) | https://marcosvelascogithub.github.io/snowtracker-web/ | https://marcosvelascogithub.github.io/snowtracker-web/en/ | https://marcosvelascogithub.github.io/snowtracker-web/de/ | https://marcosvelascogithub.github.io/snowtracker-web/fr/ | https://marcosvelascogithub.github.io/snowtracker-web/it/ | https://marcosvelascogithub.github.io/snowtracker-web/nl/ |
+| Soporte | https://marcosvelascogithub.github.io/snowtracker-web/soporte/ | https://marcosvelascogithub.github.io/snowtracker-web/en/support/ | https://marcosvelascogithub.github.io/snowtracker-web/de/support/ | https://marcosvelascogithub.github.io/snowtracker-web/fr/assistance/ | https://marcosvelascogithub.github.io/snowtracker-web/it/assistenza/ | https://marcosvelascogithub.github.io/snowtracker-web/nl/ondersteuning/ |
+| Privacidad | https://marcosvelascogithub.github.io/snowtracker-web/privacidad/ | https://marcosvelascogithub.github.io/snowtracker-web/en/privacy/ | (enlaza a la inglesa) | (enlaza a la inglesa) | (enlaza a la inglesa) | (enlaza a la inglesa) |
+| Datos de OpenStreetMap (ODbL) | https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/ | https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/ | https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/ | https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/ | https://marcosvelascogithub.github.io/snowtracker-web/it/dati-osm/ | https://marcosvelascogithub.github.io/snowtracker-web/nl/osm-gegevens/ |
 
 Las capturas de la portada son las capturas en bruto del iPhone de 6,9" de `docs/app-store/` del repositorio de la app, a la mitad de tamaño: en `img/`, en español, y en `img/en/`, `img/de/` e `img/fr/`, en inglés, alemán y francés. La cabecera (`img/cabecera.jpg`, 2400 × 1029) no lleva texto y vale para las dos: sale de `cabecera()` de `docs/app-store/scripts/componer-cabecera.py` con el titular vacío.
 
@@ -20,3 +20,5 @@ La portada en alemán (`de/`) usa las capturas en alemán (`img/de/`). Los país
 La portada en francés (`fr/`) usa las capturas en francés (`img/fr/`), de la versión 1.2 de la app. Los nombres y países en francés (`name_fr` y `country_fr` de `datos/estaciones.json`) salen de `name:fr` de OpenStreetMap y de `NAME_FR` de Natural Earth. La insignia `img/app-store/fr.svg` es la oficial de Apple (toolbox.marketingtools.apple.com, `fr-fr`), de la misma fuente que la alemana.
 
 La portada en italiano (`it/`) usa de momento las capturas en inglés (`img/en/`); las italianas se harán al final, con las de la App Store. Los nombres y países en italiano (`name_it` y `country_it` de `datos/estaciones.json`) salen de `name:it` de OpenStreetMap y de `NAME_IT` de Natural Earth. La insignia `img/app-store/it.svg` es la oficial de Apple (toolbox.marketingtools.apple.com, `it-it`), de la misma fuente que la francesa.
+
+La portada en neerlandés (`nl/`) usa también de momento las capturas en inglés (`img/en/`). Los países en neerlandés (`country_nl`) salen de `NAME_NL` de Natural Earth; `name_nl` está vacío porque OpenStreetMap aún no tiene ningún `name:nl` en las estaciones. La insignia `img/app-store/nl.svg` es la oficial de Apple (toolbox.marketingtools.apple.com, `nl-nl`).

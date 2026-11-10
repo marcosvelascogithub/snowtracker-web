@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SnowTracker · Elke afdaling, geteld</title>
+<meta name="description" content="SnowTracker neemt je skidag op met iPhone en Apple Watch: snelheid, hoogteverschil, elke afdaling op de kaart, je hartslag en het hele seizoen. Zonder account, zonder advertenties, en je gegevens blijven op je iPhone.">
+<meta property="og:title" content="SnowTracker · Elke afdaling, geteld">
+<meta property="og:description" content="De snelheid, het hoogteverschil en elke afdaling van je skidag, op iPhone en Apple Watch.">
+<meta property="og:image" content="https://marcosvelascogithub.github.io/snowtracker-web/img/cabecera.jpg">
+<meta name="theme-color" content="#0b1418">
+<meta name="apple-itunes-app" content="app-id=6826156855">
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/">
+<link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/">
+<link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/">
+<link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/">
+<link rel="stylesheet" href="../estilo.css">
+<style>
+  main.portada { max-width: none; padding: 0; }
+  .envoltura { max-width: 1080px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+
+  /* Cabecera: la cordillera y la huella del icono */
+  .heroe { position: relative; background: #1f4250; }
+  .heroe .envoltura { position: relative; z-index: 1; padding-block: 64px 8px; text-align: center; }
+  .heroe img.cordillera { display: block; width: 100%; height: auto; margin-top: -2px;
+                          min-height: 260px; object-fit: cover; object-position: 40% bottom; }
+  .heroe::after { content: ""; position: absolute; inset: auto 0 0 0; height: 90px;
+                  background: linear-gradient(transparent, var(--fondo)); }
+  .heroe .marca { font-size: 15px; }
+  .heroe h1 { font-size: clamp(44px, 8vw, 92px); letter-spacing: -0.02em; margin: 14px 0 0; }
+  .heroe h1 span { color: var(--cian); }
+  .heroe p { font-size: clamp(18px, 2.4vw, 22px); color: #c9d6df; max-width: 32ch; margin: 18px auto 0; text-wrap: balance; }
+  .tienda { display: inline-block; margin-top: 28px; line-height: 0; border-radius: 8px; }
+  .tienda img { display: block; height: 48px; width: auto; }
+  .tienda:focus-visible { outline: 2px solid var(--naranja); outline-offset: 4px; }
+
+  /* Funciones, alternando texto y captura */
+  .funcion { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 72px; }
+  .funcion:nth-of-type(even) .texto { order: 2; }
+  .texto { min-width: 0; }
+  .antetitulo { color: var(--naranja); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: 13px; }
+  .funcion h2, .seccion h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .funcion h2 span, .seccion h2 span { color: var(--cian); }
+  .funcion p { color: #c9d6df; font-size: 18px; max-width: 46ch; }
+  .telefonos { display: flex; justify-content: center; gap: 20px; }
+  .telefono { width: min(280px, 44vw); aspect-ratio: 660 / 1434; border-radius: 15% / 7%; padding: 2.6%;
+              background: #3a404a; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); }
+  .telefono img { width: 100%; height: 100%; border-radius: 13% / 6%; display: block; background: #000; }
+  .telefonos .telefono:nth-child(2) { margin-top: 48px; }
+
+  /* Apple Watch */
+  .seccion { padding-block: 72px; text-align: center; }
+  .seccion > .envoltura > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .relojes { display: flex; justify-content: center; gap: 28px; margin-top: 40px; flex-wrap: wrap; }
+  .reloj { width: 190px; padding: 14px; border-radius: 30%; background: #3a404a; box-shadow: 0 24px 48px rgba(0, 0, 0, .45); }
+  .reloj img { width: 100%; display: block; border-radius: 26%; }
+
+  /* Todo lo demás */
+  .rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; text-align: left; }
+  .tarjeta { background: var(--superficie); border-radius: 20px; padding: 22px; min-width: 0; }
+  .tarjeta h3 { margin: 0 0 6px; font-size: 18px; }
+  .tarjeta p { margin: 0; color: var(--secundario); font-size: 16px; }
+
+  /* Privacidad */
+  .privacidad { background: var(--superficie); border-radius: 28px; padding: 48px 32px; margin-block: 24px 72px; text-align: center; }
+  .sellos { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .sellos span { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+
+  footer.pie { border-top: 1px solid rgba(255, 255, 255, .08); padding-block: 32px 48px; display: flex; flex-wrap: wrap;
+               gap: 12px 24px; justify-content: space-between; color: var(--secundario); font-size: 15px; margin-top: 0; }
+  footer.pie nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+
+  /* Datos rápidos bajo el titular */
+  .datos-heroe { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; color: #c9d6df; font-size: 15px; font-weight: 600; }
+  .datos-heroe span + span::before { content: "·"; margin-right: 18px; color: var(--secundario); }
+
+  /* Estaciones */
+  .estaciones { position: relative; overflow: hidden; border-radius: 28px; margin-block: 24px 48px; padding: 56px 32px;
+                text-align: center; background: linear-gradient(160deg, #1f4250 0%, var(--superficie) 70%); }
+  .estaciones h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .estaciones h2 span { color: var(--cian); }
+  .estaciones > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .cifras { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px 56px; margin: 36px 0 8px; }
+  .cifra strong { display: block; font-size: clamp(48px, 7vw, 72px); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .cifra span { color: var(--secundario); font-weight: 600; }
+  .paises { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; padding: 0; list-style: none; }
+  .paises li { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+  .paises li b { color: var(--naranja); font-variant-numeric: tabular-nums; margin-left: 6px; }
+  .boton { display: inline-block; margin-top: 32px; padding: 14px 26px; border-radius: 999px; background: var(--cian); color: #08222c;
+           font-weight: 700; text-decoration: none; }
+  .estaciones .nota { margin-top: 18px; font-size: 14px; color: var(--secundario); }
+
+  @media (max-width: 760px) {
+    .funcion { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; text-align: center; }
+    .funcion:nth-of-type(even) .texto { order: 0; }
+    .funcion p { margin-inline: auto; }
+    .rejilla { grid-template-columns: 1fr; }
+    .telefonos .telefono:nth-child(2) { margin-top: 32px; }
+  }
+  @media (min-width: 761px) and (max-width: 980px) { .rejilla { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<main class="portada">
+
+<section class="heroe">
+  <div class="envoltura">
+    <span class="marca">SnowTracker</span>
+    <h1>Elke afdaling,<br><span>geteld.</span></h1>
+    <p>De snelheid, het hoogteverschil en elke afdaling van je skidag, op iPhone en Apple Watch.</p>
+    <div class="datos-heroe"><span>iPhone en Apple Watch</span><span>3.147 skigebieden</span><span>Zonder account, zonder advertenties</span></div>
+    <a class="tienda" href="https://apps.apple.com/app/id6826156855"><img src="../img/app-store/nl.svg" alt="Download in de App Store" width="120" height="40"></a>
+  </div>
+  <img class="cordillera" src="../img/cabecera.jpg" alt="" width="2400" height="1029">
+</section>
+
+<div class="envoltura">
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Live</span>
+      <h2>Elke afdaling, <span>in realtime.</span></h2>
+      <p>Tik op ‘Start’ en vergeet het. SnowTracker onderscheidt zelf afdalingen en liften, en laat zien in welke afdaling je zit, hoe snel je gaat, hoeveel hoogteverschil je hebt afgedaald en hoe steil het is. Met je iPhone vergrendeld blijft de sessie op het toegangsscherm, met ‘Pauzeer’ altijd binnen handbereik.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/01-sesion.jpg" alt="Lopende sessie: snelheid, tijd, afgedaald hoogteverschil en afdalingen" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">De kaart</span>
+      <h2>Je hele dag <span>op de kaart.</span></h2>
+      <p>De route van de dag, gekleurd naar snelheid, op Apple Kaarten, elke afdaling genummerd en daaronder de pistes naar moeilijkheid en de liften. Tik op een afdaling en de kaart toont haar. En om haar opnieuw te beleven, speel je haar tot 240 keer sneller af.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/02-mapa.jpg" alt="Satellietkaart van de dag in Baqueira Beret met de afdalingen en de route gekleurd naar snelheid" loading="lazy"></div>
+    </div>
+  </section>
+
+  <div class="estaciones">
+    <span class="antetitulo">Skigebieden</span>
+    <h2>De pistes van je skigebied, <span>al in de app.</span></h2>
+    <p>De pistes naar moeilijkheid en de liften van skigebieden over de hele wereld zitten in de app: je ziet ze onder je route, ook zonder bereik, en in ‘Vandaag’ herkent de app het skigebied waar je bent.</p>
+    <div class="cifras">
+      <div class="cifra"><strong>3.147</strong><span>skigebieden met pistes</span></div>
+      <div class="cifra"><strong>63</strong><span>landen</span></div>
+    </div>
+    <ul class="paises"><li>Verenigde Staten<b>432</b></li><li>Japan<b>385</b></li><li>Zwitserland<b>293</b></li><li>Oostenrijk<b>275</b></li><li>Frankrijk<b>245</b></li><li>Italië<b>213</b></li></ul>
+    <a class="boton" href="skigebieden/">Vind je skigebied</a>
+    <p class="nota">Gegevens: © bijdragers van OpenStreetMap, onder de ODbL-licentie. <a href="osm-gegevens/">Download de gegevens</a>.</p>
+  </div>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Vandaag</span>
+      <h2>De app weet <span>waar je skiet.</span></h2>
+      <p>Als je de app opent, toont ‘Vandaag’ in welk skigebied je bent, wat je vandaag al hebt geskied of, als je vandaag niet hebt geskied, je laatste dag: afdalingen, hoogteverschil, topsnelheid en, met de Apple Watch, hartslag en kcal. Tik op het skigebied om skigebieden in de buurt te zien of een ander te zoeken. Kies ski, snowboard of telemark, en gaan.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/06-hoy.jpg" alt="Vandaag: Baqueira Beret, herkend aan je locatie, de activiteit en de knop ‘Start’ boven de bergen" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Het overzicht</span>
+      <h2>De hele dag <span>in één oogopslag.</span></h2>
+      <p>Top- en gemiddelde snelheid, hoogteverschil, afstand op de pistes en in de lift, elke afdaling met haar snelheid en de gevolgde pistes, de moeilijkheid van de dag per kleur en het hoogteprofiel. Sorteer je afdalingen op nummer of op snelheid.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/03-resumen.jpg" alt="Overzicht van 14 februari met de metingen van de dag" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/04a-perfil.jpg" alt="Lijst met afdalingen met de piste van elke afdaling en het hoogteprofiel" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Gezondheid</span>
+      <h2>Je hart, <span>afdaling na afdaling.</span></h2>
+      <p>Met de Apple Watch bewaart elke dag je gemiddelde hartslag tijdens afdalingen, je maximale hartslag en je actieve kcal, plus een grafiek van je hartslag over de hele dag met de afdalingen gemarkeerd.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/05-salud.jpg" alt="Gezondheid, zaterdag 14 februari: gemiddelde hartslag tijdens afdalingen, maximale hartslag, actieve kcal en hartslaggrafiek" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Het seizoen</span>
+      <h2>Elke meter hoogteverschil <span>telt.</span></h2>
+      <p>Het hoogteverschil van het hele seizoen, vergeleken met het vorige op dezelfde datum, met je skidagen, afdalingen en kilometers. Je tijd in de sneeuw (afdalend, in de lift en stilstaand), je records als medailles die hun dag openen, de pistes die je het vaakst skiet en je skigebieden op de kaart.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/07-temporada.jpg" alt="Seizoen 2025/26: afgedaald hoogteverschil, skidagen en afdalingen" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/08-temporada-records.jpg" alt="Pistes van het seizoen naar moeilijkheid en je skigebieden op de kaart" loading="lazy"></div>
+    </div>
+  </section>
+
+</div>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">Apple Watch</span>
+    <h2>Jij skiet, <span>je horloge ook.</span></h2>
+    <p>Start op je iPhone en laat hem in je zak. Om je pols zie je de huidige afdaling, je snelheid, je hartslag en je hoogteverschil, en je pauzeert of vergrendelt het scherm direct op je horloge. De hartslag en calorieën van elke dag blijven in het overzicht.</p>
+    <div class="relojes">
+      <div class="reloj"><img src="../img/en/reloj-2-metricas.png" alt="Apple Watch: afdaling 12, snelheid, hartslag en afgedaald hoogteverschil" loading="lazy"></div>
+      <div class="reloj"><img src="../img/en/reloj-3-controles.png" alt="Apple Watch: Vergrendel, Beëindig en Pauzeer" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">En meer</span>
+    <h2>Gemaakt voor <span>de bergen.</span></h2>
+    <div class="rejilla">
+      <div class="tarjeta"><h3>Op het toegangsscherm</h3><p>De sessie als live activiteit, met hoogteverschil, tijd, afdalingen en topsnelheid (met het horloge ook hartslag en calorieën), en ‘Pauzeer’, zonder de app te openen.</p></div>
+      <div class="tarjeta"><h3>Geen sessie kwijt</h3><p>Sluit de app of gaat je iPhone uit, dan wordt de sessie hersteld als je terugkomt. Je krijgt een melding als de batterij bijna leeg is en, na 30 minuten zonder beweging, de vraag of je nog skiet.</p></div>
+      <div class="tarjeta"><h3>Bewaard in Gezondheid</h3><p>Elke dag als work-out in de app Gezondheid, met de route en, met het horloge, je hartslag en calorieën.</p></div>
+      <div class="tarjeta"><h3>Deel je dag</h3><p>Een afbeelding van de dag of het seizoen, met de kaart en je cijfers, of de route als GPX voor andere apps.</p></div>
+      <div class="tarjeta"><h3>Ski, snowboard of telemark</h3><p>Kies je sport; de metingen zijn hetzelfde.</p></div>
+      <div class="tarjeta"><h3>Jouw eenheden</h3><p>Kilometers of mijlen, meters of voet, volgens je regio, en VoiceOver leest elke waarde met de eenheid.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura">
+  <section class="privacidad">
+    <span class="antetitulo">Privacy</span>
+    <h2 style="font-size: clamp(30px, 4vw, 42px); margin: 10px 0 14px;">Je gegevens, <span style="color: var(--cian)">op je iPhone.</span></h2>
+    <p class="secundario" style="max-width: 50ch; margin: 0 auto;">SnowTracker heeft geen accounts en geen servers. Je sessies blijven op je apparaat en niemand anders ziet ze.</p>
+    <div class="sellos"><span>Geen account</span><span>Geen advertenties</span><span>Geen analyse</span><span>Geen tracking</span></div>
+    <p style="margin-top: 24px;"><a href="../en/privacy/" hreflang="en">Lees het privacybeleid (in het Engels)</a></p>
+  </section>
+
+  <footer class="pie">
+    <span>SnowTracker · Marcos Velasco Fernández</span>
+    <nav><a href="ondersteuning/">Ondersteuning</a><a href="../en/privacy/" hreflang="en">Privacy</a><a href="osm-gegevens/">OpenStreetMap-gegevens</a><a href="mailto:marcosvelasco.iphoneapps@gmail.com?subject=SnowTracker">Contact</a><a href="../" hreflang="es" lang="es">Español</a><a href="../en/" hreflang="en" lang="en">English</a><a href="../de/" hreflang="de" lang="de">Deutsch</a><a href="../fr/" hreflang="fr" lang="fr">Français</a><a href="../it/" hreflang="it" lang="it">Italiano</a></nav>
+  </footer>
+</div>
+
+</main>
+</body>
+</html>
