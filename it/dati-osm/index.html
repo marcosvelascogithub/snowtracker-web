@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dati OpenStreetMap di SnowTracker</title>
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/">
+<link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/">
+<link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/dati-osm/">
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body>
+<main>
+<header>
+<a class="marca" href="../">SnowTracker</a>
+<h1>Dati OpenStreetMap</h1>
+<p class="secundario">Estratto del 31 ottobre 2026, 23:00 UTC</p>
+</header>
+
+<div class="resumen"><p>Le piste, gli impianti e i comprensori di SnowTracker sono © <a href="https://www.openstreetmap.org/copyright">collaboratori di OpenStreetMap</a>. I dati dell’app sono un database derivato di OpenStreetMap, pubblicato qui con la <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL) 1.0</a>.</p></div>
+
+<h2>Scarica i dati</h2>
+<p>Gli stessi file inclusi nell’app, gratuitamente:</p>
+<p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 6,4 MB · piste da sci alpino e impianti</span></p>
+<p><a href="../../datos-osm/pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0,4 MB · indice delle 7.166 zone di pistes.bin</span></p>
+<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,5 MB · i 3.147 comprensori sciistici</span></p>
+
+<h2>Origine</h2>
+<p>Creati a partire dall’estratto mondiale delle piste di <a href="https://www.opensnowmap.org/">OpenSnowMap</a> (<code>planet_pistes.osm.gz</code>), con dati di OpenStreetMap. Le linee sono semplificate e gli attributi che l’app non usa vengono eliminati. Si aggiornano a ogni versione dell’app.</p>
+
+<h2>Formato</h2>
+<p><strong>pistes-index.json:</strong> <code>extract</code> è la data dell’estratto, e ogni elemento di <code>zones</code> è <code>[latitudine min., longitudine min., latitudine max., longitudine max., offset, lunghezza]</code>: il rettangolo che contiene la zona e la posizione del suo blocco in pistes.bin, in byte.</p>
+<p><strong>pistes.bin:</strong> i blocchi delle zone, uno dopo l’altro. Ogni blocco è un GeoJSON compresso con xz (<code>FeatureCollection</code> di <code>LineString</code>). Ogni pista ha <code>piste:type</code> e, se esistono, <code>piste:difficulty</code> e <code>name</code> (il suo <code>name</code> o, in mancanza, il suo <code>piste:name</code>); ogni impianto ha <code>aerialway</code>, con i valori di OpenStreetMap.</p>
+<p><strong>resorts.json:</strong> <code>extract</code> è la data dell’estratto, e ogni elemento di <code>resorts</code> è <code>[nome, name:es, name:en, name:de, name:fr, name:it, paese in spagnolo, paese in inglese, paese in tedesco, paese in francese, paese in italiano, latitudine min., longitudine min., latitudine max., longitudine max.]</code>: il nome del comprensorio in OpenStreetMap, i suoi nomi nelle lingue dell’app, se ci sono, e il rettangolo che contiene le sue piste e i suoi impianti.</p>
+
+<footer><a href="../../en/privacy/" hreflang="en">Privacy</a> · <a href="../assistenza/">Assistenza</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../de/osm-daten/" hreflang="de" lang="de">Deutsch</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a></footer>
+</main>
+</body>
+</html>

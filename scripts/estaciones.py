@@ -2,7 +2,7 @@
 #
 #  estaciones.py
 #
-#  Genera las páginas de estaciones (`estaciones/`, `en/resorts/`, `de/skigebiete/` y `fr/stations/`) a partir de
+#  Genera las páginas de estaciones (`estaciones/`, `en/resorts/`, `de/skigebiete/`, `fr/stations/` e `it/comprensori/`) a partir de
 #  `datos/estaciones.json`, que sale del script `scripts/pistas/estaciones.py` de la app
 #  con el mismo extracto de OpenStreetMap que los datos de pistas de cada versión.
 #
@@ -80,6 +80,21 @@ TEXT = {
         "country": "country_fr", "name": "name_fr",
         "dir": "fr/stations/",
     },
+    "it": {
+        "path": ROOT / "it" / "comprensori" / "index.html",
+        "lang": "it", "label": "Italiano", "root": "../../",
+        "home": "../", "css": "../../estilo.css",
+        "title": "Comprensori sciistici con piste in SnowTracker",
+        "h1": "Comprensori",
+        "intro": "SnowTracker mostra le piste e gli impianti di {n} comprensori in {c} paesi sotto il tuo percorso, sulla mappa di ogni giornata. Sono inclusi nell’app: si vedono senza connessione e non inviano alcun dato.",
+        "note": "I dati provengono da OpenStreetMap, una mappa realizzata dai suoi collaboratori, e si aggiornano a ogni versione dell’app. Se il tuo comprensorio ha piste in OpenStreetMap, le vedrai anche se non compare in questo elenco, che include solo i comprensori con un nome.",
+        "search": "Cerca un comprensorio o un paese", "none": "Nessun comprensorio corrisponde.",
+        "count": "{n} comprensori", "count1": "1 comprensorio",
+        "data": "Dati: © collaboratori di OpenStreetMap, con licenza ODbL. Paesi: Natural Earth e Apple. Aggiornato il {date}.",
+        "footer": "SnowTracker · Marcos Velasco Fernández",
+        "country": "country_it", "name": "name_it",
+        "dir": "it/comprensori/",
+    },
 }
 
 SITE = "https://marcosvelascogithub.github.io/snowtracker-web/"
@@ -107,8 +122,8 @@ def render(lang, data):
     for r in resorts:
         by_country[r[t["country"]]].append(r)
     countries = sorted(by_country, key=fold)
-    # Separador de miles: punto en español y alemán, espacio fino en francés, coma en inglés.
-    sep = {"es": ".", "de": ".", "fr": "\u202f"}.get(lang, ",")
+    # Separador de miles: punto en español, alemán e italiano, espacio fino en francés, coma en inglés.
+    sep = {"es": ".", "de": ".", "fr": "\u202f", "it": "."}.get(lang, ",")
     fmt = lambda n: f"{n:,}".replace(",", sep)
     alternates = "".join(f'<link rel="alternate" hreflang="{o["lang"]}" href="{SITE}{o["dir"]}">\n'
                          for k, o in TEXT.items() if k != lang)
