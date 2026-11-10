@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SnowTracker · すべての滑走を記録</title>
+<meta name="description" content="SnowTrackerは、iPhoneとApple Watchでスキーの一日を記録します：速度、標高差、地図上のすべての滑走、心拍数、シーズン全体。アカウント不要、広告なし。データはiPhoneに保存されます。">
+<meta property="og:title" content="SnowTracker · すべての滑走を記録">
+<meta property="og:description" content="スキーの一日の速度、標高差、すべての滑走を、iPhoneとApple Watchで。">
+<meta property="og:image" content="https://marcosvelascogithub.github.io/snowtracker-web/img/cabecera.jpg">
+<meta name="theme-color" content="#0b1418">
+<meta name="apple-itunes-app" content="app-id=6826156855">
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/">
+<link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/">
+<link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/">
+<link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/">
+<link rel="alternate" hreflang="pl" href="https://marcosvelascogithub.github.io/snowtracker-web/pl/">
+<link rel="alternate" hreflang="cs" href="https://marcosvelascogithub.github.io/snowtracker-web/cs/">
+<link rel="alternate" hreflang="sv" href="https://marcosvelascogithub.github.io/snowtracker-web/sv/">
+<link rel="alternate" hreflang="da" href="https://marcosvelascogithub.github.io/snowtracker-web/da/">
+<link rel="alternate" hreflang="ru" href="https://marcosvelascogithub.github.io/snowtracker-web/ru/">
+<link rel="alternate" hreflang="ja" href="https://marcosvelascogithub.github.io/snowtracker-web/ja/">
+<link rel="alternate" hreflang="pt-PT" href="https://marcosvelascogithub.github.io/snowtracker-web/pt/">
+<link rel="stylesheet" href="../estilo.css">
+<style>
+  main.portada { max-width: none; padding: 0; }
+  .envoltura { max-width: 1080px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+
+  /* Cabecera: la cordillera y la huella del icono */
+  .heroe { position: relative; background: #1f4250; }
+  .heroe .envoltura { position: relative; z-index: 1; padding-block: 64px 8px; text-align: center; }
+  .heroe img.cordillera { display: block; width: 100%; height: auto; margin-top: -2px;
+                          min-height: 260px; object-fit: cover; object-position: 40% bottom; }
+  .heroe::after { content: ""; position: absolute; inset: auto 0 0 0; height: 90px;
+                  background: linear-gradient(transparent, var(--fondo)); }
+  .heroe .marca { font-size: 15px; }
+  .heroe h1 { font-size: clamp(44px, 8vw, 92px); letter-spacing: -0.02em; margin: 14px 0 0; }
+  .heroe h1 span { color: var(--cian); }
+  .heroe p { font-size: clamp(18px, 2.4vw, 22px); color: #c9d6df; max-width: 32ch; margin: 18px auto 0; text-wrap: balance; }
+  .tienda { display: inline-block; margin-top: 28px; line-height: 0; border-radius: 8px; }
+  .tienda img { display: block; height: 48px; width: auto; }
+  .tienda:focus-visible { outline: 2px solid var(--naranja); outline-offset: 4px; }
+
+  /* Funciones, alternando texto y captura */
+  .funcion { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 72px; }
+  .funcion:nth-of-type(even) .texto { order: 2; }
+  .texto { min-width: 0; }
+  .antetitulo { color: var(--naranja); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: 13px; }
+  .funcion h2, .seccion h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .funcion h2 span, .seccion h2 span { color: var(--cian); }
+  .funcion p { color: #c9d6df; font-size: 18px; max-width: 46ch; }
+  .telefonos { display: flex; justify-content: center; gap: 20px; }
+  .telefono { width: min(280px, 44vw); aspect-ratio: 660 / 1434; border-radius: 15% / 7%; padding: 2.6%;
+              background: #3a404a; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); }
+  .telefono img { width: 100%; height: 100%; border-radius: 13% / 6%; display: block; background: #000; }
+  .telefonos .telefono:nth-child(2) { margin-top: 48px; }
+
+  /* Apple Watch */
+  .seccion { padding-block: 72px; text-align: center; }
+  .seccion > .envoltura > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .relojes { display: flex; justify-content: center; gap: 28px; margin-top: 40px; flex-wrap: wrap; }
+  .reloj { width: 190px; padding: 14px; border-radius: 30%; background: #3a404a; box-shadow: 0 24px 48px rgba(0, 0, 0, .45); }
+  .reloj img { width: 100%; display: block; border-radius: 26%; }
+
+  /* Todo lo demás */
+  .rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; text-align: left; }
+  .tarjeta { background: var(--superficie); border-radius: 20px; padding: 22px; min-width: 0; }
+  .tarjeta h3 { margin: 0 0 6px; font-size: 18px; }
+  .tarjeta p { margin: 0; color: var(--secundario); font-size: 16px; }
+
+  /* Privacidad */
+  .privacidad { background: var(--superficie); border-radius: 28px; padding: 48px 32px; margin-block: 24px 72px; text-align: center; }
+  .sellos { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .sellos span { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+
+  footer.pie { border-top: 1px solid rgba(255, 255, 255, .08); padding-block: 32px 48px; display: flex; flex-wrap: wrap;
+               gap: 12px 24px; justify-content: space-between; color: var(--secundario); font-size: 15px; margin-top: 0; }
+  footer.pie nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+
+  /* Datos rápidos bajo el titular */
+  .datos-heroe { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; color: #c9d6df; font-size: 15px; font-weight: 600; }
+  .datos-heroe span + span::before { content: "·"; margin-right: 18px; color: var(--secundario); }
+
+  /* Estaciones */
+  .estaciones { position: relative; overflow: hidden; border-radius: 28px; margin-block: 24px 48px; padding: 56px 32px;
+                text-align: center; background: linear-gradient(160deg, #1f4250 0%, var(--superficie) 70%); }
+  .estaciones h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .estaciones h2 span { color: var(--cian); }
+  .estaciones > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .cifras { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px 56px; margin: 36px 0 8px; }
+  .cifra strong { display: block; font-size: clamp(48px, 7vw, 72px); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .cifra span { color: var(--secundario); font-weight: 600; }
+  .paises { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; padding: 0; list-style: none; }
+  .paises li { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+  .paises li b { color: var(--naranja); font-variant-numeric: tabular-nums; margin-left: 6px; }
+  .boton { display: inline-block; margin-top: 32px; padding: 14px 26px; border-radius: 999px; background: var(--cian); color: #08222c;
+           font-weight: 700; text-decoration: none; }
+  .estaciones .nota { margin-top: 18px; font-size: 14px; color: var(--secundario); }
+
+  @media (max-width: 760px) {
+    .funcion { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; text-align: center; }
+    .funcion:nth-of-type(even) .texto { order: 0; }
+    .funcion p { margin-inline: auto; }
+    .rejilla { grid-template-columns: 1fr; }
+    .telefonos .telefono:nth-child(2) { margin-top: 32px; }
+  }
+  @media (min-width: 761px) and (max-width: 980px) { .rejilla { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<main class="portada">
+
+<section class="heroe">
+  <div class="envoltura">
+    <span class="marca">SnowTracker</span>
+    <h1>すべての滑走を、<br><span>記録。</span></h1>
+    <p>スキーの一日の速度、標高差、すべての滑走を、iPhoneとApple Watchで。</p>
+    <div class="datos-heroe"><span>iPhoneとApple Watch</span><span>3,147か所のスキー場</span><span>アカウント不要、広告なし</span></div>
+    <a class="tienda" href="https://apps.apple.com/app/id6826156855"><img src="../img/app-store/ja.svg" alt="App Storeからダウンロード" width="120" height="40"></a>
+  </div>
+  <img class="cordillera" src="../img/cabecera.jpg" alt="" width="2400" height="1029">
+</section>
+
+<div class="envoltura">
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">リアルタイム</span>
+      <h2>すべての滑走を、 <span>その場で。</span></h2>
+      <p>「開始」をタップしたら、あとはおまかせ。SnowTrackerは滑走とリフトを自動で判別し、何本目の滑走か、速度、これまでの標高差、コースの斜度を表示します。iPhoneをロックしても、セッションはロック画面に表示され、すぐに一時停止できます。</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/01-sesion.jpg" alt="記録中のセッション：速度、時間、滑降した標高差、滑走本数" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">地図</span>
+      <h2>一日のすべてを、 <span>地図に。</span></h2>
+      <p>一日のルートをAppleの地図に速度で色分けして表示し、各滑走に番号を付け、その下に難易度別のコースとリフトを表示します。滑走をタップすると、地図がその滑走を表示します。もう一度振り返りたいときは、最大240倍速で再生できます。</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/02-mapa.jpg" alt="Baqueira Beretでの一日の航空写真地図。滑走と、速度で色分けされたルート" loading="lazy"></div>
+    </div>
+  </section>
+
+  <div class="estaciones">
+    <span class="antetitulo">スキー場</span>
+    <h2>あなたのスキー場のコースが、 <span>アプリに。</span></h2>
+    <p>世界中のスキー場の難易度別コースとリフトがアプリに内蔵されています。電波が届かなくてもルートの下に表示され、「今日」ではいるスキー場をアプリが認識します。</p>
+    <div class="cifras">
+      <div class="cifra"><strong>3,147</strong><span>コースのあるスキー場</span></div>
+      <div class="cifra"><strong>63</strong><span>か国</span></div>
+    </div>
+    <ul class="paises"><li>アメリカ合衆国<b>432</b></li><li>日本<b>385</b></li><li>スイス<b>293</b></li><li>オーストリア<b>275</b></li><li>フランス<b>245</b></li><li>イタリア<b>213</b></li></ul>
+    <a class="boton" href="ski-jo/">スキー場を探す</a>
+    <p class="nota">データ：© OpenStreetMap協力者（ODbLライセンス）。 <a href="osm-data/">データをダウンロード</a>。</p>
+  </div>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">今日</span>
+      <h2>今いるスキー場が <span>わかります。</span></h2>
+      <p>アプリを開くと、「今日」に今いるスキー場と、今日の滑走、または今日滑っていない場合は最終日の内容が表示されます：滑走本数、標高差、最高速度、Apple Watchがあれば心拍数とkcal。スキー場をタップすると、近くのスキー場を見たり、別のスキー場を検索したりできます。スキー、スノーボード、テレマークを選んで開始しましょう。</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/06-hoy.jpg" alt="今日：位置情報から認識したBaqueira Beret、アクティビティ、山を背景にした「開始」ボタン" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">概要</span>
+      <h2>一日のすべてを、 <span>ひと目で。</span></h2>
+      <p>最高速度と平均速度、標高差、滑走とリフトの距離、速度と通ったコース付きの各滑走、色で見る一日の難易度、高度プロファイル。滑走は番号順または速度順に並べ替えられます。</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/03-resumen.jpg" alt="2月14日の概要と一日の計測値" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/04a-perfil.jpg" alt="各滑走のコースを示した滑走の一覧と高度プロファイル" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">ヘルスケア</span>
+      <h2>心拍数を、 <span>滑走ごとに。</span></h2>
+      <p>Apple Watchがあれば、毎日の滑走中の平均心拍数、最大心拍数、アクティブkcalに加えて、滑走の区間を示した一日の心拍数グラフが残ります。</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/05-salud.jpg" alt="2月14日（土）のヘルスケア：滑走中の平均心拍数、最大心拍数、アクティブkcal、心拍数グラフ" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">シーズン</span>
+      <h2>標高差を、 <span>すべて積み上げて。</span></h2>
+      <p>シーズン全体の標高差を昨シーズンの同じ時期と比べて表示し、日数、滑走本数、距離も表示します。雪上の時間（滑走、リフト、停止）、その日を開けるメダル形式の自己記録、よく滑るコース、地図上のスキー場も。</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/07-temporada.jpg" alt="2025/26シーズン：滑降した標高差、日数、滑走本数" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/08-temporada-records.jpg" alt="難易度別のシーズンのコースと、地図上のスキー場" loading="lazy"></div>
+    </div>
+  </section>
+
+</div>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">Apple Watch</span>
+    <h2>あなたが滑り、 <span>Apple Watchが記録します。</span></h2>
+    <p>iPhoneで開始して、ポケットに入れたままに。手首で現在の滑走、速度、心拍数、標高差を確認でき、一時停止や画面のロックも手首でできます。毎日の心拍数とカロリーは、その日の概要に残ります。</p>
+    <div class="relojes">
+      <div class="reloj"><img src="../img/en/reloj-2-metricas.png" alt="Apple Watch：12本目の滑走、速度、心拍数、滑降した標高差" loading="lazy"></div>
+      <div class="reloj"><img src="../img/en/reloj-3-controles.png" alt="Apple Watch：ロック、終了、一時停止" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">ほかにも</span>
+    <h2>山のために <span>作りました。</span></h2>
+    <div class="rejilla">
+      <div class="tarjeta"><h3>ロック画面で</h3><p>ロック画面にセッションを表示。標高差、時間、滑走本数、最高速度（Apple Watchがあれば心拍数とカロリーも）を表示し、アプリを開かずに一時停止できます。</p></div>
+      <div class="tarjeta"><h3>セッションが失われることはありません</h3><p>アプリが終了したりiPhoneの電源が切れたりしても、戻ったときにセッションが復元されます。バッテリー残量が少なくなるとお知らせし、30分間動きがないと、まだ滑っているかどうかを確認します。</p></div>
+      <div class="tarjeta"><h3>ヘルスケアに保存</h3><p>毎日をワークアウトとしてヘルスケアアプリに保存。ルートと、Apple Watchがあれば心拍数とカロリーも保存されます。</p></div>
+      <div class="tarjeta"><h3>一日を共有</h3><p>地図と数字の入った一日やシーズンの画像、またはほかのアプリで使えるGPX形式のルート。</p></div>
+      <div class="tarjeta"><h3>スキー、スノーボード、テレマーク</h3><p>アクティビティを選べます。統計の計測方法は同じです。</p></div>
+      <div class="tarjeta"><h3>お使いの単位で</h3><p>地域に応じてキロメートルかマイル、メートルかフィート。VoiceOverは各数値を単位付きで読み上げます。</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura">
+  <section class="privacidad">
+    <span class="antetitulo">プライバシー</span>
+    <h2 style="font-size: clamp(30px, 4vw, 42px); margin: 10px 0 14px;">あなたのデータは、 <span style="color: var(--cian)">あなたのiPhoneに。</span></h2>
+    <p class="secundario" style="max-width: 50ch; margin: 0 auto;">SnowTrackerにはアカウントも独自のサーバもありません。セッションはデバイスに保存され、ほかの人が見ることはありません。</p>
+    <div class="sellos"><span>アカウント不要</span><span>広告なし</span><span>分析なし</span><span>トラッキングなし</span></div>
+    <p style="margin-top: 24px;"><a href="../en/privacy/" hreflang="en">プライバシーポリシーを読む（英語）</a></p>
+  </section>
+
+  <footer class="pie">
+    <span>SnowTracker · Marcos Velasco Fernández</span>
+    <nav><a href="support/">サポート</a><a href="../en/privacy/" hreflang="en">プライバシー</a><a href="osm-data/">OpenStreetMapのデータ</a><a href="mailto:marcosvelasco.iphoneapps@gmail.com?subject=SnowTracker">お問い合わせ</a><a href="../" hreflang="es" lang="es">Español</a><a href="../en/" hreflang="en" lang="en">English</a><a href="../de/" hreflang="de" lang="de">Deutsch</a><a href="../fr/" hreflang="fr" lang="fr">Français</a><a href="../it/" hreflang="it" lang="it">Italiano</a><a href="../nl/" hreflang="nl" lang="nl">Nederlands</a><a href="../pl/" hreflang="pl" lang="pl">Polski</a><a href="../cs/" hreflang="cs" lang="cs">Čeština</a><a href="../sv/" hreflang="sv" lang="sv">Svenska</a><a href="../da/" hreflang="da" lang="da">Dansk</a><a href="../ru/" hreflang="ru" lang="ru">Русский</a><a href="../pt/" hreflang="pt-PT" lang="pt-PT">Português</a></nav>
+  </footer>
+</div>
+
+</main>
+</body>
+</html>

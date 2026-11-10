@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SnowTracker – OpenStreetMap-data</title>
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/">
+<link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/">
+<link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/dati-osm/">
+<link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/osm-gegevens/">
+<link rel="alternate" hreflang="pl" href="https://marcosvelascogithub.github.io/snowtracker-web/pl/dane-osm/">
+<link rel="alternate" hreflang="cs" href="https://marcosvelascogithub.github.io/snowtracker-web/cs/data-osm/">
+<link rel="alternate" hreflang="sv" href="https://marcosvelascogithub.github.io/snowtracker-web/sv/osm-data/">
+<link rel="alternate" hreflang="da" href="https://marcosvelascogithub.github.io/snowtracker-web/da/osm-data/">
+<link rel="alternate" hreflang="ru" href="https://marcosvelascogithub.github.io/snowtracker-web/ru/osm-data/">
+<link rel="alternate" hreflang="ja" href="https://marcosvelascogithub.github.io/snowtracker-web/ja/osm-data/">
+<link rel="alternate" hreflang="pt-PT" href="https://marcosvelascogithub.github.io/snowtracker-web/pt/dados-osm/">
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body>
+<main>
+<header>
+<a class="marca" href="../">SnowTracker</a>
+<h1>OpenStreetMap-data</h1>
+<p class="secundario">Udtræk fra 31. oktober 2026, 23:00 UTC</p>
+</header>
+
+<div class="resumen"><p>Pisterne, liftene og skiområderne i SnowTracker er © <a href="https://www.openstreetmap.org/copyright">OpenStreetMaps bidragydere</a>. Dataene i appen er en afledt database af OpenStreetMap og offentliggøres her under <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL) 1.0</a>.</p></div>
+
+<h2>Hent dataene</h2>
+<p>De samme filer, som appen indeholder, gratis:</p>
+<p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 6,4 MB · alpine pister og lifte</span></p>
+<p><a href="../../datos-osm/pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0,4 MB · indeks over de 7.166 zoner i pistes.bin</span></p>
+<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,9 MB · de 3.147 skiområder</span></p>
+
+<h2>Kilde</h2>
+<p>Lavet ud fra det verdensomspændende udtræk af pister fra <a href="https://www.opensnowmap.org/">OpenSnowMap</a> (<code>planet_pistes.osm.gz</code>), med data fra OpenStreetMap. Linjerne er forenklede, og tags, som appen ikke bruger, er fjernet. Opdateres med hver version af appen.</p>
+
+<h2>Format</h2>
+<p><strong>pistes-index.json:</strong> <code>extract</code> er datoen for udtrækket, og hvert element i <code>zones</code> er <code>[min. breddegrad, min. længdegrad, maks. breddegrad, maks. længdegrad, offset, længde]</code>: zonens omsluttende rektangel og hvor dens blok ligger i pistes.bin, i byte.</p>
+<p><strong>pistes.bin:</strong> zonernes blokke, den ene efter den anden. Hver blok er en GeoJSON komprimeret med xz (<code>FeatureCollection</code> af <code>LineString</code>). Hver piste har <code>piste:type</code> og, hvis de findes, <code>piste:difficulty</code> og <code>name</code> (dens <code>name</code> eller, hvis det mangler, dens <code>piste:name</code>); hver lift har <code>aerialway</code>, med værdierne fra OpenStreetMap.</p>
+<p><strong>resorts.json:</strong> <code>extract</code> er datoen for udtrækket, og hvert element i <code>resorts</code> er <code>[navn, name:es, name:en, name:de, name:fr, name:it, name:nl, name:pl, name:cs, name:sv, name:da, name:ru, name:ja, name:pt, land på disse 13 sprog i samme rækkefølge, min. breddegrad, min. længdegrad, maks. breddegrad, maks. længdegrad]</code>: skiområdets navn i OpenStreetMap, dets navne på appens sprog, hvis de findes, og det omsluttende rektangel for dets pister og lifte.</p>
+
+<footer><a href="../../en/privacy/" hreflang="en">Privatliv</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../de/osm-daten/" hreflang="de" lang="de">Deutsch</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a> · <a href="../../it/dati-osm/" hreflang="it" lang="it">Italiano</a> · <a href="../../nl/osm-gegevens/" hreflang="nl" lang="nl">Nederlands</a> · <a href="../../pl/dane-osm/" hreflang="pl" lang="pl">Polski</a> · <a href="../../cs/data-osm/" hreflang="cs" lang="cs">Čeština</a> · <a href="../../sv/osm-data/" hreflang="sv" lang="sv">Svenska</a> · <a href="../../ru/osm-data/" hreflang="ru" lang="ru">Русский</a> · <a href="../../ja/osm-data/" hreflang="ja" lang="ja">日本語</a> · <a href="../../pt/dados-osm/" hreflang="pt-PT" lang="pt-PT">Português</a></footer>
+</main>
+</body>
+</html>

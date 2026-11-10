@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SnowTracker · Varje åk räknas</title>
+<meta name="description" content="SnowTracker mäter din skiddag på iPhone och Apple Watch: hastighet, fallhöjd, varje åk på kartan, din puls och hela säsongen. Inga konton, ingen reklam, och dina data stannar på din iPhone.">
+<meta property="og:title" content="SnowTracker · Varje åk räknas">
+<meta property="og:description" content="Hastighet, fallhöjd och varje åk under din skiddag, på iPhone och Apple Watch.">
+<meta property="og:image" content="https://marcosvelascogithub.github.io/snowtracker-web/img/cabecera.jpg">
+<meta name="theme-color" content="#0b1418">
+<meta name="apple-itunes-app" content="app-id=6826156855">
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/">
+<link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/">
+<link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/">
+<link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/">
+<link rel="alternate" hreflang="pl" href="https://marcosvelascogithub.github.io/snowtracker-web/pl/">
+<link rel="alternate" hreflang="cs" href="https://marcosvelascogithub.github.io/snowtracker-web/cs/">
+<link rel="alternate" hreflang="sv" href="https://marcosvelascogithub.github.io/snowtracker-web/sv/">
+<link rel="alternate" hreflang="da" href="https://marcosvelascogithub.github.io/snowtracker-web/da/">
+<link rel="alternate" hreflang="ru" href="https://marcosvelascogithub.github.io/snowtracker-web/ru/">
+<link rel="alternate" hreflang="ja" href="https://marcosvelascogithub.github.io/snowtracker-web/ja/">
+<link rel="alternate" hreflang="pt-PT" href="https://marcosvelascogithub.github.io/snowtracker-web/pt/">
+<link rel="stylesheet" href="../estilo.css">
+<style>
+  main.portada { max-width: none; padding: 0; }
+  .envoltura { max-width: 1080px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+
+  /* Cabecera: la cordillera y la huella del icono */
+  .heroe { position: relative; background: #1f4250; }
+  .heroe .envoltura { position: relative; z-index: 1; padding-block: 64px 8px; text-align: center; }
+  .heroe img.cordillera { display: block; width: 100%; height: auto; margin-top: -2px;
+                          min-height: 260px; object-fit: cover; object-position: 40% bottom; }
+  .heroe::after { content: ""; position: absolute; inset: auto 0 0 0; height: 90px;
+                  background: linear-gradient(transparent, var(--fondo)); }
+  .heroe .marca { font-size: 15px; }
+  .heroe h1 { font-size: clamp(44px, 8vw, 92px); letter-spacing: -0.02em; margin: 14px 0 0; }
+  .heroe h1 span { color: var(--cian); }
+  .heroe p { font-size: clamp(18px, 2.4vw, 22px); color: #c9d6df; max-width: 32ch; margin: 18px auto 0; text-wrap: balance; }
+  .tienda { display: inline-block; margin-top: 28px; line-height: 0; border-radius: 8px; }
+  .tienda img { display: block; height: 48px; width: auto; }
+  .tienda:focus-visible { outline: 2px solid var(--naranja); outline-offset: 4px; }
+
+  /* Funciones, alternando texto y captura */
+  .funcion { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 72px; }
+  .funcion:nth-of-type(even) .texto { order: 2; }
+  .texto { min-width: 0; }
+  .antetitulo { color: var(--naranja); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: 13px; }
+  .funcion h2, .seccion h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .funcion h2 span, .seccion h2 span { color: var(--cian); }
+  .funcion p { color: #c9d6df; font-size: 18px; max-width: 46ch; }
+  .telefonos { display: flex; justify-content: center; gap: 20px; }
+  .telefono { width: min(280px, 44vw); aspect-ratio: 660 / 1434; border-radius: 15% / 7%; padding: 2.6%;
+              background: #3a404a; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); }
+  .telefono img { width: 100%; height: 100%; border-radius: 13% / 6%; display: block; background: #000; }
+  .telefonos .telefono:nth-child(2) { margin-top: 48px; }
+
+  /* Apple Watch */
+  .seccion { padding-block: 72px; text-align: center; }
+  .seccion > .envoltura > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .relojes { display: flex; justify-content: center; gap: 28px; margin-top: 40px; flex-wrap: wrap; }
+  .reloj { width: 190px; padding: 14px; border-radius: 30%; background: #3a404a; box-shadow: 0 24px 48px rgba(0, 0, 0, .45); }
+  .reloj img { width: 100%; display: block; border-radius: 26%; }
+
+  /* Todo lo demás */
+  .rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; text-align: left; }
+  .tarjeta { background: var(--superficie); border-radius: 20px; padding: 22px; min-width: 0; }
+  .tarjeta h3 { margin: 0 0 6px; font-size: 18px; }
+  .tarjeta p { margin: 0; color: var(--secundario); font-size: 16px; }
+
+  /* Privacidad */
+  .privacidad { background: var(--superficie); border-radius: 28px; padding: 48px 32px; margin-block: 24px 72px; text-align: center; }
+  .sellos { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .sellos span { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+
+  footer.pie { border-top: 1px solid rgba(255, 255, 255, .08); padding-block: 32px 48px; display: flex; flex-wrap: wrap;
+               gap: 12px 24px; justify-content: space-between; color: var(--secundario); font-size: 15px; margin-top: 0; }
+  footer.pie nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+
+  /* Datos rápidos bajo el titular */
+  .datos-heroe { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; color: #c9d6df; font-size: 15px; font-weight: 600; }
+  .datos-heroe span + span::before { content: "·"; margin-right: 18px; color: var(--secundario); }
+
+  /* Estaciones */
+  .estaciones { position: relative; overflow: hidden; border-radius: 28px; margin-block: 24px 48px; padding: 56px 32px;
+                text-align: center; background: linear-gradient(160deg, #1f4250 0%, var(--superficie) 70%); }
+  .estaciones h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .estaciones h2 span { color: var(--cian); }
+  .estaciones > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .cifras { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px 56px; margin: 36px 0 8px; }
+  .cifra strong { display: block; font-size: clamp(48px, 7vw, 72px); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .cifra span { color: var(--secundario); font-weight: 600; }
+  .paises { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; padding: 0; list-style: none; }
+  .paises li { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+  .paises li b { color: var(--naranja); font-variant-numeric: tabular-nums; margin-left: 6px; }
+  .boton { display: inline-block; margin-top: 32px; padding: 14px 26px; border-radius: 999px; background: var(--cian); color: #08222c;
+           font-weight: 700; text-decoration: none; }
+  .estaciones .nota { margin-top: 18px; font-size: 14px; color: var(--secundario); }
+
+  @media (max-width: 760px) {
+    .funcion { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; text-align: center; }
+    .funcion:nth-of-type(even) .texto { order: 0; }
+    .funcion p { margin-inline: auto; }
+    .rejilla { grid-template-columns: 1fr; }
+    .telefonos .telefono:nth-child(2) { margin-top: 32px; }
+  }
+  @media (min-width: 761px) and (max-width: 980px) { .rejilla { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<main class="portada">
+
+<section class="heroe">
+  <div class="envoltura">
+    <span class="marca">SnowTracker</span>
+    <h1>Varje åk<br><span>räknas.</span></h1>
+    <p>Hastighet, fallhöjd och varje åk under din skiddag, på iPhone och Apple Watch.</p>
+    <div class="datos-heroe"><span>iPhone och Apple Watch</span><span>3 147 skidorter</span><span>Inga konton, ingen reklam</span></div>
+    <a class="tienda" href="https://apps.apple.com/app/id6826156855"><img src="../img/app-store/sv.svg" alt="Hämta i App Store" width="120" height="40"></a>
+  </div>
+  <img class="cordillera" src="../img/cabecera.jpg" alt="" width="2400" height="1029">
+</section>
+
+<div class="envoltura">
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Live</span>
+      <h2>Varje åk, <span>medan det händer.</span></h2>
+      <p>Tryck på Starta och glöm sedan bort det. SnowTracker skiljer själv åk från liftar och visar vilket åk du är på, hur fort du åker, hur mycket fallhöjd du har åkt och lutningen i åket. Med iPhone låst ligger passet kvar på låsskärmen, med Pausa nära till hands.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/01-sesion.jpg" alt="Pass pågår: hastighet, tid, fallhöjd nedåt och åk" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Kartan</span>
+      <h2>Hela din dag <span>på kartan.</span></h2>
+      <p>Dagens rutt på Apples karta, färgad efter hastighet, med varje åk numrerat och under den backarna efter svårighet och liftarna. Tryck på ett åk så visar kartan det. Och vill du uppleva det igen kan du spela upp det upp till 240 gånger snabbare.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/02-mapa.jpg" alt="Satellitkarta över dagen i Baqueira Beret med åken och rutten färgad efter hastighet" loading="lazy"></div>
+    </div>
+  </section>
+
+  <div class="estaciones">
+    <span class="antetitulo">Skidorter</span>
+    <h2>Din skidorts backar <span>finns redan i appen.</span></h2>
+    <p>Backar efter svårighet och liftar från skidorter över hela världen finns i appen: du ser dem under din rutt även utan täckning, och i Idag känner appen igen skidorten du är i.</p>
+    <div class="cifras">
+      <div class="cifra"><strong>3 147</strong><span>skidorter med backar</span></div>
+      <div class="cifra"><strong>63</strong><span>länder</span></div>
+    </div>
+    <ul class="paises"><li>USA<b>432</b></li><li>Japan<b>385</b></li><li>Schweiz<b>293</b></li><li>Österrike<b>275</b></li><li>Frankrike<b>245</b></li><li>Italien<b>213</b></li></ul>
+    <a class="boton" href="skidorter/">Hitta din skidort</a>
+    <p class="nota">Data: © OpenStreetMaps bidragsgivare, licens ODbL. <a href="osm-data/">Ladda ned data</a>.</p>
+  </div>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Idag</span>
+      <h2>Den vet vilken <span>skidort du är i.</span></h2>
+      <p>När du öppnar appen visar Idag vilken skidort du är i, vad du har åkt i dag eller, om du inte har åkt i dag, din senaste dag: åk, fallhöjd, topphastighet och, med Apple Watch, puls och kcal. Tryck på skidorten för att se de i närheten eller söka efter en annan. Välj skidor, snowboard eller telemark och starta.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/06-hoy.jpg" alt="Idag: Baqueira Beret, som känns igen via din plats, aktiviteten och knappen Starta framför bergen" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Sammanfattningen</span>
+      <h2>Hela dagen <span>i en överblick.</span></h2>
+      <p>Topphastighet och snitthastighet, fallhöjd, distans i backen och i liften, varje åk med hastighet och de backar det gick i, dagens svårighet i färger och höjdprofilen. Sortera åken efter nummer eller hastighet.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/03-resumen.jpg" alt="Sammanfattning av 14 februari med dagens mätvärden" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/04a-perfil.jpg" alt="Lista över åk med backen för varje åk och höjdprofilen" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Hälsa</span>
+      <h2>Din puls, <span>åk för åk.</span></h2>
+      <p>Med Apple Watch sparar varje dag din snittpuls i åken, din maxpuls och dina aktiva kcal, plus ett diagram över pulsen under hela dagen med åken markerade.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/05-salud.jpg" alt="Hälsa lördag 14 februari: snittpuls i åken, maxpuls, aktiva kcal och pulsdiagrammet" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Säsongen</span>
+      <h2>All din fallhöjd <span>räknas ihop.</span></h2>
+      <p>Hela säsongens fallhöjd jämfört med förra säsongen vid samma tid, med dagar, åk och distans. Din tid på snön (i backen, i liften och stillastående), dina rekord som medaljer som öppnar sin dag, backarna du åker mest och dina skidorter på en karta.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/07-temporada.jpg" alt="Säsong 2025/26: fallhöjd nedåt, dagar och åk" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/08-temporada-records.jpg" alt="Säsongens backar efter svårighet och dina skidorter på en karta" loading="lazy"></div>
+    </div>
+  </section>
+
+</div>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">Apple Watch</span>
+    <h2>Du åker, <span>klockan hänger med.</span></h2>
+    <p>Starta på iPhone och ha den i fickan. På handleden ser du åket du är på, din hastighet, din puls och din fallhöjd, och du pausar eller låser skärmen från handleden. Varje dags puls och kalorier finns kvar i dagens sammanfattning.</p>
+    <div class="relojes">
+      <div class="reloj"><img src="../img/en/reloj-2-metricas.png" alt="Apple Watch: åk 12, hastighet, puls och fallhöjd nedåt" loading="lazy"></div>
+      <div class="reloj"><img src="../img/en/reloj-3-controles.png" alt="Apple Watch: Lås, Avsluta och Pausa" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">Och mer</span>
+    <h2>Gjord <span>för fjällen.</span></h2>
+    <div class="rejilla">
+      <div class="tarjeta"><h3>På låsskärmen</h3><p>Passet på låsskärmen med fallhöjd, tid, åk och topphastighet (plus puls och kalorier med klockan), och Pausa utan att öppna appen.</p></div>
+      <div class="tarjeta"><h3>Du förlorar aldrig ett pass</h3><p>Om appen stängs eller iPhone stängs av återställs passet när du kommer tillbaka. Appen säger till när batteriet håller på att ta slut och frågar efter 30 minuter utan rörelse om du fortfarande åker.</p></div>
+      <div class="tarjeta"><h3>Spara i Hälsa</h3><p>Varje dag som en träning i appen Hälsa, med rutten och, med klockan, din puls och dina kalorier.</p></div>
+      <div class="tarjeta"><h3>Dela din dag</h3><p>En bild av dagen eller säsongen med kartan och dina siffror, eller rutten som GPX för att använda den i andra appar.</p></div>
+      <div class="tarjeta"><h3>Skidor, snowboard eller telemark</h3><p>Välj aktivitet; statistiken mäts på samma sätt.</p></div>
+      <div class="tarjeta"><h3>Dina enheter</h3><p>Kilometer eller miles, meter eller fot, beroende på din region, och VoiceOver läser varje siffra med sin enhet.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura">
+  <section class="privacidad">
+    <span class="antetitulo">Integritet</span>
+    <h2 style="font-size: clamp(30px, 4vw, 42px); margin: 10px 0 14px;">Dina data <span style="color: var(--cian)">på din iPhone.</span></h2>
+    <p class="secundario" style="max-width: 50ch; margin: 0 auto;">SnowTracker har inga konton och inga egna servrar. Dina pass sparas på enheten och ingen annan ser dem.</p>
+    <div class="sellos"><span>Inga konton</span><span>Ingen reklam</span><span>Ingen analys</span><span>Ingen spårning</span></div>
+    <p style="margin-top: 24px;"><a href="../en/privacy/" hreflang="en">Läs integritetspolicyn (på engelska)</a></p>
+  </section>
+
+  <footer class="pie">
+    <span>SnowTracker · Marcos Velasco Fernández</span>
+    <nav><a href="support/">Support</a><a href="../en/privacy/" hreflang="en">Integritet</a><a href="osm-data/">OpenStreetMap-data</a><a href="mailto:marcosvelasco.iphoneapps@gmail.com?subject=SnowTracker">Kontakt</a><a href="../" hreflang="es" lang="es">Español</a><a href="../en/" hreflang="en" lang="en">English</a><a href="../de/" hreflang="de" lang="de">Deutsch</a><a href="../fr/" hreflang="fr" lang="fr">Français</a><a href="../it/" hreflang="it" lang="it">Italiano</a><a href="../nl/" hreflang="nl" lang="nl">Nederlands</a><a href="../pl/" hreflang="pl" lang="pl">Polski</a><a href="../cs/" hreflang="cs" lang="cs">Čeština</a><a href="../da/" hreflang="da" lang="da">Dansk</a><a href="../ru/" hreflang="ru" lang="ru">Русский</a><a href="../ja/" hreflang="ja" lang="ja">日本語</a><a href="../pt/" hreflang="pt-PT" lang="pt-PT">Português</a></nav>
+  </footer>
+</div>
+
+</main>
+</body>
+</html>
