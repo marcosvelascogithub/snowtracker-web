@@ -8,6 +8,15 @@
 <link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/">
 <link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
 <link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/">
+<link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/dati-osm/">
+<link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/osm-gegevens/">
+<link rel="alternate" hreflang="pl" href="https://marcosvelascogithub.github.io/snowtracker-web/pl/dane-osm/">
+<link rel="alternate" hreflang="cs" href="https://marcosvelascogithub.github.io/snowtracker-web/cs/data-osm/">
+<link rel="alternate" hreflang="sv" href="https://marcosvelascogithub.github.io/snowtracker-web/sv/osm-data/">
+<link rel="alternate" hreflang="da" href="https://marcosvelascogithub.github.io/snowtracker-web/da/osm-data/">
+<link rel="alternate" hreflang="ru" href="https://marcosvelascogithub.github.io/snowtracker-web/ru/osm-data/">
+<link rel="alternate" hreflang="ja" href="https://marcosvelascogithub.github.io/snowtracker-web/ja/osm-data/">
+<link rel="alternate" hreflang="pt-PT" href="https://marcosvelascogithub.github.io/snowtracker-web/pt/dados-osm/">
 <link rel="stylesheet" href="../../estilo.css">
 </head>
 <body>
@@ -24,7 +33,7 @@
 <p>Dieselben Dateien, die die App enthält, kostenlos:</p>
 <p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 6,4 MB · Abfahrtspisten und Lifte</span></p>
 <p><a href="../../datos-osm/pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0,4 MB · Index der 7.166 Zonen in pistes.bin</span></p>
-<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,4 MB · die 3.147 Skigebiete</span></p>
+<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,9 MB · die 3.147 Skigebiete</span></p>
 
 <h2>Quelle</h2>
 <p>Erstellt aus dem weltweiten Pistenextrakt von <a href="https://www.opensnowmap.org/">OpenSnowMap</a> (<code>planet_pistes.osm.gz</code>), mit Daten von OpenStreetMap. Die Linien sind vereinfacht, und Tags, die die App nicht verwendet, sind entfernt. Wird mit jeder Version der App aktualisiert.</p>
@@ -32,9 +41,9 @@
 <h2>Format</h2>
 <p><strong>pistes-index.json:</strong> <code>extract</code> ist das Datum des Extrakts, und jedes Element in <code>zones</code> ist <code>[min. Breite, min. Länge, max. Breite, max. Länge, Offset, Länge]</code>: das umschließende Rechteck der Zone und die Position ihres Blocks in pistes.bin, in Bytes.</p>
 <p><strong>pistes.bin:</strong> die Blöcke der Zonen, einer nach dem anderen. Jeder Block ist ein mit xz komprimiertes GeoJSON (<code>FeatureCollection</code> aus <code>LineString</code>). Jede Piste hat <code>piste:type</code> und, falls vorhanden, <code>piste:difficulty</code> und <code>name</code> (ihr <code>name</code> oder, falls er fehlt, ihr <code>piste:name</code>); jeder Lift hat <code>aerialway</code>, mit den Werten von OpenStreetMap.</p>
-<p><strong>resorts.json:</strong> <code>extract</code> ist das Datum des Extrakts, und jedes Element in <code>resorts</code> ist <code>[Name, name:es, name:en, name:de, Land auf Spanisch, Land auf Englisch, Land auf Deutsch, min. Breite, min. Länge, max. Breite, max. Länge]</code>: der Name des Skigebiets in OpenStreetMap und das umschließende Rechteck seiner Pisten und Lifte.</p>
+<p><strong>resorts.json:</strong> <code>extract</code> ist das Datum des Extrakts, und jedes Element in <code>resorts</code> ist <code>[Name, name:es, name:en, name:de, name:fr, name:it, name:nl, name:pl, name:cs, name:sv, name:da, name:ru, name:ja, name:pt, Land in diesen 13 Sprachen in derselben Reihenfolge, min. Breite, min. Länge, max. Breite, max. Länge]</code>: der Name des Skigebiets in OpenStreetMap, seine Namen in den Sprachen der App, falls vorhanden, und das umschließende Rechteck seiner Pisten und Lifte.</p>
 
-<footer><a href="../../en/privacy/" hreflang="en">Datenschutz</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a></footer>
+<footer><a href="../../en/privacy/" hreflang="en">Datenschutz</a> · <a href="../support/">Support</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a> · <a href="../../it/dati-osm/" hreflang="it" lang="it">Italiano</a> · <a href="../../nl/osm-gegevens/" hreflang="nl" lang="nl">Nederlands</a> · <a href="../../pl/dane-osm/" hreflang="pl" lang="pl">Polski</a> · <a href="../../cs/data-osm/" hreflang="cs" lang="cs">Čeština</a> · <a href="../../sv/osm-data/" hreflang="sv" lang="sv">Svenska</a> · <a href="../../da/osm-data/" hreflang="da" lang="da">Dansk</a> · <a href="../../ru/osm-data/" hreflang="ru" lang="ru">Русский</a> · <a href="../../ja/osm-data/" hreflang="ja" lang="ja">日本語</a> · <a href="../../pt/dados-osm/" hreflang="pt-PT" lang="pt-PT">Português</a></footer>
 </main>
 </body>
 </html>

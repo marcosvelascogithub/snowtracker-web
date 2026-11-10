@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Данные OpenStreetMap · SnowTracker</title>
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/datos-osm/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/osm-data/">
+<link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/osm-daten/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/donnees-osm/">
+<link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/dati-osm/">
+<link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/osm-gegevens/">
+<link rel="alternate" hreflang="pl" href="https://marcosvelascogithub.github.io/snowtracker-web/pl/dane-osm/">
+<link rel="alternate" hreflang="cs" href="https://marcosvelascogithub.github.io/snowtracker-web/cs/data-osm/">
+<link rel="alternate" hreflang="sv" href="https://marcosvelascogithub.github.io/snowtracker-web/sv/osm-data/">
+<link rel="alternate" hreflang="da" href="https://marcosvelascogithub.github.io/snowtracker-web/da/osm-data/">
+<link rel="alternate" hreflang="ru" href="https://marcosvelascogithub.github.io/snowtracker-web/ru/osm-data/">
+<link rel="alternate" hreflang="ja" href="https://marcosvelascogithub.github.io/snowtracker-web/ja/osm-data/">
+<link rel="alternate" hreflang="pt-PT" href="https://marcosvelascogithub.github.io/snowtracker-web/pt/dados-osm/">
+<link rel="stylesheet" href="../../estilo.css">
+</head>
+<body>
+<main>
+<header>
+<a class="marca" href="../">SnowTracker</a>
+<h1>Данные OpenStreetMap</h1>
+<p class="secundario">Выгрузка от 31 октября 2026 г., 23:00 UTC</p>
+</header>
+
+<div class="resumen"><p>Трассы, подъемники и горнолыжные курорты в SnowTracker — © <a href="https://www.openstreetmap.org/copyright">участники OpenStreetMap</a>. Данные в приложении — это производная база данных OpenStreetMap, и они публикуются здесь по лицензии <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL) 1.0</a>.</p></div>
+
+<h2>Скачать данные</h2>
+<p>Те же файлы, что входят в приложение, бесплатно:</p>
+<p><a href="../../datos-osm/pistes.bin" download><strong>pistes.bin</strong></a> <span class="secundario">· 6,4 МБ · горнолыжные трассы и подъемники</span></p>
+<p><a href="../../datos-osm/pistes-index.json" download><strong>pistes-index.json</strong></a> <span class="secundario">· 0,4 МБ · индекс 7 166 зон в pistes.bin</span></p>
+<p><a href="../../datos-osm/resorts.json" download><strong>resorts.json</strong></a> <span class="secundario">· 0,9 МБ · 3 147 горнолыжных курортов</span></p>
+
+<h2>Источник</h2>
+<p>Созданы на основе мировой выгрузки трасс <a href="https://www.opensnowmap.org/">OpenSnowMap</a> (<code>planet_pistes.osm.gz</code>) с данными OpenStreetMap. Линии упрощены, а теги, которые приложение не использует, удалены. Обновляются с каждой версией приложения.</p>
+
+<h2>Формат</h2>
+<p><strong>pistes-index.json:</strong> <code>extract</code> — дата выгрузки, а каждый элемент <code>zones</code> — <code>[мин. широта, мин. долгота, макс. широта, макс. долгота, смещение, длина]</code>: ограничивающий прямоугольник зоны и положение ее блока в pistes.bin, в байтах.</p>
+<p><strong>pistes.bin:</strong> блоки зон один за другим. Каждый блок — это GeoJSON, сжатый xz (<code>FeatureCollection</code> из <code>LineString</code>). У каждой трассы есть <code>piste:type</code> и, если есть, <code>piste:difficulty</code> и <code>name</code> (ее <code>name</code> или, если его нет, ее <code>piste:name</code>); у каждого подъемника есть <code>aerialway</code>, со значениями OpenStreetMap.</p>
+<p><strong>resorts.json:</strong> <code>extract</code> — дата выгрузки, а каждый элемент <code>resorts</code> — <code>[название, name:es, name:en, name:de, name:fr, name:it, name:nl, name:pl, name:cs, name:sv, name:da, name:ru, name:ja, name:pt, страна на этих 13 языках в том же порядке, мин. широта, мин. долгота, макс. широта, макс. долгота]</code>: название курорта в OpenStreetMap, его названия на языках приложения, если они есть, и ограничивающий прямоугольник его трасс и подъемников.</p>
+
+<footer><a href="../../en/privacy/" hreflang="en">Конфиденциальность</a> · <a href="../support/">Поддержка</a> · <a href="../">SnowTracker</a> · <a href="../../datos-osm/" hreflang="es" lang="es">Español</a> · <a href="../../en/osm-data/" hreflang="en" lang="en">English</a> · <a href="../../de/osm-daten/" hreflang="de" lang="de">Deutsch</a> · <a href="../../fr/donnees-osm/" hreflang="fr" lang="fr">Français</a> · <a href="../../it/dati-osm/" hreflang="it" lang="it">Italiano</a> · <a href="../../nl/osm-gegevens/" hreflang="nl" lang="nl">Nederlands</a> · <a href="../../pl/dane-osm/" hreflang="pl" lang="pl">Polski</a> · <a href="../../cs/data-osm/" hreflang="cs" lang="cs">Čeština</a> · <a href="../../sv/osm-data/" hreflang="sv" lang="sv">Svenska</a> · <a href="../../da/osm-data/" hreflang="da" lang="da">Dansk</a> · <a href="../../ja/osm-data/" hreflang="ja" lang="ja">日本語</a> · <a href="../../pt/dados-osm/" hreflang="pt-PT" lang="pt-PT">Português</a></footer>
+</main>
+</body>
+</html>

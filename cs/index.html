@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SnowTracker · Každý sjezd se počítá</title>
+<meta name="description" content="SnowTracker měří váš lyžařský den na iPhonu a Apple Watch: rychlost, převýšení, každý sjezd na mapě, tep a celou sezónu. Bez účtů, bez reklam a vaše data zůstávají ve vašem iPhonu.">
+<meta property="og:title" content="SnowTracker · Každý sjezd se počítá">
+<meta property="og:description" content="Rychlost, převýšení a každý sjezd vašeho lyžařského dne na iPhonu a Apple Watch.">
+<meta property="og:image" content="https://marcosvelascogithub.github.io/snowtracker-web/img/cabecera.jpg">
+<meta name="theme-color" content="#0b1418">
+<meta name="apple-itunes-app" content="app-id=6826156855">
+<link rel="alternate" hreflang="es" href="https://marcosvelascogithub.github.io/snowtracker-web/">
+<link rel="alternate" hreflang="en" href="https://marcosvelascogithub.github.io/snowtracker-web/en/">
+<link rel="alternate" hreflang="de" href="https://marcosvelascogithub.github.io/snowtracker-web/de/">
+<link rel="alternate" hreflang="fr" href="https://marcosvelascogithub.github.io/snowtracker-web/fr/">
+<link rel="alternate" hreflang="it" href="https://marcosvelascogithub.github.io/snowtracker-web/it/">
+<link rel="alternate" hreflang="nl" href="https://marcosvelascogithub.github.io/snowtracker-web/nl/">
+<link rel="alternate" hreflang="pl" href="https://marcosvelascogithub.github.io/snowtracker-web/pl/">
+<link rel="alternate" hreflang="cs" href="https://marcosvelascogithub.github.io/snowtracker-web/cs/">
+<link rel="alternate" hreflang="sv" href="https://marcosvelascogithub.github.io/snowtracker-web/sv/">
+<link rel="alternate" hreflang="da" href="https://marcosvelascogithub.github.io/snowtracker-web/da/">
+<link rel="alternate" hreflang="ru" href="https://marcosvelascogithub.github.io/snowtracker-web/ru/">
+<link rel="alternate" hreflang="ja" href="https://marcosvelascogithub.github.io/snowtracker-web/ja/">
+<link rel="alternate" hreflang="pt-PT" href="https://marcosvelascogithub.github.io/snowtracker-web/pt/">
+<link rel="stylesheet" href="../estilo.css">
+<style>
+  main.portada { max-width: none; padding: 0; }
+  .envoltura { max-width: 1080px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
+
+  /* Cabecera: la cordillera y la huella del icono */
+  .heroe { position: relative; background: #1f4250; }
+  .heroe .envoltura { position: relative; z-index: 1; padding-block: 64px 8px; text-align: center; }
+  .heroe img.cordillera { display: block; width: 100%; height: auto; margin-top: -2px;
+                          min-height: 260px; object-fit: cover; object-position: 40% bottom; }
+  .heroe::after { content: ""; position: absolute; inset: auto 0 0 0; height: 90px;
+                  background: linear-gradient(transparent, var(--fondo)); }
+  .heroe .marca { font-size: 15px; }
+  .heroe h1 { font-size: clamp(44px, 8vw, 92px); letter-spacing: -0.02em; margin: 14px 0 0; }
+  .heroe h1 span { color: var(--cian); }
+  .heroe p { font-size: clamp(18px, 2.4vw, 22px); color: #c9d6df; max-width: 32ch; margin: 18px auto 0; text-wrap: balance; }
+  .tienda { display: inline-block; margin-top: 28px; line-height: 0; border-radius: 8px; }
+  .tienda img { display: block; height: 48px; width: auto; }
+  .tienda:focus-visible { outline: 2px solid var(--naranja); outline-offset: 4px; }
+
+  /* Funciones, alternando texto y captura */
+  .funcion { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; padding-block: 72px; }
+  .funcion:nth-of-type(even) .texto { order: 2; }
+  .texto { min-width: 0; }
+  .antetitulo { color: var(--naranja); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: 13px; }
+  .funcion h2, .seccion h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .funcion h2 span, .seccion h2 span { color: var(--cian); }
+  .funcion p { color: #c9d6df; font-size: 18px; max-width: 46ch; }
+  .telefonos { display: flex; justify-content: center; gap: 20px; }
+  .telefono { width: min(280px, 44vw); aspect-ratio: 660 / 1434; border-radius: 15% / 7%; padding: 2.6%;
+              background: #3a404a; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); }
+  .telefono img { width: 100%; height: 100%; border-radius: 13% / 6%; display: block; background: #000; }
+  .telefonos .telefono:nth-child(2) { margin-top: 48px; }
+
+  /* Apple Watch */
+  .seccion { padding-block: 72px; text-align: center; }
+  .seccion > .envoltura > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .relojes { display: flex; justify-content: center; gap: 28px; margin-top: 40px; flex-wrap: wrap; }
+  .reloj { width: 190px; padding: 14px; border-radius: 30%; background: #3a404a; box-shadow: 0 24px 48px rgba(0, 0, 0, .45); }
+  .reloj img { width: 100%; display: block; border-radius: 26%; }
+
+  /* Todo lo demás */
+  .rejilla { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; text-align: left; }
+  .tarjeta { background: var(--superficie); border-radius: 20px; padding: 22px; min-width: 0; }
+  .tarjeta h3 { margin: 0 0 6px; font-size: 18px; }
+  .tarjeta p { margin: 0; color: var(--secundario); font-size: 16px; }
+
+  /* Privacidad */
+  .privacidad { background: var(--superficie); border-radius: 28px; padding: 48px 32px; margin-block: 24px 72px; text-align: center; }
+  .sellos { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .sellos span { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+
+  footer.pie { border-top: 1px solid rgba(255, 255, 255, .08); padding-block: 32px 48px; display: flex; flex-wrap: wrap;
+               gap: 12px 24px; justify-content: space-between; color: var(--secundario); font-size: 15px; margin-top: 0; }
+  footer.pie nav { display: flex; gap: 20px; flex-wrap: wrap; }
+
+
+  /* Datos rápidos bajo el titular */
+  .datos-heroe { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; color: #c9d6df; font-size: 15px; font-weight: 600; }
+  .datos-heroe span + span::before { content: "·"; margin-right: 18px; color: var(--secundario); }
+
+  /* Estaciones */
+  .estaciones { position: relative; overflow: hidden; border-radius: 28px; margin-block: 24px 48px; padding: 56px 32px;
+                text-align: center; background: linear-gradient(160deg, #1f4250 0%, var(--superficie) 70%); }
+  .estaciones h2 { font-size: clamp(32px, 4.5vw, 48px); line-height: 1.08; margin: 10px 0 16px; text-wrap: balance; }
+  .estaciones h2 span { color: var(--cian); }
+  .estaciones > p { color: #c9d6df; font-size: 18px; max-width: 52ch; margin: 0 auto; }
+  .cifras { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px 56px; margin: 36px 0 8px; }
+  .cifra strong { display: block; font-size: clamp(48px, 7vw, 72px); line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+  .cifra span { color: var(--secundario); font-weight: 600; }
+  .paises { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; padding: 0; list-style: none; }
+  .paises li { border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+  .paises li b { color: var(--naranja); font-variant-numeric: tabular-nums; margin-left: 6px; }
+  .boton { display: inline-block; margin-top: 32px; padding: 14px 26px; border-radius: 999px; background: var(--cian); color: #08222c;
+           font-weight: 700; text-decoration: none; }
+  .estaciones .nota { margin-top: 18px; font-size: 14px; color: var(--secundario); }
+
+  @media (max-width: 760px) {
+    .funcion { grid-template-columns: 1fr; gap: 32px; padding-block: 48px; text-align: center; }
+    .funcion:nth-of-type(even) .texto { order: 0; }
+    .funcion p { margin-inline: auto; }
+    .rejilla { grid-template-columns: 1fr; }
+    .telefonos .telefono:nth-child(2) { margin-top: 32px; }
+  }
+  @media (min-width: 761px) and (max-width: 980px) { .rejilla { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<main class="portada">
+
+<section class="heroe">
+  <div class="envoltura">
+    <span class="marca">SnowTracker</span>
+    <h1>Každý sjezd<br><span>se počítá.</span></h1>
+    <p>Rychlost, převýšení a každý sjezd vašeho lyžařského dne na iPhonu a Apple Watch.</p>
+    <div class="datos-heroe"><span>iPhone a Apple Watch</span><span>3 147 lyžařských středisek</span><span>Bez účtů a bez reklam</span></div>
+    <a class="tienda" href="https://apps.apple.com/app/id6826156855"><img src="../img/app-store/cs.svg" alt="Stáhnout v App Store" width="120" height="40"></a>
+  </div>
+  <img class="cordillera" src="../img/cabecera.jpg" alt="" width="2400" height="1029">
+</section>
+
+<div class="envoltura">
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Živě</span>
+      <h2>Každý sjezd, <span>právě když probíhá.</span></h2>
+      <p>Klepněte na Začít a dál se nestarejte. SnowTracker sám rozliší sjezdy od vleků a ukáže, kolikátý sjezd jedete, jak rychle, kolik převýšení máte za sebou a sklon sjezdu. Se zamčeným iPhonem zůstane relace na zamčené obrazovce a pozastavení máte po ruce.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/01-sesion.jpg" alt="Probíhající relace: rychlost, čas, převýšení dolů a sjezdy" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Mapa</span>
+      <h2>Celý váš den <span>na mapě.</span></h2>
+      <p>Trasa dne na mapě Apple, obarvená podle rychlosti, s očíslovanými sjezdy a pod ní sjezdovky podle obtížnosti a vleky. Klepněte na sjezd a mapa ho ukáže. A pokud ho chcete prožít znovu, přehrajte ho až 240krát rychleji.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/02-mapa.jpg" alt="Satelitní mapa dne v Baqueira Beret se sjezdy a trasou obarvenou podle rychlosti" loading="lazy"></div>
+    </div>
+  </section>
+
+  <div class="estaciones">
+    <span class="antetitulo">Lyžařská střediska</span>
+    <h2>Sjezdovky vašeho střediska <span>už v aplikaci.</span></h2>
+    <p>Sjezdovky podle obtížnosti a vleky lyžařských středisek z celého světa jsou součástí aplikace: vidíte je pod svou trasou i bez signálu a v Dnes aplikace pozná středisko, ve kterém jste.</p>
+    <div class="cifras">
+      <div class="cifra"><strong>3 147</strong><span>lyžařských středisek se sjezdovkami</span></div>
+      <div class="cifra"><strong>63</strong><span>zemí</span></div>
+    </div>
+    <ul class="paises"><li>Spojené státy<b>432</b></li><li>Japonsko<b>385</b></li><li>Švýcarsko<b>293</b></li><li>Rakousko<b>275</b></li><li>Francie<b>245</b></li><li>Itálie<b>213</b></li></ul>
+    <a class="boton" href="strediska/">Najděte své středisko</a>
+    <p class="nota">Data: © přispěvatelé OpenStreetMap, licence ODbL. <a href="data-osm/">Stáhnout data</a>.</p>
+  </div>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Dnes</span>
+      <h2>Ví, ve kterém <span>jste středisku.</span></h2>
+      <p>Když otevřete aplikaci, Dnes ukáže, ve kterém jste středisku, co jste dnes najezdili, nebo když dnes nelyžujete, váš poslední den: sjezdy, převýšení, maximální rychlost a s Apple Watch tep a kcal. Klepnutím na středisko zobrazíte ta v okolí nebo vyhledáte jiné. Zvolte lyže, snowboard nebo telemark a začněte.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/06-hoy.jpg" alt="Dnes: Baqueira Beret, rozpoznané podle polohy, aktivita a tlačítko Začít nad horami" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Souhrn</span>
+      <h2>Celý den <span>na první pohled.</span></h2>
+      <p>Maximální a průměrná rychlost, převýšení, vzdálenost na lyžích a na vlecích, každý sjezd s rychlostí a sjezdovkami, kudy vedl, obtížnost dne podle barev a výškový profil. Řaďte sjezdy podle čísla nebo rychlosti.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/03-resumen.jpg" alt="Souhrn 14. února s měřeními dne" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/04a-perfil.jpg" alt="Seznam sjezdů se sjezdovkou každého z nich a výškový profil" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Zdraví</span>
+      <h2>Váš tep <span>sjezd po sjezdu.</span></h2>
+      <p>S Apple Watch si každý den uchová průměrný tep na sjezdech, maximální tep a aktivní kcal a k tomu graf tepu za celý den s vyznačenými sjezdy.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/05-salud.jpg" alt="Zdraví, sobota 14. února: průměrný tep na sjezdech, maximální tep, aktivní kcal a graf tepu" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Sezóna</span>
+      <h2>Všechno převýšení <span>se sčítá.</span></h2>
+      <p>Převýšení celé sezóny ve srovnání s minulou sezónou ke stejnému dni, s dny, sjezdy a vzdáleností. Váš čas na sněhu (na lyžích, na vlecích a stáním), rekordy jako medaile, které otevřou svůj den, sjezdovky, které jezdíte nejčastěji, a vaše střediska na mapě.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="../img/en/07-temporada.jpg" alt="Sezóna 2025/26: převýšení dolů, dny a sjezdy" loading="lazy"></div>
+      <div class="telefono"><img src="../img/en/08-temporada-records.jpg" alt="Sjezdovky sezóny podle obtížnosti a vaše střediska na mapě" loading="lazy"></div>
+    </div>
+  </section>
+
+</div>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">Apple Watch</span>
+    <h2>Vy lyžujete, <span>hodinky drží krok.</span></h2>
+    <p>Začněte na iPhonu a schovejte ho do kapsy. Na zápěstí vidíte aktuální sjezd, rychlost, tep a převýšení a ze zápěstí relaci pozastavíte nebo zamknete obrazovku. Tep a kalorie každého dne zůstanou v jeho souhrnu.</p>
+    <div class="relojes">
+      <div class="reloj"><img src="../img/en/reloj-2-metricas.png" alt="Apple Watch: sjezd 12, rychlost, tep a převýšení dolů" loading="lazy"></div>
+      <div class="reloj"><img src="../img/en/reloj-3-controles.png" alt="Apple Watch: Zamknout, Ukončit a Pozastavit" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">A ještě víc</span>
+    <h2>Stvořeno <span>pro hory.</span></h2>
+    <div class="rejilla">
+      <div class="tarjeta"><h3>Na zamčené obrazovce</h3><p>Relace na zamčené obrazovce s převýšením, časem, sjezdy a maximální rychlostí (s hodinkami i tepem a kaloriemi) a pozastavení bez otevírání aplikace.</p></div>
+      <div class="tarjeta"><h3>O relaci nikdy nepřijdete</h3><p>Když se aplikace zavře nebo se iPhone vypne, relace se po návratu obnoví. Upozorní vás, když dochází baterie, a po 30 minutách bez pohybu se zeptá, jestli ještě lyžujete.</p></div>
+      <div class="tarjeta"><h3>Ukládání do aplikace Zdraví</h3><p>Každý den jako cvičení v aplikaci Zdraví, s trasou a s hodinkami i s tepem a kaloriemi.</p></div>
+      <div class="tarjeta"><h3>Sdílejte svůj den</h3><p>Obrázek dne nebo sezóny s mapou a čísly, nebo trasa jako GPX pro použití v jiných aplikacích.</p></div>
+      <div class="tarjeta"><h3>Lyže, snowboard nebo telemark</h3><p>Zvolte aktivitu; statistiky se měří stejně.</p></div>
+      <div class="tarjeta"><h3>Vaše jednotky</h3><p>Kilometry nebo míle, metry nebo stopy podle vaší oblasti a VoiceOver přečte každé číslo s jednotkou.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="envoltura">
+  <section class="privacidad">
+    <span class="antetitulo">Soukromí</span>
+    <h2 style="font-size: clamp(30px, 4vw, 42px); margin: 10px 0 14px;">Vaše data <span style="color: var(--cian)">ve vašem iPhonu.</span></h2>
+    <p class="secundario" style="max-width: 50ch; margin: 0 auto;">SnowTracker nemá účty ani vlastní servery. Vaše relace se ukládají ve vašem zařízení a nikdo jiný je nevidí.</p>
+    <div class="sellos"><span>Bez účtů</span><span>Bez reklam</span><span>Bez analytiky</span><span>Bez sledování</span></div>
+    <p style="margin-top: 24px;"><a href="../en/privacy/" hreflang="en">Přečtěte si zásady ochrany soukromí (v angličtině)</a></p>
+  </section>
+
+  <footer class="pie">
+    <span>SnowTracker · Marcos Velasco Fernández</span>
+    <nav><a href="podpora/">Podpora</a><a href="../en/privacy/" hreflang="en">Soukromí</a><a href="data-osm/">Data OpenStreetMap</a><a href="mailto:marcosvelasco.iphoneapps@gmail.com?subject=SnowTracker">Kontakt</a><a href="../" hreflang="es" lang="es">Español</a><a href="../en/" hreflang="en" lang="en">English</a><a href="../de/" hreflang="de" lang="de">Deutsch</a><a href="../fr/" hreflang="fr" lang="fr">Français</a><a href="../it/" hreflang="it" lang="it">Italiano</a><a href="../nl/" hreflang="nl" lang="nl">Nederlands</a><a href="../pl/" hreflang="pl" lang="pl">Polski</a><a href="../sv/" hreflang="sv" lang="sv">Svenska</a><a href="../da/" hreflang="da" lang="da">Dansk</a><a href="../ru/" hreflang="ru" lang="ru">Русский</a><a href="../ja/" hreflang="ja" lang="ja">日本語</a><a href="../pt/" hreflang="pt-PT" lang="pt-PT">Português</a></nav>
+  </footer>
+</div>
+
+</main>
+</body>
+</html>
