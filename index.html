@@ -237,6 +237,11 @@
   .pantalla .sesion strong { font-size: clamp(36px, 9vw, 48px); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
   .pantalla .sesion small { color: var(--secundario); font-weight: 600; }
 
+  /* Actividad en vivo: la tarjeta ampliada sobre la captura */
+  .telefonos.con-detalle { position: relative; }
+  .con-detalle .detalle { position: absolute; left: 50%; top: 72%; width: min(440px, 92%); height: auto; transform: translate(-50%, -50%) rotate(-2deg);
+                          border-radius: 6% / 16%; box-shadow: 0 30px 60px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .12); }
+
   /* Capítulos de la historia */
   .capitulo { position: relative; padding-block: 120px 8px; text-align: center; }
   .capitulo::before { content: ""; position: absolute; left: 50%; top: 0; height: 96px; width: 2px; transform: translateX(-50%);
@@ -390,10 +395,11 @@
     <div class="texto">
       <span class="antetitulo">En la pantalla de bloqueo</span>
       <h2>El iPhone, <span>en el bolsillo.</span></h2>
-      <p>Bloquéalo y sigue esquiando: la sesión se queda en la pantalla de bloqueo como actividad en vivo, con la bajada en la que vas, el desnivel, el tiempo, las bajadas y la velocidad máxima. Y si paras a comer, Pausar está ahí, sin abrir la app ni quitarte los guantes más de la cuenta.</p>
+      <p>Bloquéalo y sigue esquiando: la sesión se queda en la pantalla de bloqueo como actividad en vivo, con la bajada en la que vas, el desnivel, el tiempo, las bajadas y la velocidad máxima. Con el Apple Watch, también tu pulso y las kcal que llevas. Y si paras a comer, Pausar está ahí, sin abrir la app.</p>
     </div>
-    <div class="telefonos">
-      <div class="telefono"><img src="img/15-actividad-en-vivo.jpg" alt="Pantalla de bloqueo con la actividad en vivo de SnowTracker: bajada 11, ≈4230 m de desnivel, 2:26:21 de tiempo, 11 bajadas, 79 km/h de velocidad máxima y el botón Pausar" loading="lazy"></div>
+    <div class="telefonos con-detalle">
+      <div class="telefono"><img src="img/15-actividad-en-vivo.jpg" alt="" loading="lazy"></div>
+      <img class="detalle" src="img/15b-actividad-detalle.jpg" alt="Actividad en vivo de SnowTracker en la pantalla de bloqueo: bajada 11, ≈4230 m de desnivel, 2:26:26 de tiempo, 11 bajadas, 79 km/h de velocidad máxima, 142 ppm de pulso, 874 kcal y el botón Pausar" width="840" height="313" loading="lazy">
     </div>
   </section>
 </div>
@@ -588,7 +594,6 @@
     <span class="antetitulo">Y además</span>
     <h2>Pensada para <span>la montaña.</span></h2>
     <div class="rejilla">
-      <div class="tarjeta"><h3>En la pantalla de bloqueo</h3><p>La sesión en una actividad en vivo, con el desnivel, el tiempo, las bajadas y la velocidad máxima (y, con el reloj, el pulso y las kcal), y Pausar sin abrir la app.</p></div>
       <div class="tarjeta"><h3>Nunca pierdes una sesión</h3><p>Si la app se cierra o el iPhone se apaga, la sesión se recupera al volver. Te avisa cuando queda poca batería y, si llevas 30 minutos sin moverte, te pregunta si sigues esquiando.</p></div>
       <div class="tarjeta"><h3>Guarda en Salud</h3><p>Cada día, como entrenamiento en la app Salud, con la ruta y, con el reloj, el pulso y las kcal.</p></div>
       <div class="tarjeta"><h3>Comparte tu día</h3><p>Una imagen del día o de la temporada, con el mapa y tus cifras, o la ruta en GPX para llevarla a otras apps.</p></div>
