@@ -136,6 +136,12 @@
   .dias { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 12px; }
   .dia { min-width: 0; }
   .dia.b { text-align: right; }
+  .estacion { text-align: center; margin: 0 0 18px; color: var(--secundario); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
+  .chip { display: inline-block; padding: 4px 12px; border-radius: 999px; font-weight: 700; font-size: 14px; white-space: nowrap; }
+  .a .chip { background: var(--a); color: #08222c; }
+  .b .chip { border: 2px solid var(--b); color: var(--b); }
+  .dia-tira { font-weight: 700; font-size: 13px; white-space: nowrap; }
+  .tira[data-lado="a"] .dia-tira { color: var(--a); } .tira[data-lado="b"] .dia-tira { color: var(--b); }
   .insignia { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font-weight: 800; font-size: 15px; }
   .a .insignia { background: var(--a); color: #08222c; }
   .b .insignia { border: 2px solid var(--b); color: var(--b); }
@@ -164,7 +170,7 @@
 
   .ritmo { margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, .08); }
   .ritmo h3 { margin: 0 0 14px; font-size: 18px; }
-  .tira { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .tira { display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
   .tira .insignia { width: 28px; height: 28px; font-size: 14px; }
   .tramos { display: flex; gap: 4px; height: 34px; }
   .tramos span { display: grid; place-items: center; border-radius: 8px; font-weight: 700; font-size: 14px; color: #0b1418; min-width: 0;
@@ -373,10 +379,21 @@
     <div class="texto">
       <span class="antetitulo">En directo</span>
       <h2>Cada bajada, <span>al momento.</span></h2>
-      <p>Pulsa «Empezar» y olvídate. SnowTracker separa solo las bajadas de los remontes y te dice en cuál vas, a qué velocidad, cuánto has bajado y la inclinación de la pista. Con el iPhone bloqueado, la sesión sigue en la pantalla de bloqueo, con Pausar a mano.</p>
+      <p>Pulsa «Empezar» y olvídate. SnowTracker separa solo las bajadas de los remontes y te dice en cuál vas, a qué velocidad, cuánto has bajado y la inclinación de la pista.</p>
     </div>
     <div class="telefonos">
       <div class="telefono"><img src="img/01-sesion.jpg" alt="Sesión en curso: 71 km/h, 2 h 26 min, 4163 m de desnivel bajado y 11 bajadas" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">En la pantalla de bloqueo</span>
+      <h2>El iPhone, <span>en el bolsillo.</span></h2>
+      <p>Bloquéalo y sigue esquiando: la sesión se queda en la pantalla de bloqueo como actividad en vivo, con la bajada en la que vas, el desnivel, el tiempo, las bajadas y la velocidad máxima. Y si paras a comer, Pausar está ahí, sin abrir la app ni quitarte los guantes más de la cuenta.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="img/15-actividad-en-vivo.jpg" alt="Pantalla de bloqueo con la actividad en vivo de SnowTracker: bajada 11, ≈4230 m de desnivel, 2:26:21 de tiempo, 11 bajadas, 79 km/h de velocidad máxima y el botón Pausar" loading="lazy"></div>
     </div>
   </section>
 </div>
@@ -465,47 +482,48 @@
     </div>
 
     <div class="marcador aparece" id="marcador"
-         data-mas="{v} más en {d}" data-igual="Empate" data-lang="es">
+         data-mas="{v} más el {d}" data-igual="Empate" data-dia-a="14 feb" data-dia-b="21 feb">
+      <p class="estacion">Baqueira Beret · Esquí</p>
       <div class="dias">
         <div class="dia a" data-lado="a">
-          <span class="insignia" aria-hidden="true">A</span>
+          <span class="chip nom-a">Sáb, 14 feb</span>
           <span class="grande"><span class="cuenta-num" data-valor="6830" data-prefijo="≈">≈6830</span></span>
-          <small>m bajados · <span class="fecha">Sáb, 14 feb</span> · Baqueira Beret</small>
+          <small>metros bajados</small>
         </div>
         <span class="vs" aria-hidden="true">VS</span>
         <div class="dia b" data-lado="b">
-          <span class="insignia" aria-hidden="true">B</span>
+          <span class="chip nom-b">Sáb, 21 feb</span>
           <span class="grande"><span class="cuenta-num" data-valor="2889" data-prefijo="≈">≈2889</span></span>
-          <small>m bajados · <span class="fecha">Sáb, 21 feb</span> · Baqueira Beret</small>
+          <small>metros bajados</small>
         </div>
       </div>
-      <span class="ventaja" id="ventaja" data-plantilla="↑ ≈{v} m más bajados en {d}">↑ ≈3941 m más bajados en A</span>
+      <span class="ventaja" id="ventaja" data-plantilla="↑ ≈{v} m más bajados el {d}">↑ ≈3941 m más bajados el 14 feb</span>
 
       <ul class="filas" id="filas">
         <li class="fila" data-a="16" data-b="6" data-unidad="">
-          <span class="eti">Bajadas · <span class="dif">10 más en A</span></span>
+          <span class="eti">Bajadas · <span class="dif">10 más el 14 feb</span></span>
           <span class="v va gana">16</span><span class="barras" aria-hidden="true"><span class="barra ba"><i></i></span><span class="barra bb"><i></i></span></span><span class="v vb pierde">6</span></li>
         <li class="fila" data-a="34.8" data-b="12.0" data-dec="1" data-unidad=" km">
-          <span class="eti">Distancia esquiando · <span class="dif">22,8 km más en A</span></span>
+          <span class="eti">Distancia esquiando · <span class="dif">22,8 km más el 14 feb</span></span>
           <span class="v va gana">34,8 km</span><span class="barras" aria-hidden="true"><span class="barra ba"><i></i></span><span class="barra bb"><i></i></span></span><span class="v vb pierde">12,0 km</span></li>
         <li class="fila" data-a="79" data-b="79" data-unidad=" km/h">
           <span class="eti">Velocidad máxima · <span class="dif">Empate</span></span>
           <span class="v va">79 km/h</span><span class="barras" aria-hidden="true"><span class="barra ba"><i></i></span><span class="barra bb"><i></i></span></span><span class="v vb">79 km/h</span></li>
         <li class="fila" data-a="49" data-b="40" data-unidad=" km/h">
-          <span class="eti">Media esquiando · <span class="dif">9 km/h más en A</span></span>
+          <span class="eti">Media esquiando · <span class="dif">9 km/h más el 14 feb</span></span>
           <span class="v va gana">49 km/h</span><span class="barras" aria-hidden="true"><span class="barra ba"><i></i></span><span class="barra bb"><i></i></span></span><span class="v vb pierde">40 km/h</span></li>
         <li class="fila" data-a="42" data-b="18" data-unidad=" min">
-          <span class="eti">Tiempo esquiando · <span class="dif">24 min más en A</span></span>
+          <span class="eti">Tiempo esquiando · <span class="dif">24 min más el 14 feb</span></span>
           <span class="v va gana">42 min</span><span class="barras" aria-hidden="true"><span class="barra ba"><i></i></span><span class="barra bb"><i></i></span></span><span class="v vb pierde">18 min</span></li>
       </ul>
 
       <div class="ritmo">
         <h3>Minutos bajando a cada velocidad</h3>
-        <div class="tira" data-lado="a"><span class="insignia" aria-hidden="true">A</span>
-          <div class="tramos" role="img" aria-label="A: 8 minutos lento, 10 normal y 24 rápido">
+        <div class="tira" data-lado="a"><span class="dia-tira nom-a" aria-hidden="true">14 feb</span>
+          <div class="tramos" role="img" aria-label="14 de febrero: 8 minutos lento, 10 normal y 24 rápido">
             <span class="lento" data-min="8">8′</span><span class="normal" data-min="10">10′</span><span class="rapido" data-min="24">24′</span></div></div>
-        <div class="tira" data-lado="b"><span class="insignia" aria-hidden="true">B</span>
-          <div class="tramos" role="img" aria-label="B: 5 minutos lento, 9 normal y 4 rápido">
+        <div class="tira" data-lado="b"><span class="dia-tira nom-b" aria-hidden="true">21 feb</span>
+          <div class="tramos" role="img" aria-label="21 de febrero: 5 minutos lento, 9 normal y 4 rápido">
             <span class="lento" data-min="5">5′</span><span class="normal" data-min="9">9′</span><span class="rapido" data-min="4">4′</span></div></div>
         <div class="leyenda"><span style="--c: var(--lento)">Lento &lt;30</span><span style="--c: var(--normal)">Normal 30-55</span><span style="--c: var(--rapido)">Rápido &gt;55 km/h</span></div>
       </div>
@@ -513,9 +531,9 @@
       <div class="pie-marcador">
         <button class="intercambiar" type="button" id="intercambiar" aria-pressed="false" hidden>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg>
-          Intercambiar A y B
+          Intercambiar los días
         </button>
-        <small>Datos del día de ejemplo de la app.</small>
+        <small>Dos sábados de esquí en Baqueira Beret, del día de ejemplo de la app.</small>
       </div>
     </div>
 
@@ -533,10 +551,10 @@
     <div class="perfil aparece" aria-hidden="true">
       <div class="barra-sup">
         <span class="reloj-dig" id="reloj">9:00</span>
-        <span class="estado"><span><span style="color: var(--a)">●</span> A <b id="estado-a">—</b></span><span><span style="color: var(--b)">●</span> B <b id="estado-b">—</b></span></span>
+        <span class="estado"><span><span style="color: var(--a)">●</span> 14 feb <b id="estado-a">—</b></span><span><span style="color: var(--b)">●</span> 21 feb <b id="estado-b">—</b></span></span>
       </div>
       <div class="grafica" id="perfil"><svg viewBox="0 0 900 220" preserveAspectRatio="none"></svg><span class="cursor"></span><span class="punto pa"></span><span class="punto pb"></span></div>
-      <p class="nota-ilu">Ilustración: A con línea continua, B con línea discontinua, como en la app.</p>
+      <p class="nota-ilu">Ilustración: el 14 de febrero con línea continua y el 21 con línea discontinua, como en la app.</p>
     </div>
 
     <div class="telefonos tres aparece">
@@ -640,7 +658,7 @@
 
   /* ----- Comparador ----- */
   var marcador = document.getElementById('marcador');
-  var lados = { a: 'A', b: 'B' };
+  var lados = { a: marcador.dataset.diaA, b: marcador.dataset.diaB };
   var cambiado = false, animado = false;
 
   function contar(el, hasta, dec, prefijo) {
@@ -684,18 +702,17 @@
       t.setAttribute('aria-label', origen.dataset.etiqueta || t.getAttribute('aria-label'));
     });
     /* Cabecera */
-    var nums = marcador.querySelectorAll('.cuenta-num'), fechas = marcador.querySelectorAll('.dia .fecha');
+    var nums = marcador.querySelectorAll('.cuenta-num');
     var vA = +nums[0].dataset.valor, vB = +nums[1].dataset.valor;
     if (cambiado) { var x = vA; vA = vB; vB = x; }
     var ventaja = document.getElementById('ventaja');
-    ventaja.textContent = ventaja.dataset.plantilla.replace('{v}', fmt(Math.abs(vA - vB), 0)).replace('{d}', vA >= vB ? 'A' : 'B');
+    ventaja.textContent = ventaja.dataset.plantilla.replace('{v}', fmt(Math.abs(vA - vB), 0)).replace('{d}', vA >= vB ? lados.a : lados.b);
     return { a: vA, b: vB };
   }
 
   if (marcador) {
     var tiraAria = marcador.querySelectorAll('.tramos');
     tiraAria.forEach(function (t) { t.dataset.etiqueta = t.getAttribute('aria-label'); });
-    var fechas = Array.prototype.map.call(marcador.querySelectorAll('.dia .fecha'), function (e) { return e.textContent; });
     pintarFilas();
     alVer(marcador, function (v) {
       if (!v || animado) return;
@@ -710,10 +727,12 @@
     boton.addEventListener('click', function () {
       cambiado = !cambiado;
       boton.setAttribute('aria-pressed', String(cambiado));
-      var nums = marcador.querySelectorAll('.cuenta-num'), fs = marcador.querySelectorAll('.dia .fecha');
-      var r = pintarFilas();
+      /* Los nombres de los días cambian de lado con sus cifras */
+      var t = lados.a; lados.a = lados.b; lados.b = t;
+      var na = marcador.querySelectorAll('.nom-a'), nb = marcador.querySelectorAll('.nom-b');
+      na.forEach(function (e, i) { var x = e.textContent; e.textContent = nb[i].textContent; nb[i].textContent = x; });
+      var nums = marcador.querySelectorAll('.cuenta-num'), r = pintarFilas();
       [r.a, r.b].forEach(function (v, i) { nums[i].textContent = nums[i].dataset.prefijo + fmt(v, 0); });
-      fs[0].textContent = fechas[cambiado ? 1 : 0]; fs[1].textContent = fechas[cambiado ? 0 : 1];
     });
   }
 
