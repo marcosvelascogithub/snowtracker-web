@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SnowTracker · Cada bajada, contada</title>
-<meta name="description" content="SnowTracker mide tu día de esquí en el iPhone y el Apple Watch: velocidad, desnivel, cada bajada en el mapa, tu pulso y toda la temporada. Sin cuentas, sin publicidad y con tus datos en tu iPhone.">
+<meta name="description" content="SnowTracker mide tu día de esquí en el iPhone y el Apple Watch: velocidad, desnivel, cada bajada en el mapa, tu pulso, el replay del día, la comparación de dos días y toda la temporada. Sin cuentas, sin publicidad y con tus datos en tu iPhone.">
 <meta property="og:title" content="SnowTracker · Cada bajada, contada">
 <meta property="og:description" content="Velocidad, desnivel y cada bajada de tu día de esquí, en el iPhone y el Apple Watch.">
 <meta property="og:image" content="https://marcosvelascogithub.github.io/snowtracker-web/img/cabecera.jpg">
@@ -52,9 +52,15 @@
   .funcion h2 span, .seccion h2 span { color: var(--cian); }
   .funcion p { color: #c9d6df; font-size: 18px; max-width: 46ch; }
   .telefonos { display: flex; justify-content: center; gap: 20px; }
-  .telefono { width: min(280px, 44vw); aspect-ratio: 660 / 1434; border-radius: 15% / 7%; padding: 2.6%;
+  .telefonos { align-items: flex-start; }
+  /* Dos capturas caben siempre (también a 320 px); una sola, más grande */
+  .telefonos .telefono { width: min(280px, calc(50% - 10px)); }
+  .telefonos .telefono:only-child { width: min(280px, 64%); }
+  html:not(.js) .perfil { display: none; }
+  .telefono { flex: none; width: min(280px, 44vw); border-radius: 15% / 7%; padding: 2.6%;
               background: #3a404a; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); }
-  .telefono img { width: 100%; height: 100%; border-radius: 13% / 6%; display: block; background: #000; }
+  /* La proporción la marca la captura (660 × 1434, la del iPhone): nada de estirarla */
+  .telefono img { width: 100%; height: auto; aspect-ratio: 660 / 1434; object-fit: cover; border-radius: 13% / 6%; display: block; background: #000; }
   .telefonos .telefono:nth-child(2) { margin-top: 48px; }
 
   /* Apple Watch */
@@ -108,6 +114,178 @@
     .telefonos .telefono:nth-child(2) { margin-top: 32px; }
   }
   @media (min-width: 761px) and (max-width: 980px) { .rejilla { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---------- Novedades: comparador, mapa doble y cuenta atrás ---------- */
+  :root { --a: #5ed1ff; --b: #ff8a3d; --lento: #3b82f6; --normal: #facc15; --rapido: #ef4444; }
+
+  .nuevo { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; padding: 6px 16px 6px 6px; border-radius: 999px;
+           background: rgba(11, 20, 24, .55); border: 1px solid rgba(94, 209, 255, .35); color: var(--texto); text-decoration: none;
+           font-weight: 600; font-size: 15px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .nuevo b { background: var(--cian); color: #08222c; border-radius: 999px; padding: 3px 10px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+  .nuevo:hover { border-color: var(--cian); }
+
+  /* Comparador */
+  .duelo { position: relative; overflow: hidden; padding-block: 96px 72px;
+           background:
+             radial-gradient(60% 50% at 0% 10%, rgba(94, 209, 255, .16), transparent 70%),
+             radial-gradient(60% 50% at 100% 30%, rgba(255, 138, 61, .14), transparent 70%),
+             linear-gradient(180deg, var(--fondo), #0f1d23 60%, var(--fondo)); }
+  .duelo .cabeza { text-align: center; }
+  .duelo h2, .cuenta h2 { font-size: clamp(36px, 6vw, 68px); line-height: 1.02; letter-spacing: -0.02em; margin: 12px 0 18px; text-wrap: balance; }
+  .duelo h2 .a { color: var(--a); } .duelo h2 .b { color: var(--b); }
+  .duelo .cabeza p { color: #c9d6df; font-size: clamp(18px, 2.2vw, 21px); max-width: 54ch; margin: 0 auto; text-wrap: pretty; }
+
+  .marcador { margin: 56px auto 0; max-width: 920px; background: rgba(19, 34, 42, .82); border: 1px solid rgba(255, 255, 255, .07);
+              border-radius: 32px; padding: clamp(20px, 4vw, 40px); box-shadow: 0 40px 80px rgba(0, 0, 0, .35); }
+  .dias { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 12px; }
+  .dia { min-width: 0; }
+  .dia.b { text-align: right; }
+  .estacion { text-align: center; margin: 0 0 18px; color: var(--secundario); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
+  .chip { display: inline-block; padding: 4px 12px; border-radius: 999px; font-weight: 700; font-size: 14px; white-space: nowrap; }
+  .a .chip { background: var(--a); color: #08222c; }
+  .b .chip { border: 2px solid var(--b); color: var(--b); }
+  .dia-tira { font-weight: 700; font-size: 13px; white-space: nowrap; }
+  .tira[data-lado="a"] .dia-tira { color: var(--a); } .tira[data-lado="b"] .dia-tira { color: var(--b); }
+  .dia .grande { display: block; font-size: clamp(40px, 8.5vw, 84px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; margin-top: 12px; font-variant-numeric: tabular-nums; }
+  .dia.a .grande { color: var(--a); } .dia.b .grande { color: var(--b); }
+  .dia small { display: block; color: var(--secundario); font-size: 15px; margin-top: 8px; }
+  .vs { color: var(--secundario); font-weight: 800; font-size: 18px; padding-bottom: 34px; }
+  .ventaja { display: table; text-align: center; text-wrap: balance; margin: 22px auto 6px; padding: 8px 18px; border-radius: 999px; background: rgba(255, 138, 61, .14);
+             color: #ffb27f; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  .filas { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 18px; }
+  .fila { display: grid; grid-template-columns: minmax(84px, 1fr) minmax(0, 3fr) minmax(84px, 1fr); grid-template-areas: "eti eti eti" "va barras vb"; gap: 6px 14px; align-items: center; }
+  .fila .eti { grid-area: eti; display: flex; justify-content: center; gap: 10px; color: var(--secundario); font-size: 14px; font-weight: 600; }
+  .fila .eti .dif { color: var(--texto); }
+  .fila .v { font-weight: 700; font-size: clamp(17px, 2.2vw, 21px); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .fila .va { grid-area: va; } .fila .vb { grid-area: vb; text-align: right; }
+  .fila .v.gana::after { content: " ▲"; font-size: .7em; vertical-align: .15em; }
+  .fila .va.gana { color: var(--a); } .fila .vb.gana { color: var(--b); }
+  .barras { grid-area: barras; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .barra { height: 12px; border-radius: 999px; background: rgba(255, 255, 255, .07); overflow: hidden; display: flex; }
+  .barra.ba { justify-content: flex-end; }
+  .barra i { display: block; height: 100%; width: 50%; border-radius: 999px; transition: width 1.1s cubic-bezier(.2, .8, .2, 1); }
+  .barra.ba i { background: var(--a); }
+  .barra.bb i { background: repeating-linear-gradient(90deg, var(--b) 0 10px, transparent 10px 14px); }
+  .fila .pierde { opacity: .55; }
+
+  .ritmo { margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, .08); }
+  .ritmo h3 { margin: 0 0 14px; font-size: 18px; }
+  .tira { display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .tramos { display: flex; gap: 4px; height: 34px; }
+  .tramos span { display: grid; place-items: center; border-radius: 8px; font-weight: 700; font-size: 14px; color: #0b1418; min-width: 0;
+                 flex: 1 1 auto; transition: flex-basis 1.1s cubic-bezier(.2, .8, .2, 1); overflow: hidden; }
+  .lento { background: var(--lento); color: #fff !important; } .normal { background: var(--normal); } .rapido { background: var(--rapido); color: #fff !important; }
+  .leyenda { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--secundario); font-size: 14px; margin-top: 10px; }
+  .leyenda span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; background: var(--c); }
+  .pie-marcador { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 26px; }
+  .intercambiar { font: inherit; font-weight: 700; color: var(--texto); background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .14);
+                  border-radius: 999px; padding: 10px 18px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+  .intercambiar:hover { background: rgba(255, 255, 255, .14); }
+  .intercambiar:focus-visible, .nuevo:focus-visible { outline: 2px solid var(--naranja); outline-offset: 3px; }
+  .intercambiar svg { transition: transform .5s; } .intercambiar[aria-pressed="true"] svg { transform: rotate(180deg); }
+  .pie-marcador small { color: var(--secundario); font-size: 13px; }
+
+  .apartados { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 56px auto 0; max-width: 920px; padding: 0; list-style: none; }
+  .apartados li { background: rgba(19, 34, 42, .7); border: 1px solid rgba(255, 255, 255, .06); border-radius: 20px; padding: 18px; min-width: 0; }
+  .apartados b { display: block; font-size: 17px; margin-bottom: 4px; }
+  .apartados span { color: var(--secundario); font-size: 15px; }
+  .duelo .telefonos { margin-top: 64px; }
+
+  /* Gráfica de altitud de los dos días */
+  .perfil { position: relative; margin: 48px auto 0; max-width: 920px; background: var(--superficie); border-radius: 28px; padding: 22px clamp(14px, 3vw, 28px) 16px; text-align: left; }
+  .perfil .barra-sup { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .reloj-dig { font-size: clamp(28px, 4vw, 40px); font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .perfil .estado { display: flex; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--secundario); font-weight: 600; }
+  .perfil .estado b { color: var(--texto); font-variant-numeric: tabular-nums; }
+  .grafica { position: relative; margin-top: 12px; height: clamp(150px, 22vw, 220px); }
+  .grafica svg { position: absolute; inset: 0 0 22px 0; width: 100%; height: calc(100% - 22px); overflow: visible; }
+  .grafica svg * { vector-effect: non-scaling-stroke; }
+  .grafica .hora { position: absolute; bottom: 0; transform: translateX(-50%); color: var(--secundario); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .grafica .cursor { position: absolute; top: 0; bottom: 22px; width: 1.5px; margin-left: -.75px; background: rgba(255, 255, 255, .8); }
+  .grafica .punto { position: absolute; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; border: 3px solid var(--fondo); }
+  .grafica .punto.pa { background: var(--a); }
+  .grafica .punto.pb { background: var(--fondo); border-color: var(--b); }
+  .perfil .nota-ilu { color: var(--secundario); font-size: 13px; margin: 6px 0 0; }
+
+  /* Cuenta atrás */
+  .cuenta { padding-block: 96px; background: radial-gradient(50% 60% at 70% 50%, rgba(94, 209, 255, .12), transparent 70%); }
+  .cuenta .envoltura { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+  .cuenta h2 span { color: var(--cian); }
+  .cuenta p { color: #c9d6df; font-size: 18px; max-width: 46ch; }
+  .cuenta ul { padding: 0; margin: 22px 0 0; list-style: none; display: grid; gap: 10px; }
+  .cuenta li { display: flex; gap: 12px; align-items: baseline; color: #c9d6df; }
+  .cuenta li::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--cian); transform: translateY(-2px); }
+  .pantalla { position: relative; width: min(300px, 70vw); margin: 0 auto; aspect-ratio: 660 / 1434; border-radius: 15% / 7%; padding: 2.6%; background: #3a404a; box-shadow: 0 30px 60px rgba(0, 0, 0, .45), 0 0 120px rgba(94, 209, 255, .12); }
+  .pantalla .lienzo { position: relative; width: 100%; height: 100%; border-radius: 13% / 6%; background: #000; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .pantalla .icono { width: 15%; aspect-ratio: 1; border-radius: 50%; background: #10262f; display: grid; place-items: center; margin-bottom: 9%; }
+  .pantalla .icono svg { width: 62%; }
+  .pantalla .anillo { position: relative; width: 70%; aspect-ratio: 1; }
+  .pantalla .anillo svg { width: 100%; height: 100%; display: block; }
+  .pantalla .anillo .num { position: absolute; inset: 0; display: grid; place-items: center; font-weight: 800; font-variant-numeric: tabular-nums; color: #fff; }
+  .pantalla .num span { font-size: clamp(64px, 16vw, 92px); line-height: 1; }
+  .pantalla .num span.listo { font-size: clamp(18px, 4.6vw, 24px); font-weight: 700; }
+  .pantalla .num span.cambia { animation: cambia .35s ease-out; }
+  @keyframes cambia { from { opacity: 0; transform: translateY(18%) scale(.9); filter: blur(6px); } }
+  .pantalla .actividad { color: #fff; font-weight: 700; font-size: clamp(16px, 4vw, 20px); margin-top: 8%; }
+  .pantalla .cancelar { position: absolute; bottom: 7%; padding: 3.5% 9%; border-radius: 999px; background: rgba(255, 255, 255, .12); color: #fff; font-weight: 600; font-size: clamp(13px, 3.4vw, 16px); }
+  .pantalla .sesion { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: #000; opacity: 0; transition: opacity .35s; }
+  .pantalla .sesion.ver { opacity: 1; }
+  .pantalla .sesion strong { font-size: clamp(36px, 9vw, 48px); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .pantalla .sesion small { color: var(--secundario); font-weight: 600; }
+
+  /* Capítulos de la historia */
+  .capitulo { position: relative; padding-block: 120px 8px; text-align: center; }
+  .capitulo::before { content: ""; position: absolute; left: 50%; top: 0; height: 96px; width: 2px; transform: translateX(-50%);
+                      background: linear-gradient(transparent, var(--cian)); opacity: .6; }
+  .capitulo .n { display: block; font-size: clamp(72px, 12vw, 140px); font-weight: 800; line-height: .9; letter-spacing: -0.04em;
+                 color: transparent; -webkit-text-stroke: 1.5px rgba(94, 209, 255, .45); font-variant-numeric: tabular-nums; }
+  .capitulo .cuando { display: block; margin-top: 10px; color: var(--naranja); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: 13px; }
+  .capitulo .titulo-cap { font-size: clamp(22px, 3vw, 30px); margin: 6px 0 0; color: var(--secundario); font-weight: 700; }
+  .capitulo + .envoltura > .funcion:first-child, .capitulo + .envoltura > .estaciones:first-child { padding-top: 32px; }
+  .capitulo + .cuenta, .capitulo + .duelo { padding-top: 40px; }
+  .capitulo + .seccion { padding-top: 40px; }
+
+  /* Comparador: tres capturas y subtítulo */
+  .telefonos.tres { flex-wrap: wrap; gap: 20px; }
+  .telefonos.tres .telefono { width: min(250px, calc(50% - 10px)); }
+  .telefonos.tres .telefono:nth-child(3) { margin-top: 0; }
+  .subcabeza { text-align: center; margin-top: 88px; }
+  .subcabeza h3 { font-size: clamp(28px, 4vw, 44px); line-height: 1.08; margin: 0 0 14px; letter-spacing: -0.02em; }
+  .subcabeza h3 span { color: var(--cian); }
+  .subcabeza p { color: #c9d6df; font-size: 18px; max-width: 54ch; margin: 0 auto; }
+  .duelo .perfil { margin-top: 36px; }
+
+  /* Indicador del capítulo en curso */
+  .progreso { position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 10; transform: translate(-50%, 140%);
+              display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 10px; border-radius: 999px; max-width: calc(100vw - 32px);
+              background: rgba(19, 34, 42, .82); border: 1px solid rgba(255, 255, 255, .1); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+              box-shadow: 0 10px 30px rgba(0, 0, 0, .4); transition: transform .45s cubic-bezier(.2, .8, .2, 1); font-size: 14px; font-weight: 700; white-space: nowrap; }
+  .progreso.ver { transform: translate(-50%, 0); }
+  .progreso .pn { background: var(--cian); color: #08222c; border-radius: 999px; padding: 2px 8px; font-variant-numeric: tabular-nums; }
+  .progreso .pt { overflow: hidden; text-overflow: ellipsis; }
+  .progreso .pb { width: 64px; height: 4px; border-radius: 999px; background: rgba(255, 255, 255, .14); overflow: hidden; flex: none; }
+  .progreso .pb i { display: block; height: 100%; width: var(--avance, 0%); background: var(--cian); }
+
+  /* Entradas al hacer scroll (solo con JS y sin «Reducir movimiento») */
+  .js .barra i { width: var(--p, 0%); }
+  .js .tramos span { flex: 0 0 var(--w, 0%); }
+  .js .aparece { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s cubic-bezier(.2, .8, .2, 1); }
+  .js .aparece.visto { opacity: 1; transform: none; }
+
+  @media (max-width: 760px) {
+    .apartados { grid-template-columns: 1fr 1fr; }
+    .cuenta .envoltura { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+    .cuenta p { margin-inline: auto; } .cuenta ul { justify-items: center; }
+    .dias { grid-template-columns: 1fr 1fr; } .vs { display: none; }
+    .fila { grid-template-columns: auto minmax(0, 1fr) auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .aparece { opacity: 1; transform: none; transition: none; }
+    .barra i, .tramos span, .intercambiar svg { transition: none; }
+    .pantalla .num span.cambia { animation: none; }
+    .progreso { transition: none; }
+  }
 </style>
 </head>
 <body>
@@ -120,31 +298,24 @@
     <p>Velocidad, desnivel y cada bajada de tu día de esquí, en el iPhone y el Apple Watch.</p>
     <div class="datos-heroe"><span>iPhone y Apple Watch</span><span>3.147 estaciones</span><span>Sin cuentas ni publicidad</span></div>
     <a class="tienda" href="https://apps.apple.com/app/id6826156855"><img src="img/app-store/es.svg" alt="Consíguelo en el App Store" width="120" height="40"></a>
+    <br><a class="nuevo" href="#capitulo-1"><b>Un día en la nieve</b> Empieza la historia ↓</a>
   </div>
   <img class="cordillera" src="img/cabecera.jpg" alt="" width="2400" height="1029">
 </section>
 
+<div class="capitulo aparece" id="capitulo-1" data-cap="1" data-nombre="Llegas a la estación">
+  <div class="envoltura"><span class="n" aria-hidden="true">01</span><span class="cuando">Por la mañana</span><p class="titulo-cap">Llegas a la estación</p></div>
+</div>
+
 <div class="envoltura">
-
   <section class="funcion">
     <div class="texto">
-      <span class="antetitulo">En directo</span>
-      <h2>Cada bajada, <span>al momento.</span></h2>
-      <p>Pulsa «Empezar» y olvídate. SnowTracker separa solo las bajadas de los remontes y te dice en cuál vas, a qué velocidad, cuánto has bajado y la inclinación de la pista. Con el iPhone bloqueado, la sesión sigue en la pantalla de bloqueo, con Pausar a mano.</p>
+      <span class="antetitulo">Hoy</span>
+      <h2>Sabe en qué <span>estación estás.</span></h2>
+      <p>Al abrir la app, Hoy te dice en qué estación estás, lo que llevas en el día o, si hoy no has esquiado, tu último día: bajadas, desnivel, velocidad máxima y, con Apple Watch, pulso y kcal. Toca la estación para ver las cercanas o buscar otra. Elige esquí, snowboard o telemark y empieza.</p>
     </div>
     <div class="telefonos">
-      <div class="telefono"><img src="img/01-sesion.jpg" alt="Sesión en curso: 71 km/h, 2 h 26 min, 4163 m de desnivel bajado y 11 bajadas" loading="lazy"></div>
-    </div>
-  </section>
-
-  <section class="funcion">
-    <div class="texto">
-      <span class="antetitulo">El mapa</span>
-      <h2>Tu día entero, <span>en el mapa.</span></h2>
-      <p>La ruta del día, coloreada por velocidad sobre los mapas de Apple, con cada bajada numerada y, debajo, las pistas por dificultad y los remontes. Toca una bajada y el mapa la encuadra sola. Y si quieres revivirla, reprodúcela hasta 240 veces más rápido.</p>
-    </div>
-    <div class="telefonos">
-      <div class="telefono"><img src="img/02-mapa.jpg" alt="Mapa del día en Baqueira Beret, en satélite, con las pistas y la ruta coloreada por velocidad" loading="lazy"></div>
+      <div class="telefono"><img src="img/06-hoy.jpg" alt="Hoy: Baqueira Beret, detectada por tu ubicación, la actividad, el botón Empezar con el logo de la app sobre la cordillera y la tarjeta del día con el desnivel" loading="lazy"></div>
     </div>
   </section>
 
@@ -160,18 +331,87 @@
     <a class="boton" href="estaciones/">Busca tu estación</a>
     <p class="nota">Datos: © colaboradores de OpenStreetMap, con licencia ODbL. <a href="datos-osm/">Descarga los datos</a>.</p>
   </div>
+</div>
 
+<div class="capitulo aparece" id="capitulo-2" data-cap="2" data-nombre="Empiezas">
+  <div class="envoltura"><span class="n" aria-hidden="true">02</span><span class="cuando">Al pie del remonte</span><p class="titulo-cap">Empiezas</p></div>
+</div>
+
+<section class="cuenta" aria-labelledby="titulo-cuenta">
+  <div class="envoltura">
+    <div class="texto aparece">
+      <span class="antetitulo">Nuevo · Al empezar</span>
+      <h2 id="titulo-cuenta">Preparado. <span>3, 2, 1…</span></h2>
+      <p>Al pulsar «Empezar», una cuenta atrás a pantalla completa te da tiempo a guardar el iPhone y ponerte los guantes. La sesión arranca en 0:00:00, ni un segundo antes.</p>
+      <ul>
+        <li>¿Con prisa? Toca la pantalla y empieza ya.</li>
+        <li>Una vibración suave en cada número.</li>
+        <li>Si bloqueas el iPhone, la sesión empieza igual.</li>
+      </ul>
+    </div>
+    <div class="pantalla aparece" id="pantalla" role="img" aria-label="Cuenta atrás de SnowTracker: Preparado, 3, 2, 1 y la sesión empieza en 0:00:00"
+         data-listo="Preparado">
+      <div class="lienzo" aria-hidden="true">
+        <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="#5ed1ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14.5" cy="4" r="1.8" fill="#5ed1ff" stroke="none"/><path d="M8 9.5 12.5 7l2 4.5-3 2.5 2.5 4"/><path d="M14.5 11.5 18 12"/><path d="M3 15.5l17 6"/></svg></div>
+        <div class="anillo">
+          <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="88" fill="none" stroke="rgba(94,209,255,.25)" stroke-width="13"/>
+            <circle id="arco" cx="100" cy="100" r="88" fill="none" stroke="#5ed1ff" stroke-width="13" stroke-linecap="round"
+                    stroke-dasharray="552.92" stroke-dashoffset="0" transform="rotate(-90 100 100)"/></svg>
+          <div class="num"><span id="numero">3</span></div>
+        </div>
+        <div class="actividad">Esquí</div>
+        <div class="cancelar">Cancelar</div>
+        <div class="sesion" id="sesion"><strong>0:00:00</strong><small>Sesión en marcha</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="capitulo aparece" id="capitulo-3" data-cap="3" data-nombre="Esquías">
+  <div class="envoltura"><span class="n" aria-hidden="true">03</span><span class="cuando">Todo el día</span><p class="titulo-cap">Esquías</p></div>
+</div>
+
+<div class="envoltura">
   <section class="funcion">
     <div class="texto">
-      <span class="antetitulo">Hoy</span>
-      <h2>Sabe en qué <span>estación estás.</span></h2>
-      <p>Al abrir la app, Hoy te dice en qué estación estás, lo que llevas en el día o, si hoy no has esquiado, tu último día: bajadas, desnivel, velocidad máxima y, con Apple Watch, pulso y kcal. Toca la estación para ver las cercanas o buscar otra. Elige esquí, snowboard o telemark y empieza.</p>
+      <span class="antetitulo">En directo</span>
+      <h2>Cada bajada, <span>al momento.</span></h2>
+      <p>Con la sesión en marcha, olvídate: SnowTracker separa solo las bajadas de los remontes y te dice en cuál vas, a qué velocidad, cuánto has bajado y la inclinación de la pista.</p>
     </div>
     <div class="telefonos">
-      <div class="telefono"><img src="img/06-hoy.jpg" alt="Hoy: Baqueira Beret, detectada por tu ubicación, la actividad, el botón Empezar con el logo de la app sobre la cordillera y la tarjeta del día con el desnivel" loading="lazy"></div>
+      <div class="telefono"><img src="img/01-sesion.jpg" alt="Sesión en curso: 71 km/h, 2 h 26 min, 4163 m de desnivel bajado y 11 bajadas" loading="lazy"></div>
     </div>
   </section>
 
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">En la pantalla de bloqueo</span>
+      <h2>El iPhone, <span>en el bolsillo.</span></h2>
+      <p>Bloquéalo y sigue esquiando: la sesión se queda en la pantalla de bloqueo como actividad en vivo, con la bajada en la que vas, el desnivel, el tiempo, las bajadas y la velocidad máxima. Con el Apple Watch, también tu pulso y las kcal que llevas. Y si paras a comer, Pausar está ahí, sin abrir la app.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="img/15-actividad-en-vivo.jpg" alt="Pantalla de bloqueo con la actividad en vivo de SnowTracker: bajada 11, ≈4230 m de desnivel, 2:26:26 de tiempo, 11 bajadas, 79 km/h de velocidad máxima, 142 ppm de pulso, 874 kcal y el botón Pausar" loading="lazy"></div>
+    </div>
+  </section>
+</div>
+
+<section class="seccion">
+  <div class="envoltura">
+    <span class="antetitulo">Apple Watch</span>
+    <h2>Tú esquías, <span>el reloj apunta.</span></h2>
+    <p>Empieza en el iPhone y olvídate de él. En la muñeca ves la bajada en la que vas, la velocidad, el pulso y el desnivel, y pausas o bloqueas la pantalla desde la muñeca. El pulso y las kcal de cada día quedan en su resumen.</p>
+    <div class="relojes">
+      <div class="reloj"><img src="img/reloj-2-metricas.png" alt="Apple Watch: bajada 12, 58 km/h, pulso 142 ppm y 5860 m bajados" loading="lazy"></div>
+      <div class="reloj"><img src="img/reloj-3-controles.png" alt="Apple Watch: Bloquear, Terminar y Pausar" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<div class="capitulo aparece" id="capitulo-4" data-cap="4" data-nombre="Terminas">
+  <div class="envoltura"><span class="n" aria-hidden="true">04</span><span class="cuando">A última hora</span><p class="titulo-cap">Terminas</p></div>
+</div>
+
+<div class="envoltura">
   <section class="funcion">
     <div class="texto">
       <span class="antetitulo">El resumen</span>
@@ -186,15 +426,146 @@
 
   <section class="funcion">
     <div class="texto">
+      <span class="antetitulo">El mapa</span>
+      <h2>Tu día entero, <span>en el mapa.</span></h2>
+      <p>La ruta del día, coloreada por velocidad sobre los mapas de Apple, con cada bajada numerada y, debajo, las pistas por dificultad y los remontes. Toca una bajada y el mapa la encuadra sola.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="img/02-mapa.jpg" alt="Mapa del día en Baqueira Beret, en satélite, con las pistas y la ruta coloreada por velocidad" loading="lazy"></div>
+    </div>
+  </section>
+
+  <section class="funcion">
+    <div class="texto">
       <span class="antetitulo">Salud</span>
-      <h2>Tu pulso, <span>bajada a bajada.</span></h2>
-      <p>Con el Apple Watch, cada día guarda tu pulso medio en las bajadas, el máximo y las kcal activas, y la gráfica del pulso de todo el día con las bajadas marcadas.</p>
+      <h2>Tu pulso y tus calorías, <span>de todo el día.</span></h2>
+      <p>Con el Apple Watch, cada día guarda las calorías activas que has quemado, tu pulso medio en las bajadas y el máximo, y la gráfica del pulso de todo el día con las bajadas marcadas. Mientras esquías, ves sumar las kcal en la pantalla de bloqueo.</p>
     </div>
     <div class="telefonos">
       <div class="telefono"><img src="img/05-salud.jpg" alt="Salud del sábado 14 de febrero: 145 ppm de media en las bajadas, 166 ppm de máximo, 992 kcal activas y la gráfica del pulso" loading="lazy"></div>
     </div>
   </section>
+</div>
 
+<div class="capitulo aparece" id="capitulo-5" data-cap="5" data-nombre="Lo revives">
+  <div class="envoltura"><span class="n" aria-hidden="true">05</span><span class="cuando">Esa noche</span><p class="titulo-cap">Lo revives</p></div>
+</div>
+
+<div class="envoltura">
+  <section class="funcion">
+    <div class="texto">
+      <span class="antetitulo">Nuevo · Replay</span>
+      <h2>Vuelve a <span>bajarlo todo.</span></h2>
+      <p>Reproduce el día sobre el mapa, hasta 240 veces más rápido, con la cámara siguiendo tu marcador. El perfil de altitud se mueve con el mapa: arrástralo para ir a cualquier momento, salta de una bajada a otra y mira la velocidad, la altitud, la hora y el pulso de cada punto.</p>
+    </div>
+    <div class="telefonos">
+      <div class="telefono"><img src="img/13-replay.jpg" alt="Replay del sábado 14 de febrero en satélite: 3:29:40, 1947 m de altitud, 11 km/h y 96 ppm en un remonte" loading="lazy"></div>
+    </div>
+  </section>
+</div>
+
+<div class="capitulo aparece" id="capitulo-6" data-cap="6" data-nombre="Lo comparas">
+  <div class="envoltura"><span class="n" aria-hidden="true">06</span><span class="cuando">Una semana después</span><p class="titulo-cap">Lo comparas</p></div>
+</div>
+
+<!-- Comparador. Las cifras son las del ejemplo de la app (Baqueira Beret, 14 y 21 de febrero), las mismas de las capturas. -->
+<section class="duelo" id="comparador" aria-labelledby="titulo-comparador">
+  <div class="envoltura">
+    <div class="cabeza aparece">
+      <span class="antetitulo">Nuevo · Comparador</span>
+      <h2 id="titulo-comparador"><span class="a">Tu día</span> contra <span class="b">tu día.</span></h2>
+      <p>Elige dos días de tu historial, de la misma estación o de otra temporada, y ponlos frente a frente: qué día bajaste más, en cuál fuiste más rápido y por cuánto. Cada cifra marca el día que gana, con la diferencia al lado y la media de tu temporada como referencia.</p>
+    </div>
+
+    <div class="marcador aparece" id="marcador"
+         data-mas="{v} más el {d}" data-igual="Empate" data-dia-a="14 feb" data-dia-b="21 feb">
+      <p class="estacion">Baqueira Beret · Esquí</p>
+      <div class="dias">
+        <div class="dia a" data-lado="a">
+          <span class="chip nom-a">Sáb, 14 feb</span>
+          <span class="grande"><span class="cuenta-num" data-valor="6830" data-prefijo="≈">≈6830</span></span>
+          <small>metros bajados</small>
+        </div>
+        <span class="vs" aria-hidden="true">VS</span>
+        <div class="dia b" data-lado="b">
+          <span class="chip nom-b">Sáb, 21 feb</span>
+          <span class="grande"><span class="cuenta-num" data-valor="2881" data-prefijo="≈">≈2881</span></span>
+          <small>metros bajados</small>
+        </div>
+      </div>
+      <span class="ventaja" id="ventaja" data-plantilla="↑ ≈{v} m más bajados el {d}">↑ ≈3949 m más bajados el 14 feb</span>
+
+      <ul class="filas" id="filas">
+        <li class="fila" data-a="16" data-b="6" data-unidad="">
+          <span class="eti">Bajadas · <span class="dif">10 más el 14 feb</span></span>
+          <span class="v va gana">16</span><span class="barras" aria-hidden="true"><span class="barra ba"><i></i></span><span class="barra bb"><i></i></span></span><span class="v vb pierde">6</span></li>
+        <li class="fila" data-a="34.8" data-b="12.0" data-dec="1" data-unidad=" km">
+          <span class="eti">Distancia esquiando · <span class="dif">22,8 km más el 14 feb</span></span>
+          <span class="v va gana">34,8 km</span><span class="barras" aria-hidden="true"><span class="barra ba"><i></i></span><span class="barra bb"><i></i></span></span><span class="v vb pierde">12,0 km</span></li>
+        <li class="fila" data-a="79" data-b="68" data-unidad=" km/h">
+          <span class="eti">Velocidad máxima · <span class="dif">11 km/h más el 14 feb</span></span>
+          <span class="v va gana">79 km/h</span><span class="barras" aria-hidden="true"><span class="barra ba"><i></i></span><span class="barra bb"><i></i></span></span><span class="v vb pierde">68 km/h</span></li>
+        <li class="fila" data-a="49" data-b="38" data-unidad=" km/h">
+          <span class="eti">Media esquiando · <span class="dif">11 km/h más el 14 feb</span></span>
+          <span class="v va gana">49 km/h</span><span class="barras" aria-hidden="true"><span class="barra ba"><i></i></span><span class="barra bb"><i></i></span></span><span class="v vb pierde">38 km/h</span></li>
+        <li class="fila" data-a="42" data-b="19" data-unidad=" min">
+          <span class="eti">Tiempo esquiando · <span class="dif">23 min más el 14 feb</span></span>
+          <span class="v va gana">42 min</span><span class="barras" aria-hidden="true"><span class="barra ba"><i></i></span><span class="barra bb"><i></i></span></span><span class="v vb pierde">19 min</span></li>
+      </ul>
+
+      <div class="ritmo">
+        <h3>Minutos bajando a cada velocidad</h3>
+        <div class="tira" data-lado="a"><span class="dia-tira nom-a" aria-hidden="true">14 feb</span>
+          <div class="tramos" role="img" aria-label="14 de febrero: 8 minutos lento, 10 normal y 24 rápido">
+            <span class="lento" data-min="8">8′</span><span class="normal" data-min="10">10′</span><span class="rapido" data-min="24">24′</span></div></div>
+        <div class="tira" data-lado="b"><span class="dia-tira nom-b" aria-hidden="true">21 feb</span>
+          <div class="tramos" role="img" aria-label="21 de febrero: 6 minutos lento, 10 normal y 3 rápido">
+            <span class="lento" data-min="6">6′</span><span class="normal" data-min="10">10′</span><span class="rapido" data-min="3">3′</span></div></div>
+        <div class="leyenda"><span style="--c: var(--lento)">Lento &lt;30</span><span style="--c: var(--normal)">Normal 30–55</span><span style="--c: var(--rapido)">Rápido &gt;55 km/h</span></div>
+      </div>
+
+      <div class="pie-marcador">
+        <button class="intercambiar" type="button" id="intercambiar" aria-pressed="false" hidden>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></svg>
+          Intercambiar los días
+        </button>
+        <small>Dos sábados de esquí en Baqueira Beret, del día de ejemplo de la app.</small>
+      </div>
+    </div>
+
+    <ul class="apartados">
+      <li class="aparece"><b>Resumen</b><span>Bajadas, desnivel, distancia, velocidades y tiempos, cifra a cifra.</span></li>
+      <li class="aparece"><b>Rendimiento</b><span>Las dos agujas en un velocímetro, tus minutos a cada velocidad y la altitud de los dos días.</span></li>
+      <li class="aparece"><b>Salud</b><span>Con el Apple Watch, tu pulso y tus kcal de un día frente al otro.</span></li>
+      <li class="aparece"><b>Mapa</b><span>Los dos días a la vez sobre el mapa, cada uno con su marcador.</span></li>
+    </ul>
+
+    <div class="subcabeza aparece">
+      <h3>Dos días, <span>a la misma hora.</span></h3>
+      <p>En Rendimiento, la altitud de los dos días va superpuesta por hora del día, con un cursor que marca dónde estaba cada uno. Y en Mapa, los dos días se reproducen a la vez, cada uno con su marcador y su velocidad.</p>
+    </div>
+    <div class="perfil aparece" aria-hidden="true">
+      <div class="barra-sup">
+        <span class="reloj-dig" id="reloj">9:00</span>
+        <span class="estado"><span><span style="color: var(--a)">●</span> 14 feb <b id="estado-a">—</b></span><span><span style="color: var(--b)">●</span> 21 feb <b id="estado-b">—</b></span></span>
+      </div>
+      <div class="grafica" id="perfil"><svg viewBox="0 0 900 220" preserveAspectRatio="none"></svg><span class="cursor"></span><span class="punto pa"></span><span class="punto pb"></span></div>
+      <p class="nota-ilu">Ilustración: el 14 de febrero con línea continua y el 21 con línea discontinua, como en la app.</p>
+    </div>
+
+    <div class="telefonos tres aparece">
+      <div class="telefono"><img src="img/09-comparador.jpg" alt="Comparador: ≈6830 m bajados el sábado 14 de febrero frente a ≈2881 m el 21, con 16 bajadas frente a 6" loading="lazy"></div>
+      <div class="telefono"><img src="img/10-comparador-rendimiento.jpg" alt="Rendimiento: velocímetro con 79 km/h el 14 de febrero frente a 68 km/h el 21, y minutos bajando a cada velocidad" loading="lazy"></div>
+      <div class="telefono"><img src="img/12-comparador-mapa.jpg" alt="Mapa del comparador: las rutas de los dos días en Baqueira Beret, con el marcador del 21 de febrero en un remonte a 18 km/h" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<div class="capitulo aparece" id="capitulo-7" data-cap="7" data-nombre="Lo sumas todo">
+  <div class="envoltura"><span class="n" aria-hidden="true">07</span><span class="cuando">Al final de la temporada</span><p class="titulo-cap">Lo sumas todo</p></div>
+</div>
+
+<div class="envoltura">
   <section class="funcion">
     <div class="texto">
       <span class="antetitulo">La temporada</span>
@@ -202,31 +573,17 @@
       <p>El desnivel de toda la temporada, comparado con la anterior a estas alturas, con tus días, bajadas y kilómetros. Tu tiempo en la nieve (bajando, en remontes y parado), tus récords como medallas que abren su día, las pistas que más repites y tus estaciones en el mapa.</p>
     </div>
     <div class="telefonos">
-      <div class="telefono"><img src="img/07-temporada.jpg" alt="Temporada 2025/26: 86.669 m de desnivel bajado, 21 días, 182 bajadas, 627,2 km, 6 estaciones y tu tiempo en la nieve" loading="lazy"></div>
+      <div class="telefono"><img src="img/07-temporada.jpg" alt="Temporada 2025/26: 86.661 m de desnivel bajado, 21 días, 182 bajadas, 627,2 km, 6 estaciones y tu tiempo en la nieve" loading="lazy"></div>
       <div class="telefono"><img src="img/08-temporada-records.jpg" alt="Pistas de la temporada por dificultad y tus estaciones en el mapa" loading="lazy"></div>
     </div>
   </section>
-
 </div>
-
-<section class="seccion">
-  <div class="envoltura">
-    <span class="antetitulo">Apple Watch</span>
-    <h2>Tú esquías, <span>el reloj apunta.</span></h2>
-    <p>Empieza en el iPhone y llévalo en el bolsillo. En la muñeca ves la bajada en la que vas, la velocidad, el pulso y el desnivel, y pausas o bloqueas la pantalla desde la muñeca. El pulso y las kcal de cada día quedan en su resumen.</p>
-    <div class="relojes">
-      <div class="reloj"><img src="img/reloj-2-metricas.png" alt="Apple Watch: bajada 12, 58 km/h, pulso 142 ppm y 5860 m bajados" loading="lazy"></div>
-      <div class="reloj"><img src="img/reloj-3-controles.png" alt="Apple Watch: Bloquear, Terminar y Pausar" loading="lazy"></div>
-    </div>
-  </div>
-</section>
 
 <section class="seccion">
   <div class="envoltura">
     <span class="antetitulo">Y además</span>
     <h2>Pensada para <span>la montaña.</span></h2>
     <div class="rejilla">
-      <div class="tarjeta"><h3>En la pantalla de bloqueo</h3><p>La sesión en una actividad en vivo, con el desnivel, el tiempo, las bajadas y la velocidad máxima (y, con el reloj, el pulso y las kcal), y Pausar sin abrir la app.</p></div>
       <div class="tarjeta"><h3>Nunca pierdes una sesión</h3><p>Si la app se cierra o el iPhone se apaga, la sesión se recupera al volver. Te avisa cuando queda poca batería y, si llevas 30 minutos sin moverte, te pregunta si sigues esquiando.</p></div>
       <div class="tarjeta"><h3>Guarda en Salud</h3><p>Cada día, como entrenamiento en la app Salud, con la ruta y, con el reloj, el pulso y las kcal.</p></div>
       <div class="tarjeta"><h3>Comparte tu día</h3><p>Una imagen del día o de la temporada, con el mapa y tus cifras, o la ruta en GPX para llevarla a otras apps.</p></div>
@@ -252,5 +609,233 @@
 </div>
 
 </main>
+<div class="progreso" id="progreso" aria-hidden="true"><span class="pn">01</span><span class="pt">Llegas a la estación</span><span class="pb"><i></i></span></div>
+<script>
+/* Animaciones de la portada. Sin dependencias ni servicios externos.
+   Los textos están en el HTML (data-*), así que este script vale igual para todos los idiomas. */
+(function () {
+  var doc = document.documentElement;
+  var quieto = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var idioma = doc.lang || 'es';
+  doc.classList.add('js');
+
+  function fmt(v, dec) { return new Intl.NumberFormat(idioma, { minimumFractionDigits: dec, maximumFractionDigits: dec, useGrouping: false }).format(v); }
+  function alVer(el, fn, umbral) {
+    if (!('IntersectionObserver' in window)) { fn(true); return; }
+    new IntersectionObserver(function (es) { es.forEach(function (e) { fn(e.isIntersecting); }); }, { threshold: umbral || 0.25 }).observe(el);
+  }
+
+  /* Entradas al hacer scroll */
+  document.querySelectorAll('.aparece').forEach(function (el) {
+    var hecho = false;
+    alVer(el, function (v) { if (v && !hecho) { hecho = true; el.classList.add('visto'); } }, 0.12);
+  });
+
+  /* ----- Indicador del capítulo en curso ----- */
+  var progreso = document.getElementById('progreso'), caps = document.querySelectorAll('.capitulo');
+  if (progreso && caps.length) {
+    var total = caps.length, pn = progreso.querySelector('.pn'), pt = progreso.querySelector('.pt'), pbi = progreso.querySelector('.pb i');
+    var actualizar = function () {
+      var y = window.innerHeight * 0.5, actual = null;
+      caps.forEach(function (c) { if (c.getBoundingClientRect().top < y) actual = c; });
+      var fin = document.querySelector('footer.pie'), pasado = fin && fin.getBoundingClientRect().top < window.innerHeight;
+      progreso.classList.toggle('ver', !!actual && !pasado);
+      if (actual) {
+        pn.textContent = '0' + actual.dataset.cap + '/0' + total;
+        pt.textContent = actual.dataset.nombre;
+        pbi.style.setProperty('--avance', (actual.dataset.cap / total * 100) + '%');
+      }
+    };
+    window.addEventListener('scroll', actualizar, { passive: true });
+    window.addEventListener('resize', actualizar);
+    actualizar();
+  }
+
+  /* ----- Comparador ----- */
+  var marcador = document.getElementById('marcador');
+  var lados = { a: marcador.dataset.diaA, b: marcador.dataset.diaB };
+  var cambiado = false, animado = false;
+
+  function contar(el, hasta, dec, prefijo) {
+    if (quieto.matches) { el.textContent = prefijo + fmt(hasta, dec); return; }
+    var t0 = null, dur = 1400;
+    function paso(t) {
+      if (t0 === null) t0 = t;
+      var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = prefijo + fmt(hasta * e, dec);
+      if (k < 1) requestAnimationFrame(paso);
+    }
+    requestAnimationFrame(paso);
+  }
+
+  function pintarFilas() {
+    var plantilla = marcador.dataset.mas, empate = marcador.dataset.igual;
+    marcador.querySelectorAll('.fila').forEach(function (f) {
+      var a = parseFloat(f.dataset.a), b = parseFloat(f.dataset.b);
+      if (cambiado) { var t = a; a = b; b = t; }
+      var dec = parseInt(f.dataset.dec || '0', 10), u = f.dataset.unidad || '';
+      var va = f.querySelector('.va'), vb = f.querySelector('.vb'), max = Math.max(a, b) || 1;
+      va.textContent = fmt(a, dec) + u; vb.textContent = fmt(b, dec) + u;
+      va.className = 'v va' + (a > b ? ' gana' : a < b ? ' pierde' : '');
+      vb.className = 'v vb' + (b > a ? ' gana' : b < a ? ' pierde' : '');
+      f.querySelector('.dif').textContent = a === b ? empate
+        : plantilla.replace('{v}', fmt(Math.abs(a - b), dec) + u).replace('{d}', a > b ? lados.a : lados.b);
+      f.querySelector('.ba i').style.setProperty('--p', (animado ? a / max * 100 : 0) + '%');
+      f.querySelector('.bb i').style.setProperty('--p', (animado ? b / max * 100 : 0) + '%');
+    });
+    /* Minutos a cada velocidad, sobre la misma escala para los dos días */
+    var tiras = marcador.querySelectorAll('.tramos'), totales = [];
+    tiras.forEach(function (t) { var s = 0; t.querySelectorAll('span').forEach(function (x) { s += +x.dataset.min; }); totales.push(s); });
+    var tope = Math.max.apply(null, totales);
+    tiras.forEach(function (t, i) {
+      var origen = tiras[cambiado ? 1 - i : i];
+      t.querySelectorAll('span').forEach(function (x, j) {
+        var m = +origen.querySelectorAll('span')[j].dataset.min;
+        x.textContent = m + '′';
+        x.style.setProperty('--w', (animado ? m / tope * 100 : 0) + '%');
+      });
+      t.setAttribute('aria-label', origen.dataset.etiqueta || t.getAttribute('aria-label'));
+    });
+    /* Cabecera */
+    var nums = marcador.querySelectorAll('.cuenta-num');
+    var vA = +nums[0].dataset.valor, vB = +nums[1].dataset.valor;
+    if (cambiado) { var x = vA; vA = vB; vB = x; }
+    var ventaja = document.getElementById('ventaja');
+    ventaja.textContent = ventaja.dataset.plantilla.replace('{v}', fmt(Math.abs(vA - vB), 0)).replace('{d}', vA >= vB ? lados.a : lados.b);
+    return { a: vA, b: vB };
+  }
+
+  if (marcador) {
+    var tiraAria = marcador.querySelectorAll('.tramos');
+    tiraAria.forEach(function (t) { t.dataset.etiqueta = t.getAttribute('aria-label'); });
+    pintarFilas();
+    alVer(marcador, function (v) {
+      if (!v || animado) return;
+      animado = true;
+      var nums = marcador.querySelectorAll('.cuenta-num');
+      nums.forEach(function (n) { contar(n, +n.dataset.valor, 0, n.dataset.prefijo || ''); });
+      requestAnimationFrame(pintarFilas);
+    }, 0.3);
+
+    var boton = document.getElementById('intercambiar');
+    boton.hidden = false;
+    boton.addEventListener('click', function () {
+      cambiado = !cambiado;
+      boton.setAttribute('aria-pressed', String(cambiado));
+      /* Los nombres de los días cambian de lado con sus cifras */
+      var t = lados.a; lados.a = lados.b; lados.b = t;
+      var na = marcador.querySelectorAll('.nom-a'), nb = marcador.querySelectorAll('.nom-b');
+      na.forEach(function (e, i) { var x = e.textContent; e.textContent = nb[i].textContent; nb[i].textContent = x; });
+      var nums = marcador.querySelectorAll('.cuenta-num'), r = pintarFilas();
+      [r.a, r.b].forEach(function (v, i) { nums[i].textContent = nums[i].dataset.prefijo + fmt(v, 0); });
+    });
+  }
+
+  /* ----- Altitud de los dos días por hora, con cursor ----- */
+  var grafica = document.getElementById('perfil');
+  if (grafica) {
+    var NS = 'http://www.w3.org/2000/svg', svg = grafica.querySelector('svg'), W = 900, H = 220, ini = 9 * 60, fin = 16 * 60;
+    function px(min) { return (min - ini) / (fin - ini); }          /* 0…1 */
+    function py(alt) { return 1 - (alt - 1450) / (2550 - 1450); }   /* 0…1 */
+    /* Día A: 16 bajadas de 9:20 a 15:20; día B: 6 bajadas de 10:40 a 13:10 (las bajadas del ejemplo de la app; las altitudes son ilustrativas) */
+    function dia(desde, hasta, bajadas, semilla) {
+      var pts = [], paso = (hasta - desde) / bajadas, r = semilla;
+      function azar() { r = (r * 9301 + 49297) % 233280; return r / 233280; }
+      pts.push([desde, 1500]);
+      for (var i = 0; i < bajadas; i++) {
+        var t0 = desde + i * paso, cima = 2150 + azar() * 330, valle = 1500 + azar() * 220;
+        pts.push([t0 + paso * 0.62, cima]); pts.push([t0 + paso, i === bajadas - 1 ? 1500 : valle]);
+      }
+      return pts;
+    }
+    var A = dia(9 * 60 + 20, 15 * 60 + 20, 16, 7), B = dia(10 * 60 + 40, 13 * 60 + 10, 6, 3);
+    function ruta(p) { return p.map(function (q, i) { return (i ? 'L' : 'M') + (px(q[0]) * W).toFixed(1) + ' ' + (py(q[1]) * H).toFixed(1); }).join(' '); }
+    function nodo(tag, at) { var n = document.createElementNS(NS, tag); for (var k in at) n.setAttribute(k, at[k]); svg.appendChild(n); return n; }
+    for (var h = 10; h < 16; h++) {
+      nodo('line', { x1: px(h * 60) * W, x2: px(h * 60) * W, y1: 0, y2: H, stroke: 'rgba(255,255,255,.07)' });
+      var et = document.createElement('span'); et.className = 'hora'; et.style.left = (px(h * 60) * 100) + '%'; et.textContent = h + ':00'; grafica.appendChild(et);
+    }
+    nodo('path', { d: ruta(A), fill: 'none', stroke: '#5ed1ff', 'stroke-width': 2.5, 'stroke-linejoin': 'round' });
+    nodo('path', { d: ruta(B), fill: 'none', stroke: '#ff8a3d', 'stroke-width': 2.5, 'stroke-dasharray': '7 5', 'stroke-linejoin': 'round' });
+    var cursor = grafica.querySelector('.cursor'), pA = grafica.querySelector('.pa'), pB = grafica.querySelector('.pb');
+    var alto = function () { return grafica.clientHeight - 22; };
+    var reloj = document.getElementById('reloj'), eA = document.getElementById('estado-a'), eB = document.getElementById('estado-b');
+
+    function altEn(p, min) {
+      if (min < p[0][0]) return null;
+      for (var i = 1; i < p.length; i++) if (min <= p[i][0]) {
+        var k = (min - p[i - 1][0]) / (p[i][0] - p[i - 1][0]);
+        return { alt: p[i - 1][1] + (p[i][1] - p[i - 1][1]) * k, t: min };
+      }
+      return { alt: p[p.length - 1][1], t: p[p.length - 1][0] };
+    }
+    function estado(r) { return r === null ? '—' : fmt(Math.round(r.alt), 0) + ' m'; }
+    function pintar(min) {
+      cursor.style.left = (px(min) * 100) + '%';
+      var a = altEn(A, min), b = altEn(B, min), hgt = alto();
+      [[pA, a], [pB, b]].forEach(function (z) {
+        z[0].style.display = z[1] === null ? 'none' : '';
+        if (z[1]) { z[0].style.left = (px(z[1].t) * 100) + '%'; z[0].style.top = (py(z[1].alt) * hgt) + 'px'; }
+      });
+      var hh = Math.floor(min / 60), mm = Math.floor(min % 60);
+      reloj.textContent = hh + ':' + (mm < 10 ? '0' : '') + mm;
+      eA.textContent = estado(a); eB.textContent = estado(b);
+    }
+    var visible = false, t0 = null, hecho = 0, DUR = 14000;
+    function bucle(t) {
+      if (!visible) { t0 = null; return; }
+      if (t0 === null) t0 = t - hecho;
+      hecho = t - t0;
+      pintar(ini + ((hecho % DUR) / DUR) * (fin - ini));
+      requestAnimationFrame(bucle);
+    }
+    pintar(12 * 60 + 5);
+    window.addEventListener('resize', function () { if (!visible) pintar(12 * 60 + 5); });
+    alVer(grafica, function (v) {
+      if (quieto.matches) return;
+      if (v && !visible) { visible = true; requestAnimationFrame(bucle); } else if (!v) visible = false;
+    }, 0.2);
+  }
+
+  /* ----- Cuenta atrás: Preparado (el anillo se dibuja desde las 6), 3-2-1 vaciándose seguido ----- */
+  var pantalla = document.getElementById('pantalla');
+  if (pantalla) {
+    var arco = document.getElementById('arco'), numero = document.getElementById('numero'), sesion = document.getElementById('sesion');
+    var C = 2 * Math.PI * 88, LISTO = 1000, NUM = 1000, DIBUJO = 600, FIN = LISTO + 3 * NUM, CICLO = FIN + 2600;
+    var listo = pantalla.dataset.listo, anterior = null, corriendo = false, inicio = null;
+    function fase(t) { return t < LISTO ? 'listo' : t < FIN ? String(3 - Math.floor((t - LISTO) / NUM)) : 'fin'; }
+    function lleno(t) { return t < LISTO ? Math.min(1, t / DIBUJO) : t < FIN ? 1 - (t - LISTO) / (3 * NUM) : 0; }
+    function mostrar(t) {
+      var f = fase(t);
+      arco.setAttribute('transform', 'rotate(' + (f === 'listo' ? 90 : -90) + ' 100 100)');
+      arco.setAttribute('stroke-dashoffset', (C * (1 - lleno(t))).toFixed(2));
+      if (f !== anterior) {
+        anterior = f;
+        sesion.classList.toggle('ver', f === 'fin');
+        if (f !== 'fin') {
+          numero.textContent = f === 'listo' ? listo : f;
+          numero.className = (f === 'listo' ? 'listo ' : '') + 'cambia';
+          void numero.offsetWidth;
+        }
+      }
+    }
+    function bucleCuenta(t) {
+      if (!corriendo) return;
+      if (inicio === null) inicio = t;
+      mostrar((t - inicio) % CICLO);
+      requestAnimationFrame(bucleCuenta);
+    }
+    arco.setAttribute('stroke-dasharray', C.toFixed(2));
+    /* Fotograma fijo: el «3» con el anillo casi lleno */
+    function fijo() { anterior = null; mostrar(LISTO + 100); numero.className = ''; }
+    fijo();
+    alVer(pantalla, function (v) {
+      if (quieto.matches) return;
+      if (v && !corriendo) { corriendo = true; inicio = null; anterior = null; requestAnimationFrame(bucleCuenta); }
+      else if (!v && corriendo) { corriendo = false; fijo(); }
+    }, 0.45);
+  }
+})();
+</script>
 </body>
 </html>
