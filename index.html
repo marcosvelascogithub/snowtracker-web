@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SnowTracker · Cada bajada, contada</title>
-<meta name="description" content="SnowTracker mide tu día de esquí en el iPhone y el Apple Watch: velocidad, desnivel, cada bajada en el mapa, tu pulso y toda la temporada. Sin cuentas, sin publicidad y con tus datos en tu iPhone.">
+<meta name="description" content="SnowTracker mide tu día de esquí en el iPhone y el Apple Watch: velocidad, desnivel, cada bajada en el mapa, tu pulso, el replay del día, la comparación de dos días y toda la temporada. Sin cuentas, sin publicidad y con tus datos en tu iPhone.">
 <meta property="og:title" content="SnowTracker · Cada bajada, contada">
 <meta property="og:description" content="Velocidad, desnivel y cada bajada de tu día de esquí, en el iPhone y el Apple Watch.">
 <meta property="og:image" content="https://marcosvelascogithub.github.io/snowtracker-web/img/cabecera.jpg">
@@ -53,6 +53,10 @@
   .funcion p { color: #c9d6df; font-size: 18px; max-width: 46ch; }
   .telefonos { display: flex; justify-content: center; gap: 20px; }
   .telefonos { align-items: flex-start; }
+  /* Dos capturas caben siempre (también a 320 px); una sola, más grande */
+  .telefonos .telefono { width: min(280px, calc(50% - 10px)); }
+  .telefonos .telefono:only-child { width: min(280px, 64%); }
+  html:not(.js) .perfil { display: none; }
   .telefono { flex: none; width: min(280px, 44vw); border-radius: 15% / 7%; padding: 2.6%;
               background: #3a404a; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); }
   /* La proporción la marca la captura (660 × 1434, la del iPhone): nada de estirarla */
@@ -127,7 +131,7 @@
              radial-gradient(60% 50% at 100% 30%, rgba(255, 138, 61, .14), transparent 70%),
              linear-gradient(180deg, var(--fondo), #0f1d23 60%, var(--fondo)); }
   .duelo .cabeza { text-align: center; }
-  .duelo h2, .doble h2, .cuenta h2 { font-size: clamp(36px, 6vw, 68px); line-height: 1.02; letter-spacing: -0.02em; margin: 12px 0 18px; text-wrap: balance; }
+  .duelo h2, .cuenta h2 { font-size: clamp(36px, 6vw, 68px); line-height: 1.02; letter-spacing: -0.02em; margin: 12px 0 18px; text-wrap: balance; }
   .duelo h2 .a { color: var(--a); } .duelo h2 .b { color: var(--b); }
   .duelo .cabeza p { color: #c9d6df; font-size: clamp(18px, 2.2vw, 21px); max-width: 54ch; margin: 0 auto; text-wrap: pretty; }
 
@@ -142,14 +146,11 @@
   .b .chip { border: 2px solid var(--b); color: var(--b); }
   .dia-tira { font-weight: 700; font-size: 13px; white-space: nowrap; }
   .tira[data-lado="a"] .dia-tira { color: var(--a); } .tira[data-lado="b"] .dia-tira { color: var(--b); }
-  .insignia { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font-weight: 800; font-size: 15px; }
-  .a .insignia { background: var(--a); color: #08222c; }
-  .b .insignia { border: 2px solid var(--b); color: var(--b); }
   .dia .grande { display: block; font-size: clamp(40px, 8.5vw, 84px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; margin-top: 12px; font-variant-numeric: tabular-nums; }
   .dia.a .grande { color: var(--a); } .dia.b .grande { color: var(--b); }
   .dia small { display: block; color: var(--secundario); font-size: 15px; margin-top: 8px; }
   .vs { color: var(--secundario); font-weight: 800; font-size: 18px; padding-bottom: 34px; }
-  .ventaja { display: table; margin: 22px auto 6px; padding: 8px 18px; border-radius: 999px; background: rgba(255, 138, 61, .14);
+  .ventaja { display: table; text-align: center; text-wrap: balance; margin: 22px auto 6px; padding: 8px 18px; border-radius: 999px; background: rgba(255, 138, 61, .14);
              color: #ffb27f; font-weight: 700; font-variant-numeric: tabular-nums; }
 
   .filas { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 18px; }
@@ -171,7 +172,6 @@
   .ritmo { margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, .08); }
   .ritmo h3 { margin: 0 0 14px; font-size: 18px; }
   .tira { display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
-  .tira .insignia { width: 28px; height: 28px; font-size: 14px; }
   .tramos { display: flex; gap: 4px; height: 34px; }
   .tramos span { display: grid; place-items: center; border-radius: 8px; font-weight: 700; font-size: 14px; color: #0b1418; min-width: 0;
                  flex: 1 1 auto; transition: flex-basis 1.1s cubic-bezier(.2, .8, .2, 1); overflow: hidden; }
@@ -192,10 +192,7 @@
   .apartados span { color: var(--secundario); font-size: 15px; }
   .duelo .telefonos { margin-top: 64px; }
 
-  /* Mapa doble y replay */
-  .doble { padding-block: 96px 72px; text-align: center; }
-  .doble .cabeza p { color: #c9d6df; font-size: clamp(18px, 2.2vw, 21px); max-width: 56ch; margin: 0 auto; text-wrap: pretty; }
-  .doble h2 span { color: var(--cian); }
+  /* Gráfica de altitud de los dos días */
   .perfil { position: relative; margin: 48px auto 0; max-width: 920px; background: var(--superficie); border-radius: 28px; padding: 22px clamp(14px, 3vw, 28px) 16px; text-align: left; }
   .perfil .barra-sup { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
   .reloj-dig { font-size: clamp(28px, 4vw, 40px); font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
@@ -236,11 +233,6 @@
   .pantalla .sesion.ver { opacity: 1; }
   .pantalla .sesion strong { font-size: clamp(36px, 9vw, 48px); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
   .pantalla .sesion small { color: var(--secundario); font-weight: 600; }
-
-  /* Actividad en vivo: la tarjeta ampliada sobre la captura */
-  .telefonos.con-detalle { position: relative; }
-  .con-detalle .detalle { position: absolute; left: 50%; top: 72%; width: min(440px, 92%); height: auto; transform: translate(-50%, -50%) rotate(-2deg);
-                          border-radius: 6% / 16%; box-shadow: 0 30px 60px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .12); }
 
   /* Capítulos de la historia */
   .capitulo { position: relative; padding-block: 120px 8px; text-align: center; }
@@ -311,9 +303,9 @@
   <img class="cordillera" src="img/cabecera.jpg" alt="" width="2400" height="1029">
 </section>
 
-<header class="capitulo aparece" id="capitulo-1" data-cap="1" data-nombre="Llegas a la estación">
-  <div class="envoltura"><span class="n" aria-hidden="true">01</span><span class="cuando">Por la mañana</span><h2 class="titulo-cap">Llegas a la estación</h2></div>
-</header>
+<div class="capitulo aparece" id="capitulo-1" data-cap="1" data-nombre="Llegas a la estación">
+  <div class="envoltura"><span class="n" aria-hidden="true">01</span><span class="cuando">Por la mañana</span><p class="titulo-cap">Llegas a la estación</p></div>
+</div>
 
 <div class="envoltura">
   <section class="funcion">
@@ -341,9 +333,9 @@
   </div>
 </div>
 
-<header class="capitulo aparece" id="capitulo-2" data-cap="2" data-nombre="Empiezas">
-  <div class="envoltura"><span class="n" aria-hidden="true">02</span><span class="cuando">Al pie del remonte</span><h2 class="titulo-cap">Empiezas</h2></div>
-</header>
+<div class="capitulo aparece" id="capitulo-2" data-cap="2" data-nombre="Empiezas">
+  <div class="envoltura"><span class="n" aria-hidden="true">02</span><span class="cuando">Al pie del remonte</span><p class="titulo-cap">Empiezas</p></div>
+</div>
 
 <section class="cuenta" aria-labelledby="titulo-cuenta">
   <div class="envoltura">
@@ -375,16 +367,16 @@
   </div>
 </section>
 
-<header class="capitulo aparece" id="capitulo-3" data-cap="3" data-nombre="Esquías">
-  <div class="envoltura"><span class="n" aria-hidden="true">03</span><span class="cuando">Todo el día</span><h2 class="titulo-cap">Esquías</h2></div>
-</header>
+<div class="capitulo aparece" id="capitulo-3" data-cap="3" data-nombre="Esquías">
+  <div class="envoltura"><span class="n" aria-hidden="true">03</span><span class="cuando">Todo el día</span><p class="titulo-cap">Esquías</p></div>
+</div>
 
 <div class="envoltura">
   <section class="funcion">
     <div class="texto">
       <span class="antetitulo">En directo</span>
       <h2>Cada bajada, <span>al momento.</span></h2>
-      <p>Pulsa «Empezar» y olvídate. SnowTracker separa solo las bajadas de los remontes y te dice en cuál vas, a qué velocidad, cuánto has bajado y la inclinación de la pista.</p>
+      <p>Con la sesión en marcha, olvídate: SnowTracker separa solo las bajadas de los remontes y te dice en cuál vas, a qué velocidad, cuánto has bajado y la inclinación de la pista.</p>
     </div>
     <div class="telefonos">
       <div class="telefono"><img src="img/01-sesion.jpg" alt="Sesión en curso: 71 km/h, 2 h 26 min, 4163 m de desnivel bajado y 11 bajadas" loading="lazy"></div>
@@ -397,9 +389,8 @@
       <h2>El iPhone, <span>en el bolsillo.</span></h2>
       <p>Bloquéalo y sigue esquiando: la sesión se queda en la pantalla de bloqueo como actividad en vivo, con la bajada en la que vas, el desnivel, el tiempo, las bajadas y la velocidad máxima. Con el Apple Watch, también tu pulso y las kcal que llevas. Y si paras a comer, Pausar está ahí, sin abrir la app.</p>
     </div>
-    <div class="telefonos con-detalle">
-      <div class="telefono"><img src="img/15-actividad-en-vivo.jpg" alt="" loading="lazy"></div>
-      <img class="detalle" src="img/15b-actividad-detalle.jpg" alt="Actividad en vivo de SnowTracker en la pantalla de bloqueo: bajada 11, ≈4230 m de desnivel, 2:26:26 de tiempo, 11 bajadas, 79 km/h de velocidad máxima, 142 ppm de pulso, 874 kcal y el botón Pausar" width="840" height="313" loading="lazy">
+    <div class="telefonos">
+      <div class="telefono"><img src="img/15-actividad-en-vivo.jpg" alt="Pantalla de bloqueo con la actividad en vivo de SnowTracker: bajada 11, ≈4230 m de desnivel, 2:26:26 de tiempo, 11 bajadas, 79 km/h de velocidad máxima, 142 ppm de pulso, 874 kcal y el botón Pausar" loading="lazy"></div>
     </div>
   </section>
 </div>
@@ -408,7 +399,7 @@
   <div class="envoltura">
     <span class="antetitulo">Apple Watch</span>
     <h2>Tú esquías, <span>el reloj apunta.</span></h2>
-    <p>Empieza en el iPhone y llévalo en el bolsillo. En la muñeca ves la bajada en la que vas, la velocidad, el pulso y el desnivel, y pausas o bloqueas la pantalla desde la muñeca. El pulso y las kcal de cada día quedan en su resumen.</p>
+    <p>Empieza en el iPhone y olvídate de él. En la muñeca ves la bajada en la que vas, la velocidad, el pulso y el desnivel, y pausas o bloqueas la pantalla desde la muñeca. El pulso y las kcal de cada día quedan en su resumen.</p>
     <div class="relojes">
       <div class="reloj"><img src="img/reloj-2-metricas.png" alt="Apple Watch: bajada 12, 58 km/h, pulso 142 ppm y 5860 m bajados" loading="lazy"></div>
       <div class="reloj"><img src="img/reloj-3-controles.png" alt="Apple Watch: Bloquear, Terminar y Pausar" loading="lazy"></div>
@@ -416,9 +407,9 @@
   </div>
 </section>
 
-<header class="capitulo aparece" id="capitulo-4" data-cap="4" data-nombre="Terminas">
-  <div class="envoltura"><span class="n" aria-hidden="true">04</span><span class="cuando">A última hora</span><h2 class="titulo-cap">Terminas</h2></div>
-</header>
+<div class="capitulo aparece" id="capitulo-4" data-cap="4" data-nombre="Terminas">
+  <div class="envoltura"><span class="n" aria-hidden="true">04</span><span class="cuando">A última hora</span><p class="titulo-cap">Terminas</p></div>
+</div>
 
 <div class="envoltura">
   <section class="funcion">
@@ -437,7 +428,7 @@
     <div class="texto">
       <span class="antetitulo">El mapa</span>
       <h2>Tu día entero, <span>en el mapa.</span></h2>
-      <p>La ruta del día, coloreada por velocidad sobre los mapas de Apple, con cada bajada numerada y, debajo, las pistas por dificultad y los remontes. Toca una bajada y el mapa la encuadra sola. Y si quieres revivirla, reprodúcela hasta 240 veces más rápido.</p>
+      <p>La ruta del día, coloreada por velocidad sobre los mapas de Apple, con cada bajada numerada y, debajo, las pistas por dificultad y los remontes. Toca una bajada y el mapa la encuadra sola.</p>
     </div>
     <div class="telefonos">
       <div class="telefono"><img src="img/02-mapa.jpg" alt="Mapa del día en Baqueira Beret, en satélite, con las pistas y la ruta coloreada por velocidad" loading="lazy"></div>
@@ -447,7 +438,7 @@
   <section class="funcion">
     <div class="texto">
       <span class="antetitulo">Salud</span>
-      <h2>Tu pulso y tus calorías, <span>bajada a bajada.</span></h2>
+      <h2>Tu pulso y tus calorías, <span>de todo el día.</span></h2>
       <p>Con el Apple Watch, cada día guarda las calorías activas que has quemado, tu pulso medio en las bajadas y el máximo, y la gráfica del pulso de todo el día con las bajadas marcadas. Mientras esquías, ves sumar las kcal en la pantalla de bloqueo.</p>
     </div>
     <div class="telefonos">
@@ -456,9 +447,9 @@
   </section>
 </div>
 
-<header class="capitulo aparece" id="capitulo-5" data-cap="5" data-nombre="Lo revives">
-  <div class="envoltura"><span class="n" aria-hidden="true">05</span><span class="cuando">Esa noche</span><h2 class="titulo-cap">Lo revives</h2></div>
-</header>
+<div class="capitulo aparece" id="capitulo-5" data-cap="5" data-nombre="Lo revives">
+  <div class="envoltura"><span class="n" aria-hidden="true">05</span><span class="cuando">Esa noche</span><p class="titulo-cap">Lo revives</p></div>
+</div>
 
 <div class="envoltura">
   <section class="funcion">
@@ -473,18 +464,17 @@
   </section>
 </div>
 
-<header class="capitulo aparece" id="capitulo-6" data-cap="6" data-nombre="Lo comparas">
-  <div class="envoltura"><span class="n" aria-hidden="true">06</span><span class="cuando">Una semana después</span><h2 class="titulo-cap">Lo comparas</h2></div>
-</header>
+<div class="capitulo aparece" id="capitulo-6" data-cap="6" data-nombre="Lo comparas">
+  <div class="envoltura"><span class="n" aria-hidden="true">06</span><span class="cuando">Una semana después</span><p class="titulo-cap">Lo comparas</p></div>
+</div>
 
-<!-- Comparador. Las cifras son las del ejemplo de la app (Baqueira Beret, 14 y 21 de febrero), las mismas de las capturas. -->
 <!-- Comparador. Las cifras son las del ejemplo de la app (Baqueira Beret, 14 y 21 de febrero), las mismas de las capturas. -->
 <section class="duelo" id="comparador" aria-labelledby="titulo-comparador">
   <div class="envoltura">
     <div class="cabeza aparece">
       <span class="antetitulo">Nuevo · Comparador</span>
       <h2 id="titulo-comparador"><span class="a">Tu día</span> contra <span class="b">tu día.</span></h2>
-      <p>Elige dos días de tu historial, de la misma estación o de otra temporada, y ponlos frente a frente: quién bajó más, quién fue más rápido y por cuánto. Cada cifra marca el día que gana, con la diferencia al lado y la media de tu temporada como referencia.</p>
+      <p>Elige dos días de tu historial, de la misma estación o de otra temporada, y ponlos frente a frente: qué día bajaste más, en cuál fuiste más rápido y por cuánto. Cada cifra marca el día que gana, con la diferencia al lado y la media de tu temporada como referencia.</p>
     </div>
 
     <div class="marcador aparece" id="marcador"
@@ -531,7 +521,7 @@
         <div class="tira" data-lado="b"><span class="dia-tira nom-b" aria-hidden="true">21 feb</span>
           <div class="tramos" role="img" aria-label="21 de febrero: 5 minutos lento, 9 normal y 4 rápido">
             <span class="lento" data-min="5">5′</span><span class="normal" data-min="9">9′</span><span class="rapido" data-min="4">4′</span></div></div>
-        <div class="leyenda"><span style="--c: var(--lento)">Lento &lt;30</span><span style="--c: var(--normal)">Normal 30-55</span><span style="--c: var(--rapido)">Rápido &gt;55 km/h</span></div>
+        <div class="leyenda"><span style="--c: var(--lento)">Lento &lt;30</span><span style="--c: var(--normal)">Normal 30–55</span><span style="--c: var(--rapido)">Rápido &gt;55 km/h</span></div>
       </div>
 
       <div class="pie-marcador">
@@ -566,14 +556,14 @@
     <div class="telefonos tres aparece">
       <div class="telefono"><img src="img/09-comparador.jpg" alt="Comparador: ≈6830 m bajados el sábado 14 de febrero frente a ≈2889 m el 21, con 16 bajadas frente a 6" loading="lazy"></div>
       <div class="telefono"><img src="img/10-comparador-rendimiento.jpg" alt="Rendimiento: velocímetro con 79 km/h en los dos días y minutos bajando a cada velocidad" loading="lazy"></div>
-      <div class="telefono"><img src="img/12-comparador-mapa.jpg" alt="Mapa del comparador: las rutas de los dos días en Baqueira Beret, con el marcador de B en un remonte a 18 km/h" loading="lazy"></div>
+      <div class="telefono"><img src="img/12-comparador-mapa.jpg" alt="Mapa del comparador: las rutas de los dos días en Baqueira Beret, con el marcador del 21 de febrero en un remonte a 18 km/h" loading="lazy"></div>
     </div>
   </div>
 </section>
 
-<header class="capitulo aparece" id="capitulo-7" data-cap="7" data-nombre="Lo sumas todo">
-  <div class="envoltura"><span class="n" aria-hidden="true">07</span><span class="cuando">Al final de la temporada</span><h2 class="titulo-cap">Lo sumas todo</h2></div>
-</header>
+<div class="capitulo aparece" id="capitulo-7" data-cap="7" data-nombre="Lo sumas todo">
+  <div class="envoltura"><span class="n" aria-hidden="true">07</span><span class="cuando">Al final de la temporada</span><p class="titulo-cap">Lo sumas todo</p></div>
+</div>
 
 <div class="envoltura">
   <section class="funcion">
@@ -747,7 +737,7 @@
     var NS = 'http://www.w3.org/2000/svg', svg = grafica.querySelector('svg'), W = 900, H = 220, ini = 9 * 60, fin = 16 * 60;
     function px(min) { return (min - ini) / (fin - ini); }          /* 0…1 */
     function py(alt) { return 1 - (alt - 1450) / (2550 - 1450); }   /* 0…1 */
-    /* Día A: 16 bajadas de 9:20 a 15:20; día B: 6 bajadas de 10:40 a 13:10 (como en el ejemplo de la app) */
+    /* Día A: 16 bajadas de 9:20 a 15:20; día B: 6 bajadas de 10:40 a 13:10 (las bajadas del ejemplo de la app; las altitudes son ilustrativas) */
     function dia(desde, hasta, bajadas, semilla) {
       var pts = [], paso = (hasta - desde) / bajadas, r = semilla;
       function azar() { r = (r * 9301 + 49297) % 233280; return r / 233280; }
