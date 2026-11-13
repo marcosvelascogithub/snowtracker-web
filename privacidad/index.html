@@ -16,7 +16,7 @@
 <p class="secundario">Última actualización: 13 de noviembre de 2026</p>
 </header>
 
-<div class="resumen"><p>SnowTracker no tiene cuentas ni servidores propios. Tus sesiones se guardan en tu dispositivo. La app no tiene publicidad ni seguimiento. Solo envía informes de fallos y medidas de rendimiento técnicas, sin ubicación GPS, salud ni datos personales.</p></div>
+<div class="resumen"><p>SnowTracker no tiene cuentas ni servidores propios. Tus sesiones se guardan en tu dispositivo y, si lo activas, en tu propio iCloud. La app no tiene publicidad ni seguimiento. Solo envía informes de fallos y medidas de rendimiento técnicas, sin ubicación GPS, salud ni datos personales.</p></div>
 
 <h2>Qué datos recoge y cómo</h2>
 <p><strong>Ubicación:</strong> la posición, la velocidad y la altitud que da el GPS del iPhone, con tu permiso de ubicación. Se recoge mientras grabas una sesión. En Hoy, la app lee una posición solo si ya has dado el permiso; nunca lo pide allí.</p>
@@ -40,12 +40,14 @@
 <p>El historial de sesiones (resumen, bajadas y ruta) se guarda en el almacenamiento privado de la app en tu iPhone.</p>
 <p>El pulso, las kcal y los tramos de Salud del reloj se guardan aparte, también en el iPhone, en un almacén excluido de todas las copias de seguridad.</p>
 <p>Mientras grabas, la app guarda también un diario de la sesión para recuperarla si se cierra. El diario no lleva el pulso, no entra en las copias de seguridad y se borra cuando la sesión queda guardada.</p>
+<p><strong>Tu iCloud</strong> (desde la versión 3.0): con «Guardar en iCloud» activado en Ajustes de la app › iCloud, cada día (el resumen, las bajadas, las pausas, la estación y la ruta) se copia también a la base de datos privada de iCloud de tu cuenta de Apple, con CloudKit, para que vuelva solo si cambias de iPhone. Solo tú puedes acceder a ella: yo no puedo verla. Ocupa espacio de tu almacenamiento de iCloud. El pulso, las kcal y los tramos de Salud no van a iCloud. Se activa solo si tienes una sesión de iCloud abierta en el iPhone, y puedes apagarlo cuando quieras; apagarlo no borra nada.</p>
 <p>Si tienes activada la copia de seguridad del iPhone, en iCloud o en un ordenador, el historial entra en ella, pero los datos de salud no. Si restauras el iPhone desde una copia, recuperas las sesiones, pero no su pulso, sus kcal ni sus tramos de Salud.</p>
 
 <h2>Con quién se comparten</h2>
 <p>La app no comparte tus datos con terceros: no tiene servidores propios ni incluye servicios de publicidad. Los únicos servicios de otra empresa son los informes de fallos y las medidas de rendimiento. Los datos solo salen del iPhone en estos casos:</p>
 <p><strong>Salud:</strong> solo si das a la app el permiso para guardar entrenamientos en Salud. Cada sesión se guarda en la app Salud como entrenamiento, con la ruta, la distancia de las bajadas y, si los hay, el pulso y las kcal.</p>
 <p><strong>Mapas de Apple:</strong> para mostrar los mapas, la app usa los mapas de Apple, que Apple trata según su propia política de privacidad. Las pistas, los remontes y las estaciones de esquí (© colaboradores de OpenStreetMap) van dentro de la app: mostrarlos, reconocer la estación en la que estás y buscar otra no envía ningún dato.</p>
+<p><strong>iCloud:</strong> si tienes activado «Guardar en iCloud», tus días se guardan en tu cuenta de iCloud, que Apple trata según su propia política de privacidad.</p>
 <p><strong>Compartir ruta:</strong> el fichero GPX de una sesión solo sale del iPhone cuando lo compartes tú, y va adonde elijas.</p>
 <p><strong>Informes de fallos:</strong> se envían a Firebase Crashlytics, un servicio de Google, que los trata en su nombre y puede hacerlo en centros de datos de cualquier país. Consulta la <a href="https://firebase.google.com/support/privacy">privacidad de Firebase</a>.</p>
 <p><strong>Medidas de rendimiento:</strong> se envían a Firebase Performance Monitoring, otro servicio de Google, en las mismas condiciones.</p>
@@ -53,7 +55,8 @@
 <h2>Cuánto tiempo se guardan y cómo borrarlos</h2>
 <p>Las sesiones se guardan hasta que las borras.</p>
 <p>Firebase Crashlytics y Firebase Performance Monitoring guardan los informes de fallos y las medidas de rendimiento durante el tiempo que indica Google en la <a href="https://firebase.google.com/support/privacy">privacidad de Firebase</a>, donde también explica cómo se borran.</p>
-<p>Para borrar una sesión, desliza su fila en Historial hacia la izquierda y pulsa «Borrar», o ábrela y, al final del resumen, pulsa «Borrar sesión». Para borrar varias, toca «Editar», marca las sesiones y toca «Borrar». Se borran también su ruta, sus bajadas y los datos del reloj y, si se guardó en Salud, su entrenamiento.</p>
+<p>Para borrar una sesión, desliza su fila en Historial hacia la izquierda y pulsa «Borrar», o ábrela y, al final del resumen, pulsa «Borrar sesión». Para borrar varias, toca «Editar», marca las sesiones y toca «Borrar». Desde la versión 3.0, la sesión borrada pasa 30 días a Ajustes de la app › «Eliminados recientemente», donde puedes recuperarla o eliminarla ya con «Eliminar ahora». Al eliminarla, o pasados esos 30 días, se borran para siempre su ruta, sus bajadas y los datos del reloj, de este iPhone y de tu iCloud, y, si se guardó en Salud, su entrenamiento.</p>
+<p>Lo que ya se copió a tu iCloud se puede borrar también en Ajustes de iOS, en el almacenamiento de iCloud de tu cuenta.</p>
 <p>Lo que ya está en Salud también se puede borrar en la app Salud.</p>
 
 <h2>Cómo retirar el consentimiento</h2>
