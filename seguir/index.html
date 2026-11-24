@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0b1418">
+<title>SnowTracker</title>
+<!--
+  «Enlace para seguirme» (grupo-enlace-directo, D4). El fragmento lleva el identificador
+  del registro público `Seguimiento` y la clave AES-256: «#<id>.<clave>», en base64url.
+  El fragmento no se envía a ningún servidor (RFC 3986, apartado 3.5). La página lee el
+  registro con CloudKit Web Services (`records/lookup`) cada 30 s mientras se ve, y lo
+  descifra con Web Crypto (AES-GCM, el identificador como datos autenticados).
+-->
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.1/dist/maplibre-gl.css"
+      integrity="sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK" crossorigin="anonymous">
+<script src="https://unpkg.com/maplibre-gl@5.24.1/dist/maplibre-gl.js"
+        integrity="sha384-nXMl9YiLoSG5KBPTFgvxVuIqQQcqIvo0bFrvoEaGJC6r7IibIzF1S36Zbf/sKBtL" crossorigin="anonymous"></script>
+<style>
+  :root { --fondo: #0b1418; --texto: #f5f7fa; --secundario: #9aa4b2; --cian: #5ed1ff; --naranja: #ff8a3d; color-scheme: dark; }
+  html, body { margin: 0; height: 100%; background: var(--fondo); color: var(--texto);
+               font: 17px/1.4 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; }
+  #mapa { position: fixed; inset: 0; }
+  .tarjeta { position: fixed; left: max(12px, env(safe-area-inset-left)); right: max(12px, env(safe-area-inset-right));
+             bottom: max(12px, env(safe-area-inset-bottom)); max-width: 460px; margin: 0 auto;
+             background: rgba(11, 20, 24, 0.82); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+             border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 22px; padding: 16px 18px; box-sizing: border-box; }
+  .tarjeta h1 { font-size: 22px; margin: 0; overflow-wrap: anywhere; }
+  .estado { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin-top: 6px; color: var(--secundario); font-size: 15px; }
+  .estado .actividad { color: var(--texto); font-weight: 600; }
+  .lugar { margin-top: 8px; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+  .lugar:empty { display: none; }
+  .punto { width: 12px; height: 12px; border-radius: 50%; flex: none; border: 1px solid rgba(255, 255, 255, 0.5); }
+  .aviso { display: inline-block; margin-top: 8px; padding: 3px 10px; border-radius: 999px; font-size: 13px; font-weight: 600;
+           background: rgba(255, 138, 61, 0.18); color: var(--naranja); }
+  .pie { margin-top: 10px; font-size: 13px; color: var(--secundario); }
+  .pie a { color: var(--cian); text-decoration: none; }
+  .mensaje { position: fixed; inset: 0; display: grid; place-items: center; padding: 24px; text-align: center; }
+  .mensaje h1 { font-size: 24px; margin: 0 0 8px; }
+  .mensaje p { color: var(--secundario); margin: 0; }
+  .marcador { width: 34px; height: 34px; border-radius: 50%; background: var(--cian); color: #04222e;
+              display: grid; place-items: center; font-weight: 700; font-size: 15px;
+              border: 3px solid #fff; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45); }
+  .marcador.antiguo { background: #9aa4b2; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div id="mapa" hidden></div>
+
+<section class="tarjeta" id="tarjeta" hidden aria-live="polite">
+  <h1 id="nombre"></h1>
+  <div class="estado">
+    <span class="actividad" id="actividad"></span>
+    <span id="hace"></span>
+    <span id="altitud"></span>
+  </div>
+  <div class="lugar" id="lugar"></div>
+  <div class="estado" id="estacion"></div>
+  <span class="aviso" id="antiguo" hidden></span>
+  <span class="aviso" id="sinConexion" hidden></span>
+  <div class="pie"><a href="https://marcosvelascogithub.github.io/snowtracker-web/" id="marca">SnowTracker</a></div>
+</section>
+
+<section class="mensaje" id="mensaje">
+  <div>
+    <h1 id="mensajeTitulo"></h1>
+    <p id="mensajeTexto"></p>
+  </div>
+</section>
+
+<script>
+"use strict";
+
+// --- Configuración -------------------------------------------------------------------
+
+const CONTAINER = "iCloud.com.marcosvelasco.snowtracker";
+// API tokens de CloudKit (de solo lectura de la base pública, no son secretos: van en
+// cualquier página que use CloudKit Web Services). Se prueba primero Production; el de
+// Development sirve para las compilaciones «Debug iCloud Dev». Decisión propia, sin fuente.
+const TOKENS = {
+  production: "",
+  development: "27ad1338fc9eb91cb045ffc04da0256414792c0439719ac799674b66c409f3da",
+};
+const RECORD_FIELD = "datos";
+const POLL_MS = 30000;          // D4: cada 30 s mientras la página se ve.
+const STALE_S = 15 * 60;        // D3: más de 15 min, posición antigua.
+const STYLE = "https://tiles.openfreemap.org/styles/liberty";
+
+// --- Idioma --------------------------------------------------------------------------
+
+const T = {
+  es: { loading: "Buscando la posición…", run: "Bajando", lift: "En remonte", stop: "Parado", paused: "En pausa",
+        stale: "Posición antigua", ended: "El seguimiento ha terminado",
+        endedHint: "Quien compartía el enlace lo ha parado o ha terminado la sesión.",
+        invalid: "Enlace no válido", invalidHint: "Pide que te lo envíen otra vez.", offline: "Sin conexión",
+        green: "Pista verde", blue: "Pista azul", red: "Pista roja", black: "Pista negra", other: "Pista sin dificultad",
+        made: "Con SnowTracker" },
+  en: { loading: "Looking for the location…", run: "Downhill", lift: "On a lift", stop: "Stopped", paused: "Paused",
+        stale: "Old location", ended: "Following has ended",
+        endedHint: "The person sharing the link stopped it or ended their session.",
+        invalid: "Invalid link", invalidHint: "Ask them to send it again.", offline: "No connection",
+        green: "Green run", blue: "Blue run", red: "Red run", black: "Black run", other: "Unrated run",
+        made: "With SnowTracker" },
+  de: { loading: "Position wird gesucht …", run: "Abfahrt", lift: "Im Lift", stop: "Gestoppt", paused: "Pausiert",
+        stale: "Alte Position", ended: "Das Folgen ist beendet",
+        endedHint: "Die Person, die den Link geteilt hat, hat ihn beendet oder ihre Sitzung abgeschlossen.",
+        invalid: "Ungültiger Link", invalidHint: "Bitte darum, ihn noch einmal zu senden.", offline: "Keine Verbindung",
+        green: "Grüne Piste", blue: "Blaue Piste", red: "Rote Piste", black: "Schwarze Piste", other: "Piste ohne Schwierigkeitsgrad",
+        made: "Mit SnowTracker" },
+  fr: { loading: "Recherche de la position…", run: "En descente", lift: "Sur une remontée", stop: "À l’arrêt", paused: "En pause",
+        stale: "Position ancienne", ended: "Le suivi est terminé",
+        endedHint: "La personne qui partageait le lien l’a arrêté ou a terminé sa session.",
+        invalid: "Lien non valide", invalidHint: "Demandez qu’on vous le renvoie.", offline: "Pas de connexion",
+        green: "Piste verte", blue: "Piste bleue", red: "Piste rouge", black: "Piste noire", other: "Piste sans niveau",
+        made: "Avec SnowTracker" },
+  it: { loading: "Ricerca della posizione…", run: "In discesa", lift: "In risalita", stop: "Fermo", paused: "In pausa",
+        stale: "Posizione vecchia", ended: "Il monitoraggio è terminato",
+        endedHint: "Chi condivideva il link l’ha interrotto o ha terminato la sessione.",
+        invalid: "Link non valido", invalidHint: "Chiedi di inviartelo di nuovo.", offline: "Nessuna connessione",
+        green: "Pista verde", blue: "Pista blu", red: "Pista rossa", black: "Pista nera", other: "Pista senza difficoltà",
+        made: "Con SnowTracker" },
+  nl: { loading: "Locatie zoeken…", run: "Afdalen", lift: "In de lift", stop: "Stilstaand", paused: "Gepauzeerd",
+        stale: "Oude locatie", ended: "Het volgen is gestopt",
+        endedHint: "Degene die de link deelde, heeft hem gestopt of de sessie beëindigd.",
+        invalid: "Ongeldige link", invalidHint: "Vraag of ze hem opnieuw sturen.", offline: "Geen verbinding",
+        green: "Groene piste", blue: "Blauwe piste", red: "Rode piste", black: "Zwarte piste", other: "Piste zonder moeilijkheidsgraad",
+        made: "Met SnowTracker" },
+  pl: { loading: "Szukanie pozycji…", run: "Zjazd", lift: "Na wyciągu", stop: "Postój", paused: "Wstrzymana",
+        stale: "Stara pozycja", ended: "Śledzenie zakończone",
+        endedHint: "Osoba udostępniająca link zatrzymała go lub zakończyła sesję.",
+        invalid: "Nieprawidłowy link", invalidHint: "Poproś o ponowne wysłanie.", offline: "Brak połączenia",
+        green: "Zielona trasa", blue: "Niebieska trasa", red: "Czerwona trasa", black: "Czarna trasa", other: "Trasa bez oznaczenia trudności",
+        made: "Z SnowTracker" },
+  cs: { loading: "Hledání polohy…", run: "Sjezd", lift: "Na vleku", stop: "Stojí", paused: "Pozastaveno",
+        stale: "Stará poloha", ended: "Sledování skončilo",
+        endedHint: "Osoba, která odkaz sdílela, ho zastavila nebo ukončila relaci.",
+        invalid: "Neplatný odkaz", invalidHint: "Požádejte o nové zaslání.", offline: "Bez připojení",
+        green: "Zelená sjezdovka", blue: "Modrá sjezdovka", red: "Červená sjezdovka", black: "Černá sjezdovka", other: "Sjezdovka bez obtížnosti",
+        made: "Se SnowTrackerem" },
+  sv: { loading: "Söker position…", run: "Åker ner", lift: "I liften", stop: "Stillastående", paused: "Pausat",
+        stale: "Gammal position", ended: "Följningen har avslutats",
+        endedHint: "Den som delade länken har stoppat den eller avslutat passet.",
+        invalid: "Ogiltig länk", invalidHint: "Be att få den skickad igen.", offline: "Ingen anslutning",
+        green: "Grön backe", blue: "Blå backe", red: "Röd backe", black: "Svart backe", other: "Backe utan svårighetsgrad",
+        made: "Med SnowTracker" },
+  da: { loading: "Søger efter position…", run: "Kører ned", lift: "I liften", stop: "Står stille", paused: "På pause",
+        stale: "Gammel position", ended: "Følgningen er slut",
+        endedHint: "Den, der delte linket, har stoppet det eller afsluttet sessionen.",
+        invalid: "Ugyldigt link", invalidHint: "Bed om at få det sendt igen.", offline: "Ingen forbindelse",
+        green: "Grøn piste", blue: "Blå piste", red: "Rød piste", black: "Sort piste", other: "Piste uden sværhedsgrad",
+        made: "Med SnowTracker" },
+  ru: { loading: "Поиск местоположения…", run: "Спуск", lift: "На подъемнике", stop: "Остановка", paused: "Пауза",
+        stale: "Старое местоположение", ended: "Отслеживание завершено",
+        endedHint: "Человек, поделившийся ссылкой, остановил ее или завершил сеанс.",
+        invalid: "Недействительная ссылка", invalidHint: "Попросите отправить ее еще раз.", offline: "Нет подключения",
+        green: "Зеленая трасса", blue: "Синяя трасса", red: "Красная трасса", black: "Черная трасса", other: "Трасса без категории сложности",
+        made: "С SnowTracker" },
+  ja: { loading: "位置を検索中…", run: "滑走中", lift: "リフト乗車中", stop: "停止中", paused: "一時停止中",
+        stale: "古い位置", ended: "フォローは終了しました",
+        endedHint: "リンクを共有していた人が停止したか、セッションを終了しました。",
+        invalid: "無効なリンク", invalidHint: "もう一度送ってもらってください。", offline: "接続なし",
+        green: "緑コース", blue: "青コース", red: "赤コース", black: "黒コース", other: "難易度なしのコース",
+        made: "SnowTracker で" },
+  pt: { loading: "A procurar a posição…", run: "A descer", lift: "No teleférico", stop: "Parado", paused: "Em pausa",
+        stale: "Posição antiga", ended: "O seguimento terminou",
+        endedHint: "Quem partilhava o link parou-o ou terminou a sessão.",
+        invalid: "Link inválido", invalidHint: "Peça que lho enviem novamente.", offline: "Sem ligação",
+        green: "Pista verde", blue: "Pista azul", red: "Pista vermelha", black: "Pista preta", other: "Pista sem dificuldade",
+        made: "Com SnowTracker" },
+};
+// Requisito «Idioma y mapa de la página web»: el del navegador entre los 13; si no, inglés.
+const LANG = (() => {
+  for (const tag of navigator.languages || [navigator.language || "en"]) {
+    const base = String(tag).toLowerCase().split("-")[0];
+    if (T[base]) return base;
+  }
+  return "en";
+})();
+const L = T[LANG];
+const LOCALE = LANG === "pt" ? "pt-PT" : LANG;
+document.documentElement.lang = LOCALE;
+document.getElementById("marca").textContent = L.made;
+
+// --- Enlace --------------------------------------------------------------------------
+
+function base64urlDecode(text) {
+  if (!/^[A-Za-z0-9_-]+$/.test(text)) return null;
+  let base = text.replace(/-/g, "+").replace(/_/g, "/");
+  base += "=".repeat((4 - (base.length % 4)) % 4);
+  try {
+    return Uint8Array.from(atob(base), (c) => c.charCodeAt(0));
+  } catch {
+    return null;
+  }
+}
+
+// Igual que `GroupWebLink(url:)` de la app: 16 bytes de identificador y 32 de clave.
+function parseLink(hash) {
+  const parts = hash.replace(/^#/, "").split(".");
+  if (parts.length !== 2) return null;
+  const id = base64urlDecode(parts[0]);
+  const key = base64urlDecode(parts[1]);
+  if (!id || id.length !== 16 || !key || key.length !== 32) return null;
+  return { id: parts[0], key };
+}
+
+// --- Lectura y descifrado ------------------------------------------------------------
+
+class Offline extends Error {}
+
+// Devuelve los bytes cifrados, `null` si el registro no existe, o lanza `Offline`.
+async function lookup(env, token, id) {
+  const url = `https://api.apple-cloudkit.com/database/1/${CONTAINER}/${env}/public/records/lookup?ckAPIToken=${token}`;
+  let response;
+  try {
+    response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ records: [{ recordName: id }] }),
+      cache: "no-store",
+    });
+  } catch {
+    throw new Offline();
+  }
+  if (!response.ok) throw new Offline();
+  const record = (await response.json()).records?.[0];
+  if (!record || record.serverErrorCode === "NOT_FOUND") return null;
+  if (record.serverErrorCode) throw new Offline();
+  const value = record.fields?.[RECORD_FIELD]?.value;
+  return value ? Uint8Array.from(atob(value), (c) => c.charCodeAt(0)) : null;
+}
+
+let cryptoKey;
+async function decrypt(link, combined) {
+  cryptoKey ??= await crypto.subtle.importKey("raw", link.key, "AES-GCM", false, ["decrypt"]);
+  // `AES.GCM.SealedBox.combined` de CryptoKit: nonce (12 bytes) + cifrado + etiqueta (16).
+  const plain = await crypto.subtle.decrypt(
+    { name: "AES-GCM", iv: combined.slice(0, 12), additionalData: new TextEncoder().encode(link.id) },
+    cryptoKey, combined.slice(12));
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+
+let envFound = null;
+// Busca en Production y después en Development; recuerda dónde lo encontró.
+async function read(link) {
+  const envs = envFound ? [envFound] : Object.keys(TOKENS).filter((env) => TOKENS[env]);
+  let offline = false;
+  for (const env of envs) {
+    try {
+      const data = await lookup(env, TOKENS[env], link.id);
+      if (data) {
+        envFound = env;
+        return data;
+      }
+    } catch (error) {
+      if (!(error instanceof Offline)) throw error;
+      offline = true;
+    }
+  }
+  if (offline) throw new Offline();
+  return null;
+}
+
+// --- Vista ---------------------------------------------------------------------------
+
+const $ = (id) => document.getElementById(id);
+const relative = new Intl.RelativeTimeFormat(LOCALE, { numeric: "auto", style: "short" });
+const meters = new Intl.NumberFormat(LOCALE, { style: "unit", unit: "meter", maximumFractionDigits: 0 });
+const DIFFICULTY = { novice: ["green", "#34c759"], easy: ["blue", "#0a84ff"], intermediate: ["red", "#ff3b30"],
+                     advanced: ["black", "#1c1c1e"], other: ["other", "#9aa4b2"] };
+
+function showMessage(title, text) {
+  $("mensajeTitulo").textContent = title;
+  $("mensajeTexto").textContent = text || "";
+  $("mensaje").hidden = false;
+  $("tarjeta").hidden = true;
+  $("mapa").hidden = true;
+}
+
+function ago(seconds) {
+  if (seconds < 60) return relative.format(-Math.max(0, Math.round(seconds)), "second");
+  if (seconds < 3600) return relative.format(-Math.round(seconds / 60), "minute");
+  return relative.format(-Math.round(seconds / 3600), "hour");
+}
+
+let map, marker, last, userMoved = false;
+
+function ensureMap(lngLat) {
+  if (map) return;
+  $("mapa").hidden = false;
+  map = new maplibregl.Map({ container: "mapa", style: STYLE, center: lngLat, zoom: 14,
+                             attributionControl: { compact: false } });
+  map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+  map.on("dragstart", () => { userMoved = true; });
+  const element = document.createElement("div");
+  element.className = "marcador";
+  marker = new maplibregl.Marker({ element }).setLngLat(lngLat).addTo(map);
+}
+
+function render() {
+  if (!last) return;
+  const age = Date.now() / 1000 - last.t;
+  const stale = age > STALE_S;
+  $("mensaje").hidden = true;
+  $("tarjeta").hidden = false;
+  $("nombre").textContent = last.n;
+  document.title = `${last.n} · SnowTracker`;
+  $("actividad").textContent = last.p ? L.paused : (L[last.e] || L.stop);
+  $("hace").textContent = ago(age);
+  $("altitud").textContent = typeof last.al === "number" ? meters.format(last.al) : "";
+  $("antiguo").textContent = L.stale;
+  $("antiguo").hidden = !stale;
+  const place = $("lugar");
+  place.replaceChildren();
+  if (last.pi !== undefined || last.d) {
+    const [label, color] = DIFFICULTY[last.d] || DIFFICULTY.other;
+    const dot = document.createElement("span");
+    dot.className = "punto";
+    dot.style.background = color;
+    place.append(dot, document.createTextNode(last.pi ? last.pi : L[label]));
+  } else if (last.re) {
+    place.textContent = last.re;
+  }
+  $("estacion").textContent = last.r || "";
+  const lngLat = [last.lo, last.la];
+  ensureMap(lngLat);
+  marker.setLngLat(lngLat);
+  marker.getElement().textContent = (last.n.trim()[0] || "?").toUpperCase();
+  marker.getElement().classList.toggle("antiguo", stale);
+  if (!userMoved) map.easeTo({ center: lngLat, duration: 800 });
+}
+
+// --- Ciclo ---------------------------------------------------------------------------
+
+const link = parseLink(location.hash);
+let timer;
+
+async function poll() {
+  clearTimeout(timer);
+  try {
+    const data = await read(link);
+    $("sinConexion").hidden = true;
+    if (!data) {
+      // Requisito «Fin del enlace»: registro borrado = seguimiento terminado.
+      showMessage(L.ended, L.endedHint);
+      return;
+    }
+    last = await decrypt(link, data);
+    render();
+  } catch (error) {
+    if (error instanceof Offline) {
+      $("sinConexion").textContent = L.offline;
+      $("sinConexion").hidden = false;
+      if (!last) showMessage(L.offline, "");
+    } else {
+      // No se descifra: la clave no corresponde a este registro.
+      showMessage(L.invalid, L.invalidHint);
+      return;
+    }
+  }
+  schedule();
+}
+
+function schedule() {
+  clearTimeout(timer);
+  if (document.visibilityState === "visible") timer = setTimeout(poll, POLL_MS);
+}
+
+if (!link || !window.crypto?.subtle) {
+  showMessage(L.invalid, L.invalidHint);
+} else {
+  showMessage(L.loading, "");
+  poll();
+  // Solo lee mientras la página se ve (D4); al volver a verla, lee en el acto.
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") poll(); else clearTimeout(timer);
+  });
+  setInterval(() => { if (last && !$("tarjeta").hidden) render(); }, 15000);
+  window.addEventListener("hashchange", () => location.reload());
+}
+</script>
+</body>
+</html>
