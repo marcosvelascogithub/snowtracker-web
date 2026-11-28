@@ -13,24 +13,31 @@
 <header>
 <a class="marca" href="../">SnowTracker</a>
 <h1>Privacy Policy</h1>
-<p class="secundario">Last updated: November 24, 2026</p>
+<p class="secundario">Last updated: November 28, 2026</p>
 </header>
 
-<div class="resumen"><p>SnowTracker has no accounts and no servers of its own. Your sessions are stored on your device and, if you turn it on, in your own iCloud. The app has no ads and no tracking. It only sends technical crash reports and performance measurements, with no GPS location, health or personal data.</p></div>
+<div class="resumen"><p>SnowTracker has no accounts and no servers of its own. Your sessions are stored on your device and, if you turn it on, in your own iCloud. If you share with a group of friends, your position and your stats for the day are stored encrypted in the iCloud of whoever created the group, and only its members see them. The app has no ads and no tracking. It only sends technical crash reports and performance measurements, with no GPS location, health or personal data.</p></div>
 
 <h2>What data it collects and how</h2>
-<p><strong>Location:</strong> the position, speed and altitude provided by your iPhone’s GPS, with your location permission. It’s collected while you record a session. In Today, the app reads a position only if you’ve already given permission; it never asks for it there.</p>
+<p><strong>Location:</strong> the position, speed and altitude provided by your iPhone’s GPS, with your location permission. It’s collected while you record a session. In Today and Group, the app reads a position only if you’ve already given permission; it never asks for it there.</p>
 <p><strong>Motion:</strong> the air pressure measured by your iPhone’s barometer, with your motion permission, while you record a session.</p>
 <p><strong>Health, on Apple Watch:</strong> with the Health permission you give on your iPhone, during the session, the watch app reads your heart rate, active calories and the distance of each run, and receives the skiing segments that Health detects. The watch sends them to your iPhone.</p>
 <p><strong>What you create in the app:</strong> your sessions and your app settings.</p>
+<p><strong>Groups</strong> (from version 4.0): the group’s name and the display name you choose when you create or join it. The app doesn’t ask for, show or store in the group anyone’s email, phone number or iCloud account name.</p>
+<p><strong>What you share with a group:</strong> only while you share during a session, your latest position (coordinates, altitude, accuracy and time), the resort, whether you’re skiing down, riding a lift or stopped, whether the session is paused and, when the app recognizes it without doubt, the piste or lift you’re on. Also your stats for today: runs, ski distance, vertical and top speed.</p>
+<p><strong>Follow Me Link:</strong> only while the link is active, your display name, your latest position and its time, whether you’re skiing down, riding a lift, stopped or paused, and the resort.</p>
+<p><strong>Camera:</strong> only to scan the QR code of a group invitation, with your camera permission. The image is analyzed on your iPhone and is neither stored nor sent.</p>
 <p><strong>Crash reports:</strong> if the app crashes or hits an error, a technical report is sent: where the code failed, the iPhone model, the iOS and app versions, a randomly generated installation identifier, used to tell how many people a crash affects and whether it repeats, the app’s state at that moment (whether a session is running and for how long, the open tab, battery, language, units, and the status of permissions and Apple Watch) and a log of when the session started, paused, resumed or ended, in minutes from the start and without the time of day. It doesn’t include your position, speed, altitude, resort, heart rate, dates or your name.</p>
 <p><strong>Performance measurements</strong> (from version 3.0): how long the app takes to open, whether screens stutter, and how long some operations take on the iPhone, such as saving a session or finding runs to compare, with their duration only. They come with the iPhone model, the iOS and app versions, the language, the network type and carrier, processor and memory use, the same installation identifier and the IP address, which Firebase uses to tell the country. They don’t include your position, resort, pistes, heart rate, dates or your name.</p>
-<p>The app doesn’t collect your name, your email, your contacts or any identifier to track you.</p>
+<p>The app doesn’t collect your name, your email, your contacts or any identifier to track you. In groups and in the link, only the display name you choose appears.</p>
 
 <h2>What it’s used for</h2>
-<p><strong>Location:</strong> to measure speed, distance, altitude and vertical, to detect runs and lifts, and to draw and play back the route. In Today, to recognize the ski resort you're at, on your iPhone.</p>
+<p><strong>Location:</strong> to measure speed, distance, altitude and vertical, to detect runs and lifts, and to draw and play back the route. In Today, to recognize the ski resort you're at, on your iPhone. In Group, to center the map on you when nobody is on the slopes, also on your iPhone.</p>
 <p><strong>Motion:</strong> to measure vertical more precisely.</p>
 <p><strong>Health:</strong> to show your heart rate during the session, to show your heart rate and calories in the day’s summary, and to save them with the session. The Health segments, with the distance of each run, are saved with the session, but the app doesn’t show them or use them in the stats.</p>
+<p><strong>Groups:</strong> so the group’s members can see on the map where everyone is and compare the day’s stats in the ranking.</p>
+<p><strong>Follow Me Link:</strong> so whoever has the link can see where you are on a web page, without needing the app.</p>
+<p><strong>Camera:</strong> to read the QR code of an invitation.</p>
 <p><strong>Crash reports:</strong> to find and fix the app’s bugs.</p>
 <p><strong>Performance measurements:</strong> to find and fix what is slow.</p>
 <p><strong>Notifications:</strong> only to let you know, on the iPhone itself during a session, that the battery is running low or, after 30 minutes without moving, to ask if you’re still skiing. They don’t send any data.</p>
@@ -41,26 +48,33 @@
 <p>Heart rate, calories and the Health segments from the watch are stored separately, also on your iPhone, in a store excluded from all backups.</p>
 <p>While you record, the app also keeps a session journal so it can recover the session if the app closes. The journal doesn’t include your heart rate, isn’t included in backups and is deleted once the session is saved.</p>
 <p><strong>Your iCloud</strong> (from version 3.0): with “Save to iCloud” turned on in the app’s Settings › iCloud, each day (the summary, runs, pauses, resort and route) is also copied to the private iCloud database of your Apple Account, using CloudKit, so it comes back on its own if you change iPhone. Only you can access it: I can’t see it. It uses space in your iCloud storage. Heart rate, calories and Health segments don’t go to iCloud. It only works if you’re signed in to iCloud on your iPhone, and you can turn it off at any time; turning it off doesn’t delete anything.</p>
+<p><strong>Groups</strong> (from version 4.0): each group is stored in a shared zone of the private iCloud database of whoever created it, using CloudKit, and uses space in their iCloud storage. Only the group’s members can access it: I can’t see it. Display names, positions and stats are encrypted on the iPhone with CloudKit’s field encryption; the group’s name isn’t. Each member has a single position, which is overwritten: the app doesn’t store your route or your position history in the group.</p>
+<p><strong>Follow Me Link:</strong> while it’s active, what is sent for the link is stored in the app’s public iCloud database, encrypted on the iPhone with a key that is only in the link, in the part the browser doesn’t send to any server. Without the link it can’t be read, not even from iCloud or by me.</p>
 <p>If you have iPhone backup turned on, to iCloud or to a computer, the history is included in it, but the health data isn’t. If you restore your iPhone from a backup, you get your sessions back, but not their heart rate, calories or Health segments.</p>
 
 <h2>Who it’s shared with</h2>
 <p>The app doesn’t share your data with third parties: it has no servers of its own and includes no advertising services. The only other company’s services are crash reporting and performance measurements. Data only leaves your iPhone in these cases:</p>
 <p><strong>Health:</strong> only if you allow the app to save workouts to Health. Each session is saved in the Health app as a workout, with the route, the distance of the runs and, if available, heart rate and calories.</p>
-<p><strong>Map:</strong> to draw it, the app downloads the map imagery from OpenFreeMap and the terrain from Apple. Pistes, lifts and ski resorts (© OpenStreetMap contributors) are included in the app: showing them, recognizing the resort you're at and searching for another sends no data.</p>
-<p><strong>iCloud:</strong> if “Save to iCloud” is on, your days are stored in your iCloud account, which Apple handles according to its own privacy policy.</p>
+<p><strong>Map:</strong> to draw it, the app downloads the map imagery from OpenFreeMap and the terrain from packs hosted by Apple and from AWS Terrain Tiles (Amazon Web Services). Pistes, lifts and ski resorts (© OpenStreetMap contributors) are included in the app: showing them, recognizing the resort you're at and searching for another sends no data.</p>
+<p><strong>iCloud:</strong> if “Save to iCloud” is on, your days are stored in your iCloud account, and each group in the iCloud account of whoever created it. Apple handles them according to its own privacy policy.</p>
+<p><strong>Groups:</strong> what you share with a group is seen by its members: the people the creator invites, each with their own link or QR code. The creator can remove a member, and any member can leave whenever they want.</p>
+<p><strong>Follow Me Link:</strong> whoever has the link sees your display name and your latest position while the link is active, and you decide who you send it to. The link’s page reads the encrypted data from iCloud and downloads the map from OpenFreeMap and the MapLibre library from unpkg.</p>
 <p><strong>Share route:</strong> a session’s GPX file only leaves your iPhone when you share it yourself, and goes wherever you choose.</p>
 <p><strong>Crash reports:</strong> they are sent to Firebase Crashlytics, a Google service, which processes them on the developer’s behalf and may do so in data centers in any country. See <a href="https://firebase.google.com/support/privacy">Firebase privacy</a>.</p>
 <p><strong>Performance measurements:</strong> they are sent to Firebase Performance Monitoring, another Google service, on the same terms.</p>
 
 <h2>How long it’s kept and how to delete it</h2>
 <p>Sessions are kept until you delete them.</p>
+<p><strong>Groups:</strong> your position is deleted from the group when you stop sharing or end the session. Your stats for each day stay in the group until you tap “Delete My Stats”, leave the group, or the creator removes you or deletes the group. With “Leave Group”, your display name, your position and your stats are deleted from the group. If the creator taps “Delete Group”, the group is deleted from iCloud for everyone. Groups don’t expire on their own.</p>
+<p><strong>Follow Me Link:</strong> what was stored for the link is deleted when you tap “Stop Link” or end the session. Without a connection, it’s deleted as soon as the connection is back, and if the app closes unexpectedly, when you open it again.</p>
 <p>Firebase Crashlytics and Firebase Performance Monitoring keep crash reports and performance measurements for the period Google states in <a href="https://firebase.google.com/support/privacy">Firebase privacy</a>, which also explains how they are deleted.</p>
 <p>To delete a session, swipe its row in History to the left and tap “Delete”, or open it and, at the end of the summary, tap “Delete Session”. To delete several, tap “Edit”, select the sessions and tap “Delete”. From version 3.0, a deleted session stays for 30 days in the app’s Settings › “Recently Deleted”, where you can recover it or remove it right away with “Delete Now”. When you remove it, or after those 30 days, its route, its runs and the watch data are deleted forever, from this iPhone and from your iCloud, and, if it was saved to Health, its workout.</p>
 <p>Whatever was already copied to your iCloud can also be deleted in iOS Settings, in your account’s iCloud storage.</p>
 <p>Whatever is already in Health can also be deleted in the Health app.</p>
 
 <h2>How to withdraw consent</h2>
-<p><strong>Location and notifications:</strong> tap their row in the app’s Settings, or go to iOS Settings. <strong>Motion:</strong> in iOS Settings › Privacy &amp; Security.</p>
+<p><strong>Location and notifications:</strong> tap their row in the app’s Settings, or go to iOS Settings. <strong>Motion:</strong> in iOS Settings › Privacy &amp; Security. <strong>Camera:</strong> in iOS Settings › Privacy &amp; Security › Camera.</p>
+<p><strong>Groups:</strong> stop sharing whenever you want, from the session screen or from the Group tab, or leave the group.</p>
 <p><strong>Health:</strong> change the permissions in the Health app › Profile › Privacy › Apps › SnowTracker and, on the watch, in Settings › Health › Apps.</p>
 <p>The app works without these permissions, though without the data that depends on them.</p>
 
